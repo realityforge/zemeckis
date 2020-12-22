@@ -150,6 +150,11 @@ abstract class RoundBasedExecutor
     }
   }
 
+  /**
+   * Return the maximum number of rounds before runaway task is detected.
+   *
+   * @return the maximum number of rounds.
+   */
   @TestOnly
   int getMaxRounds()
   {
