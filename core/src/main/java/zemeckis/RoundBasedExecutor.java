@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import org.jetbrains.annotations.TestOnly;
+import org.jetbrains.annotations.VisibleForTesting;
 import org.realityforge.braincheck.BrainCheckConfig;
 import static org.realityforge.braincheck.Guards.*;
 
@@ -118,7 +119,8 @@ abstract class RoundBasedExecutor
    * Depending on configuration will optionally purge the pending
    * tasks and optionally fail an invariant check.
    */
-  private void onRunawayTasksDetected()
+  @VisibleForTesting
+  void onRunawayTasksDetected()
   {
     final List<String> taskNames =
       Zemeckis.shouldCheckInvariants() && BrainCheckConfig.verboseErrorMessages() ?
