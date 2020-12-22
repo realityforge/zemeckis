@@ -52,7 +52,8 @@ abstract class RoundBasedExecutor
   /**
    * Run tasks until complete or runaway tasks detected.
    */
-  private void executeTasks()
+  @VisibleForTesting
+  void executeTasks()
   {
     while ( true )
     {
