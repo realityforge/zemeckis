@@ -2,6 +2,7 @@ package zemeckis;
 
 import elemental2.dom.DomGlobal;
 import elemental2.dom.MessageChannel;
+import javax.annotation.Nonnull;
 
 /**
  * Run tasks after the next browser render frame.
@@ -14,6 +15,7 @@ import elemental2.dom.MessageChannel;
 final class AfterFrameExecutor
   extends RoundBasedExecutor
 {
+  @Nonnull
   private final MessageChannel _channel = new MessageChannel();
 
   AfterFrameExecutor()
