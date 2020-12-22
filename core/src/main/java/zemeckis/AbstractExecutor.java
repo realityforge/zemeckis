@@ -75,7 +75,7 @@ abstract class AbstractExecutor
   @Override
   public void init( @Nonnull final VirtualProcessorUnit.Context context )
   {
-    _context = context;
+    _context = Objects.requireNonNull( context );
   }
 
   @Nonnull
