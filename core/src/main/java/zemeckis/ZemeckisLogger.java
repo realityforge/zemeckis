@@ -104,9 +104,10 @@ final class ZemeckisLogger
   static final class ProxyLogger
     implements Logger
   {
+    @Nullable
     private Logger _logger;
 
-    void setLogger( final Logger logger )
+    void setLogger( @Nullable final Logger logger )
     {
       _logger = logger;
     }
