@@ -8,6 +8,8 @@ complete as there is too much un-said.
 
 * Experiment with using MessageChannel.send for MacroTask and compare jitter/delay between the two
 
+* Use a WebWorker to schedule repeating tasks
+
 ### Scheduler
 
 * https://github.com/spanicker/main-thread-scheduling
