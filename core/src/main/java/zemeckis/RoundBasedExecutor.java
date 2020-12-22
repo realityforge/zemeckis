@@ -3,6 +3,7 @@ package zemeckis;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import org.jetbrains.annotations.TestOnly;
 import org.realityforge.braincheck.BrainCheckConfig;
 import static org.realityforge.braincheck.Guards.*;
 
@@ -21,7 +22,7 @@ abstract class RoundBasedExecutor
    * The maximum number of iterations that can be triggered in sequence without triggering an error. Set this
    * to 0 to disable check, otherwise trigger
    */
-  private final int _maxRounds = DEFAULT_MAX_ROUNDS;
+  private final int _maxRounds;
   /**
    * The current round.
    */
@@ -30,6 +31,16 @@ abstract class RoundBasedExecutor
    * The number of tasks left in the current round.
    */
   private int _remainingTasksInCurrentRound;
+
+  RoundBasedExecutor()
+  {
+    this( DEFAULT_MAX_ROUNDS );
+  }
+
+  RoundBasedExecutor( final int maxRounds )
+  {
+    _maxRounds = maxRounds;
+  }
 
   @Override
   public final void activate()
@@ -135,5 +146,23 @@ abstract class RoundBasedExecutor
     {
       scheduleForActivation();
     }
+  }
+
+  @TestOnly
+  int getMaxRounds()
+  {
+    return _maxRounds;
+  }
+
+  @TestOnly
+  int getCurrentRound()
+  {
+    return _currentRound;
+  }
+
+  @TestOnly
+  int getRemainingTasksInCurrentRound()
+  {
+    return _remainingTasksInCurrentRound;
   }
 }
