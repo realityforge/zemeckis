@@ -20,6 +20,11 @@
     "messagePattern": "Attempting to remove handler %s that is not in the list of error handlers."
   },
   {
+    "code": 10,
+    "type": "FAIL",
+    "messagePattern": "Runaway task(s) detected. Tasks still running after %s rounds. Current tasks include: [%s]"
+  },
+  {
     "code": 11,
     "type": "INVARIANT",
     "messagePattern": "UncaughtErrorHandlerSupport.get() invoked when Zemeckis.areUncaughtErrorHandlersEnabled() returns false."
