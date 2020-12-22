@@ -1,0 +1,15 @@
+*.iml
+/*.ipr
+/*.iws
+/Gemfile.lock
+/_buildr.rb
+/reports
+/target
+/tmp
+/generated
+/*/generated
+/processor/src/test/resources/input/spritz/DocCategory.java
+/processor/src/test/resources/input/spritz/GwtIncompatible.java
+/processor/src/test/resources/input/spritz/MetaDataSource.java
+/processor/src/test/resources/input/spritz/SourceCategory.java
+/archive
