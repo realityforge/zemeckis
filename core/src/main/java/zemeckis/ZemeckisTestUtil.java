@@ -166,10 +166,9 @@ public final class ZemeckisTestUtil
   /**
    * Set the specified field name on ZemeckisConfig.
    */
-  @SuppressWarnings( "ConstantConditions" )
   private static void setConstant( @Nonnull final String fieldName, final boolean value )
   {
-    if ( !ZemeckisConfig.isProductionMode() )
+    if ( ZemeckisConfig.isDevelopmentMode() )
     {
       try
       {
@@ -184,13 +183,7 @@ public final class ZemeckisTestUtil
     }
     else
     {
-      /*
-       * This should not happen but if it does then just fail with an assertion or error.
-       */
-      assert !ZemeckisConfig.isProductionMode();
-      throw new IllegalStateException( "Unable to change constant " +
-                                       fieldName +
-                                       " as Zemeckis is in production mode" );
+      throw new AssertionError( "Unable to change constant " + fieldName + " as Zemeckis is in production mode" );
     }
   }
 }
