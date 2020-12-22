@@ -172,4 +172,15 @@ abstract class RoundBasedExecutor
   {
     return _remainingTasksInCurrentRound;
   }
+
+  /**
+   * Return true if tasks are currently executing, false otherwise.
+   *
+   * @return true if tasks are currently executing, false otherwise.
+   */
+  @TestOnly
+  boolean areTasksExecuting()
+  {
+    return 0 != _currentRound;
+  }
 }
