@@ -26,7 +26,7 @@ abstract class AbstractExecutor
 
   final int getQueueSize()
   {
-    return _taskQueue.size();
+    return getTaskQueue().size();
   }
 
   @Override
