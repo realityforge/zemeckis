@@ -72,18 +72,15 @@ public final class ZemeckisTestUtil
    */
   public static void setLogger( @Nullable final Logger logger )
   {
-    if ( ZemeckisConfig.isProductionMode() )
+    /*
+     * This should really never happen but if it does add assertion (so code stops in debugger).
+     */
+    assert !ZemeckisConfig.isProductionMode();
+    if ( ZemeckisConfig.isDevelopmentMode() )
     {
-      /*
-       * This should really never happen but if it does add assertion (so code stops in debugger) or
-       * failing that throw an exception.
-       */
-      assert ZemeckisConfig.isDevelopmentMode();
-      throw new IllegalStateException( "Unable to call ZemeckisTestUtil.setLogger() as Zemeckis is in production mode" );
+      final ZemeckisLogger.ProxyLogger proxyLogger = (ZemeckisLogger.ProxyLogger) ZemeckisLogger.getLogger();
+      proxyLogger.setLogger( null == logger ? null : logger::log );
     }
-
-    final ZemeckisLogger.ProxyLogger proxyLogger = (ZemeckisLogger.ProxyLogger) ZemeckisLogger.getLogger();
-    proxyLogger.setLogger( null == logger ? null : logger::log );
   }
 
   /**
@@ -189,7 +186,9 @@ public final class ZemeckisTestUtil
        * This should not happen but if it does then just fail with an assertion or error.
        */
       assert !ZemeckisConfig.isProductionMode();
-      throw new IllegalStateException( "Unable to change constant " + fieldName + " as Zemeckis is in production mode" );
+      throw new IllegalStateException( "Unable to change constant " +
+                                       fieldName +
+                                       " as Zemeckis is in production mode" );
     }
   }
 }
