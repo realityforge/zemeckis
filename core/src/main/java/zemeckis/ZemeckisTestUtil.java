@@ -3,11 +3,13 @@ package zemeckis;
 import java.lang.reflect.Field;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.jetbrains.annotations.TestOnly;
 
 /**
  * Utility class for interacting with Zemeckis config settings in tests.
  */
 @GwtIncompatible
+@TestOnly
 public final class ZemeckisTestUtil
 {
   private ZemeckisTestUtil()

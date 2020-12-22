@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+import org.jetbrains.annotations.TestOnly;
 import org.realityforge.braincheck.BrainCheckConfig;
 import static org.realityforge.braincheck.Guards.*;
 
@@ -32,6 +33,7 @@ final class UncaughtErrorHandlerSupport
     return INSTANCE;
   }
 
+  @TestOnly
   static void reset()
   {
     INSTANCE = new UncaughtErrorHandlerSupport();

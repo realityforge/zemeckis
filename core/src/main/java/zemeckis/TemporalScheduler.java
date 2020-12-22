@@ -6,6 +6,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
+import org.jetbrains.annotations.TestOnly;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
@@ -61,6 +62,7 @@ final class TemporalScheduler
     return c_scheduler.scheduleAtFixedRate( task, period );
   }
 
+  @TestOnly
   static void reset()
   {
     c_scheduler.shutdown();
