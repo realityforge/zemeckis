@@ -4,7 +4,7 @@ import java.io.IOException;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public class ZemeckisUtilTest
+public final class ZemeckisUtilTest
 {
   @Test
   public void safeGetString()

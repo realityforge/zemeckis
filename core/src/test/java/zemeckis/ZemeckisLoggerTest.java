@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public class ZemeckisLoggerTest
+public final class ZemeckisLoggerTest
   extends AbstractTest
 {
   @Test
