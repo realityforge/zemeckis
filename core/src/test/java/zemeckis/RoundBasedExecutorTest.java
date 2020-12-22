@@ -116,6 +116,45 @@ public final class RoundBasedExecutorTest
   }
 
   @Test
+  public void activate()
+  {
+    final RoundBasedExecutor executor = new TestExecutor( 2 );
+    executor.init( VirtualProcessorUnit.ActivationFn::invoke );
+
+    final NoopTask task1 = new NoopTask();
+    final NoopTask task2 = new NoopTask();
+    final NoopTask task3 = new NoopTask();
+    executor.queue( task1 );
+    executor.queue( task2 );
+    executor.queue( task3 );
+
+    assertEquals( executor.getMaxRounds(), 2 );
+    assertEquals( executor.getCurrentRound(), 0 );
+    assertEquals( executor.getRemainingTasksInCurrentRound(), 0 );
+    assertEquals( executor.getQueueSize(), 3 );
+
+    // task executions
+    assertEquals( task1.getRunCount(), 0 );
+    assertEquals( task2.getRunCount(), 0 );
+    assertEquals( task3.getRunCount(), 0 );
+
+    assertFalse( executor.areTasksExecuting() );
+
+    executor.activate();
+
+    assertFalse( executor.areTasksExecuting() );
+
+    // task executions
+    assertEquals( task1.getRunCount(), 1 );
+    assertEquals( task2.getRunCount(), 1 );
+    assertEquals( task3.getRunCount(), 1 );
+
+    assertEquals( executor.getCurrentRound(), 0 );
+    assertEquals( executor.getRemainingTasksInCurrentRound(), 0 );
+    assertEquals( executor.getQueueSize(), 0 );
+  }
+
+  @Test
   public void executeTasks()
   {
     final RoundBasedExecutor executor = new TestExecutor( 2 );
