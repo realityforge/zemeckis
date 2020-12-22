@@ -9,7 +9,7 @@ final class AnimationFrameExecutor
   extends RoundBasedExecutor
 {
   @Override
-  final void scheduleForActivation()
+  void scheduleForActivation()
   {
     DomGlobal.requestAnimationFrame( v -> activate() );
   }

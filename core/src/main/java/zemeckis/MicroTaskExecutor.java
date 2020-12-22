@@ -9,7 +9,7 @@ final class MicroTaskExecutor
   extends RoundBasedExecutor
 {
   @Override
-  final void scheduleForActivation()
+  void scheduleForActivation()
   {
     new Promise<>( null ).then( v -> {
       activate();

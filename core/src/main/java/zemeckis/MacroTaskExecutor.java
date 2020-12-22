@@ -7,7 +7,7 @@ final class MacroTaskExecutor
   extends RoundBasedExecutor
 {
   @Override
-  final void scheduleForActivation()
+  void scheduleForActivation()
   {
     Scheduler.schedule( this::activate, 0 );
   }

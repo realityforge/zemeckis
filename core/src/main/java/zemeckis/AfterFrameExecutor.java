@@ -22,7 +22,7 @@ final class AfterFrameExecutor
   }
 
   @Override
-  final void scheduleForActivation()
+  void scheduleForActivation()
   {
     DomGlobal.requestAnimationFrame( v -> _channel.port2.postMessage( null ) );
   }

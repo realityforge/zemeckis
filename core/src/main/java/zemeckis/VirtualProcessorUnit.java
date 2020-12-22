@@ -48,7 +48,7 @@ public final class VirtualProcessorUnit
    * @return the name of the VirtualProcessorUnit.
    */
   @Nonnull
-  public final String getName()
+  public String getName()
   {
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
@@ -78,7 +78,7 @@ public final class VirtualProcessorUnit
 
   @Nonnull
   @Override
-  public final String toString()
+  public String toString()
   {
     if ( Zemeckis.areNamesEnabled() )
     {

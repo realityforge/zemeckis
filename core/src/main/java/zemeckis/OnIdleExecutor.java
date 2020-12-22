@@ -9,7 +9,7 @@ final class OnIdleExecutor
   extends DeadlineBasedExecutor
 {
   @Override
-  final void scheduleForActivation()
+  void scheduleForActivation()
   {
     DomGlobal.requestIdleCallback( deadline -> context().activate( () -> executeTasks( () -> (int) deadline.timeRemaining() ) ) );
   }
