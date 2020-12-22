@@ -75,7 +75,8 @@ abstract class RoundBasedExecutor
    *
    * @return true if a task was ran, false otherwise.
    */
-  private boolean runNextTask()
+  @VisibleForTesting
+  boolean runNextTask()
   {
     // If we have reached the last task in this round then
     // determine if we need any more rounds and if we do ensure
