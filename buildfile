@@ -15,7 +15,7 @@ ZEMECKIS_TEST_OPTIONS =
     'zemeckis.environment' => 'development'
   }
 
-desc 'Zemeckis: A library to unify scheduling tasks'
+desc 'Zemeckis: A library to unify scheduling tasks inside a browser'
 define 'zemeckis' do
   project.group = 'org.realityforge.zemeckis'
   compile.options.source = '1.8'
