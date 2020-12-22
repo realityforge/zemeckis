@@ -68,7 +68,7 @@ abstract class AbstractExecutor
     }
     catch ( final Throwable t )
     {
-      // Should we handle it with a per-task handler or a global error handler?
+      Zemeckis.reportUncaughtError( t );
     }
   }
 
