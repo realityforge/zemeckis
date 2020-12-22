@@ -106,11 +106,6 @@ final class ZemeckisLogger
   {
     private Logger _logger;
 
-    Logger getLogger()
-    {
-      return _logger;
-    }
-
     void setLogger( final Logger logger )
     {
       _logger = logger;
