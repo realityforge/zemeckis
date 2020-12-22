@@ -1,5 +1,6 @@
 package zemeckis;
 
+import com.google.gwt.core.client.GWT;
 import javax.annotation.Nonnull;
 
 /**
@@ -31,7 +32,7 @@ final class ZemeckisConfig
 
   static boolean isJvm()
   {
-    return true;
+    return !GWT.isScript();
   }
 
   static boolean purgeTasksWhenRunawayDetected()
