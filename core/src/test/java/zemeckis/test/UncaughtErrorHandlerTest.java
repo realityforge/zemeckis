@@ -50,7 +50,7 @@ public class UncaughtErrorHandlerTest
     Zemeckis.addUncaughtErrorHandler( handler );
 
     assertInvariantFailure( () -> Zemeckis.addUncaughtErrorHandler( handler ),
-                            "Zemeckis-0096: Attempting to add handler " + handler + " that is already in " +
+                            "Zemeckis-0006: Attempting to add handler " + handler + " that is already in " +
                             "the list of error handlers." );
   }
 
@@ -61,7 +61,7 @@ public class UncaughtErrorHandlerTest
     };
 
     assertInvariantFailure( () -> Zemeckis.removeUncaughtErrorHandler( handler ),
-                            "Zemeckis-0097: Attempting to remove handler " + handler + " that is not in " +
+                            "Zemeckis-0007: Attempting to remove handler " + handler + " that is not in " +
                             "the list of error handlers." );
   }
 
@@ -164,7 +164,7 @@ public class UncaughtErrorHandlerTest
     };
 
     assertInvariantFailure( () -> Zemeckis.addUncaughtErrorHandler( handler ),
-                            "Zemeckis-0182: UncaughtErrorHandlerSupport.get() invoked when Zemeckis.areUncaughtErrorHandlersEnabled() returns false." );
+                            "Zemeckis-0011: UncaughtErrorHandlerSupport.get() invoked when Zemeckis.areUncaughtErrorHandlersEnabled() returns false." );
 
     // This should produce no error and will be silently omitted
     Zemeckis.reportUncaughtError( new IllegalStateException() );

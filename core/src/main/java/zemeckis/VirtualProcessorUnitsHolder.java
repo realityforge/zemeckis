@@ -194,7 +194,7 @@ final class VirtualProcessorUnitsHolder
       if ( Zemeckis.shouldCheckInvariants() )
       {
         invariant( () -> null == c_current,
-                   () -> "Zemeckis-0015: Attempting set current VirtualProcessorUnit to " + processorUnit +
+                   () -> "Zemeckis-0004: Attempting set current VirtualProcessorUnit to " + processorUnit +
                          " but there is an existing  VirtualProcessorUnit activated (" + c_current + ")" );
       }
       c_current = processorUnit;
@@ -212,7 +212,7 @@ final class VirtualProcessorUnitsHolder
       if ( Zemeckis.shouldCheckInvariants() )
       {
         invariant( () -> processorUnit == c_current,
-                   () -> "Zemeckis-0017: Attempting to clear current VirtualProcessorUnit from " + processorUnit +
+                   () -> "Zemeckis-0005: Attempting to clear current VirtualProcessorUnit from " + processorUnit +
                          " but the current VirtualProcessorUnit (" + processorUnit + ") activated does not match." );
       }
       c_current = null;

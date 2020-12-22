@@ -27,7 +27,7 @@ final class UncaughtErrorHandlerSupport
     if ( Zemeckis.shouldCheckInvariants() )
     {
       invariant( Zemeckis::areUncaughtErrorHandlersEnabled,
-                 () -> "Zemeckis-0182: UncaughtErrorHandlerSupport.get() invoked when Zemeckis.areUncaughtErrorHandlersEnabled() returns false." );
+                 () -> "Zemeckis-0011: UncaughtErrorHandlerSupport.get() invoked when Zemeckis.areUncaughtErrorHandlersEnabled() returns false." );
     }
     return INSTANCE;
   }
@@ -52,7 +52,7 @@ final class UncaughtErrorHandlerSupport
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> !_errorHandlers.contains( handler ),
-                    () -> "Zemeckis-0096: Attempting to add handler " + handler + " that is already in " +
+                    () -> "Zemeckis-0006: Attempting to add handler " + handler + " that is already in " +
                           "the list of error handlers." );
     }
     _errorHandlers.add( Objects.requireNonNull( handler ) );
@@ -69,7 +69,7 @@ final class UncaughtErrorHandlerSupport
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> _errorHandlers.contains( handler ),
-                    () -> "Zemeckis-0097: Attempting to remove handler " + handler + " that is not in " +
+                    () -> "Zemeckis-0007: Attempting to remove handler " + handler + " that is not in " +
                           "the list of error handlers." );
     }
     _errorHandlers.remove( Objects.requireNonNull( handler ) );

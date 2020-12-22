@@ -121,7 +121,7 @@ abstract class RoundBasedExecutor
 
     if ( Zemeckis.shouldCheckInvariants() )
     {
-      fail( () -> "Zemeckis-0101: Runaway task(s) detected. Tasks still running after " + _maxRounds +
+      fail( () -> "Zemeckis-0010: Runaway task(s) detected. Tasks still running after " + _maxRounds +
                   " rounds. Current tasks include: " + taskNames );
     }
   }

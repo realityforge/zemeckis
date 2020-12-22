@@ -48,7 +48,7 @@ abstract class AbstractExecutor
     if ( Zemeckis.shouldCheckInvariants() )
     {
       invariant( () -> !_taskQueue.contains( task ),
-                 () -> "Zemeckis-0098: Attempting to queue task " + task + " when task is already queued." );
+                 () -> "Zemeckis-0001: Attempting to queue task " + task + " when task is already queued." );
     }
   }
 

@@ -126,7 +126,7 @@ final class TemporalScheduler
       if ( Zemeckis.shouldCheckApiInvariants() )
       {
         apiInvariant( () -> delay >= 0,
-                      () -> "Zemeckis-0016: Scheduler.schedule(...) passed a negative delay. " +
+                      () -> "Zemeckis-0008: Scheduler.schedule(...) passed a negative delay. " +
                             "Actual value passed is " + delay );
       }
       return doSchedule( task, delay );
@@ -145,7 +145,7 @@ final class TemporalScheduler
       if ( Zemeckis.shouldCheckApiInvariants() )
       {
         apiInvariant( () -> period > 0,
-                      () -> "Zemeckis-0014: Scheduler.scheduleAtFixedRate(...) passed a period that is " +
+                      () -> "Zemeckis-0009: Scheduler.scheduleAtFixedRate(...) passed a period that is " +
                             "not greater than 0. Actual value passed is " + period );
       }
       return doScheduleAtFixedRate( task, period );

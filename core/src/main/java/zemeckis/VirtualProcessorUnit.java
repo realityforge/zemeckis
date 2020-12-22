@@ -32,7 +32,7 @@ public final class VirtualProcessorUnit
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> Zemeckis.areNamesEnabled() || null == name,
-                    () -> "Zemeckis-0021: VirtualProcessorUnit passed a name '" + name + "' but " +
+                    () -> "Zemeckis-0002: VirtualProcessorUnit passed a name '" + name + "' but " +
                           "Zemeckis.areNamesEnabled() is false" );
     }
     _name = Zemeckis.areNamesEnabled() ? Objects.requireNonNull( name ) : null;
@@ -53,7 +53,7 @@ public final class VirtualProcessorUnit
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
       apiInvariant( Zemeckis::areNamesEnabled,
-                    () -> "Zemeckis-0022: VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false" );
+                    () -> "Zemeckis-0003: VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false" );
     }
     assert null != _name;
     return _name;
