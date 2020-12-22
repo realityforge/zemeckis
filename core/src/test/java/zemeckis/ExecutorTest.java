@@ -12,7 +12,7 @@ public final class ExecutorTest
   {
     final TestExecutor executor = new TestExecutor();
 
-    assertEquals( executor.getActivateCount(), 0 );
+    assertFalse( executor.areTasksExecuting() );
     assertEquals( executor.getScheduleCount(), 0 );
 
     assertEquals( executor.getQueueSize(), 0 );

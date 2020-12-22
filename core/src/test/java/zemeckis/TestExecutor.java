@@ -1,26 +1,23 @@
 package zemeckis;
 
 final class TestExecutor
-  extends AbstractExecutor
+  extends RoundBasedExecutor
 {
-  private int _activateCount;
   private int _scheduleCount;
 
-  @Override
-  public void activate()
+  TestExecutor()
   {
-    _activateCount++;
+  }
+
+  TestExecutor( final int maxRounds )
+  {
+    super( maxRounds );
   }
 
   @Override
   void scheduleForActivation()
   {
     _scheduleCount++;
-  }
-
-  int getActivateCount()
-  {
-    return _activateCount;
   }
 
   int getScheduleCount()
