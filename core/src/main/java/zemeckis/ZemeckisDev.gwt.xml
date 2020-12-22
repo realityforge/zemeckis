@@ -1,0 +1,10 @@
+<module>
+  <inherits name='zemeckis.Zemeckis'/>
+  <inherits name='org.realityforge.braincheck.BrainCheckDev'/>
+
+  <source path='ignored'/>
+
+  <set-property name='zemeckis.environment' value='development'/>
+  <set-property name='zemeckis.enable_names' value='true'/>
+  <set-property name='zemeckis.enable_uncaught_error_handlers' value='true'/>
+</module>

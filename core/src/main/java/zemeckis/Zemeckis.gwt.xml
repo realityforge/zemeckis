@@ -1,0 +1,27 @@
+<module>
+  <inherits name='org.realityforge.braincheck.BrainCheck'/>
+  <inherits name='elemental2.dom.Dom'/>
+
+  <source path='' includes='*.java'/>
+  <source path='dom' includes='**/*.java'/>
+
+  <!--
+    These properties are all defined in zemeckis.ZemeckisConfig
+    See that class for a better understanding of what these properties do.
+  -->
+
+  <define-property name='zemeckis.environment' values='development,production'/>
+  <set-property name='zemeckis.environment' value='production'/>
+
+  <define-property name='zemeckis.enable_names' values='true,false'/>
+  <set-property name='zemeckis.enable_names' value='false'/>
+
+  <define-property name='zemeckis.purge_tasks_when_runaway_detected' values='true,false'/>
+  <set-property name='zemeckis.purge_tasks_when_runaway_detected' value='true'/>
+
+  <define-property name='zemeckis.enable_uncaught_error_handlers' values='true,false'/>
+  <set-property name='zemeckis.enable_uncaught_error_handlers' value='false'/>
+
+  <define-property name='zemeckis.logger' values='console,proxy,none'/>
+  <set-property name='zemeckis.logger' value='console'/>
+</module>
