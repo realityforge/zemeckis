@@ -10,6 +10,11 @@
     "messagePattern": "VirtualProcessorUnit passed a name '%s' but Zemeckis.areNamesEnabled() is false"
   },
   {
+    "code": 3,
+    "type": "API_INVARIANT",
+    "messagePattern": "VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false"
+  },
+  {
     "code": 6,
     "type": "API_INVARIANT",
     "messagePattern": "Attempting to add handler %s that is already in the list of error handlers."
