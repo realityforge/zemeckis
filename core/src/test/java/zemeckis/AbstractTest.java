@@ -46,6 +46,18 @@ public abstract class AbstractTest
     assertEquals( expectThrows( IllegalStateException.class, throwingRunnable ).getMessage(), message );
   }
 
+  protected final void assertDefaultToStringWhenNamesDisabled( @Nonnull final Object object )
+  {
+    ZemeckisTestUtil.disableNames();
+    assertDefaultToString( object );
+    ZemeckisTestUtil.enableNames();
+  }
+
+  protected final void assertDefaultToString( @Nonnull final Object object )
+  {
+    assertEquals( object.toString(), object.getClass().getName() + "@" + Integer.toHexString( object.hashCode() ) );
+  }
+
   protected final int randomInt()
   {
     return getRandom().nextInt();
