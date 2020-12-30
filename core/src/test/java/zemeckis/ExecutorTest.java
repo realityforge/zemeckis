@@ -22,8 +22,7 @@ public final class ExecutorTest
     //noinspection ResultOfMethodCallIgnored
     assertThrows( AssertionError.class, executor::context );
 
-    final VirtualProcessorUnit.Context context = activationFn -> {
-    };
+    final VirtualProcessorUnit.Context context = VirtualProcessorUnit.ActivationFn::invoke;
     executor.init( context );
 
     assertEquals( executor.context(), context );
