@@ -1,6 +1,7 @@
 package zemeckis;
 
 import javax.annotation.Nullable;
+import jsinterop.annotations.JsFunction;
 
 /**
  * This executor runs tasks until a deadline has been reached.
@@ -11,6 +12,7 @@ abstract class DeadlineBasedExecutor
   private static final int MIN_TASK_TIME = 1;
 
   @FunctionalInterface
+  @JsFunction
   interface DeadlineFunction
   {
     int getTimeRemaining();
