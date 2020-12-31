@@ -1,12 +1,12 @@
 package zemeckis;
 
 /**
- * Interface identifying a resource that can be cancelled.
+ * A task that can be cancelled.
  */
 public interface Cancelable
 {
   /**
-   * Cancel the resource.
+   * Cancel the task.
    */
   void cancel();
 }
