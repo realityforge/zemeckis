@@ -17,17 +17,6 @@ final class VirtualProcessorUnitsHolder
   {
   }
 
-  /**
-   * Return the current VirtualProcessorUnit.
-   *
-   * @return the VirtualProcessorUnit.
-   */
-  @Nullable
-  static VirtualProcessorUnit currentVpu()
-  {
-    return CurrentVPU.current();
-  }
-
   @Nonnull
   static VirtualProcessorUnit macroTaskVpu()
   {
@@ -56,6 +45,17 @@ final class VirtualProcessorUnitsHolder
   static VirtualProcessorUnit onIdleVpu()
   {
     return OnIdleVPU.VPU;
+  }
+
+  /**
+   * Return the current VirtualProcessorUnit.
+   *
+   * @return the VirtualProcessorUnit.
+   */
+  @Nullable
+  static VirtualProcessorUnit currentVpu()
+  {
+    return CurrentVPU.current();
   }
 
   /**
