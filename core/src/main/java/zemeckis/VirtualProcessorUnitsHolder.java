@@ -3,6 +3,7 @@ package zemeckis;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.jetbrains.annotations.TestOnly;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
@@ -88,6 +89,17 @@ final class VirtualProcessorUnitsHolder
     {
       CurrentVPU.deactivate( processorUnit );
     }
+  }
+
+  @TestOnly
+  synchronized static void reset()
+  {
+    CurrentVPU.c_current = null;
+    MacroTaskVPU.VPU.getExecutor().reset();
+    MicroTaskVPU.VPU.getExecutor().reset();
+    AnimationFrameVPU.VPU.getExecutor().reset();
+    AfterFrameVPU.VPU.getExecutor().reset();
+    OnIdleVPU.VPU.getExecutor().reset();
   }
 
   private static final class MacroTaskVPU

@@ -3,6 +3,7 @@ package zemeckis;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.jetbrains.annotations.TestOnly;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
@@ -80,6 +81,14 @@ abstract class AbstractExecutor
   public void init( @Nonnull final VirtualProcessorUnit.Context context )
   {
     _context = Objects.requireNonNull( context );
+  }
+
+  @TestOnly
+  @Override
+  public void reset()
+  {
+    _taskQueue.clear();
+    _taskQueue.truncate( INITIAL_QUEUE_SIZE );
   }
 
   @Nonnull

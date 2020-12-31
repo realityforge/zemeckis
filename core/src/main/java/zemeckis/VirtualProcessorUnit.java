@@ -3,6 +3,7 @@ package zemeckis;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.jetbrains.annotations.TestOnly;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
@@ -105,6 +106,13 @@ public final class VirtualProcessorUnit
      * @param context the context represent the associated {@link VirtualProcessorUnit}.
      */
     void init( @Nonnull Context context );
+
+    /**
+     * Reset state of executor.
+     * This is only used from within the test framework.
+     */
+    @TestOnly
+    void reset();
 
     /**
      * Queue task for execution and enable the executor for activation if necessary.

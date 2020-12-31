@@ -65,6 +65,7 @@ public final class ZemeckisTestUtil
     setLogger( null );
     TemporalScheduler.reset();
     UncaughtErrorHandlerSupport.reset();
+    VirtualProcessorUnitsHolder.reset();
   }
 
   /**
