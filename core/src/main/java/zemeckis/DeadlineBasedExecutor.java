@@ -29,7 +29,7 @@ abstract class DeadlineBasedExecutor
    */
   private boolean shouldYield( @Nullable final DeadlineFunction function )
   {
-    return null == function || function.getTimeRemaining() <= MIN_TASK_TIME;
+    return null == function || function.getTimeRemaining() < MIN_TASK_TIME;
   }
 
   @Override
