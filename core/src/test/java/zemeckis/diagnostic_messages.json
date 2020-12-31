@@ -53,5 +53,10 @@
     "code": 11,
     "type": "INVARIANT",
     "messagePattern": "UncaughtErrorHandlerSupport.get() invoked when Zemeckis.areUncaughtErrorHandlersEnabled() returns false."
+  },
+  {
+    "code": 12,
+    "type": "API_INVARIANT",
+    "messagePattern": "Scheduler.becomeMacroTask(...) invoked but the VirtualProcessorUnit named '%s' is already active"
   }
 ]

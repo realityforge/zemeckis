@@ -3,6 +3,7 @@ package zemeckis;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import static org.realityforge.braincheck.Guards.*;
 
 /**
  * The scheduler is responsible for scheduling and executing tasks asynchronously.
@@ -120,6 +121,12 @@ public final class Scheduler
    */
   public static void becomeMacroTask( @Nonnull final Runnable task )
   {
+    if ( Zemeckis.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> !isVpuActivated(),
+                    () -> "Zemeckis-0012: Scheduler.becomeMacroTask(...) invoked but the VirtualProcessorUnit " +
+                          "named '" + currentVpu() + "' is already active" );
+    }
     final VirtualProcessorUnit.Executor executor = macroTaskVpu().getExecutor();
     executor.queueNext( Objects.requireNonNull( task ) );
     executor.activate();
