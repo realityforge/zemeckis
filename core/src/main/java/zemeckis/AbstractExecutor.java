@@ -12,6 +12,10 @@ abstract class AbstractExecutor
   implements VirtualProcessorUnit.Executor
 {
   /**
+   * The size of the circular buffer when initially created.
+   */
+  private static final int INITIAL_QUEUE_SIZE = 100;
+  /**
    * A queue containing tasks that have been scheduled but are not yet executing.
    */
   @Nonnull
@@ -21,7 +25,7 @@ abstract class AbstractExecutor
 
   AbstractExecutor()
   {
-    _taskQueue = new CircularBuffer<>( 100 );
+    _taskQueue = new CircularBuffer<>( INITIAL_QUEUE_SIZE );
   }
 
   final int getQueueSize()
