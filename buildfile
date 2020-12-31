@@ -5,7 +5,7 @@ require 'buildr/top_level_generate_dir'
 require 'buildr/gwt'
 require 'buildr/jacoco'
 
-GWT_EXAMPLES = %w(basic)
+GWT_EXAMPLES = %w(basic repeating_task)
 
 ZEMECKIS_TEST_OPTIONS =
   {
