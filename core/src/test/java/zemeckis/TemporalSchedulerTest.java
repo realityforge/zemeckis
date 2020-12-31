@@ -22,7 +22,7 @@ public final class TemporalSchedulerTest
     final int start = TemporalScheduler.now();
     TemporalScheduler.schedule( () -> {
       final int now = TemporalScheduler.now() - start;
-      if ( now <= 20 )
+      if ( now <= 19 )
       {
         errors.add( "Scheduled task 1 executed before expected" );
       }
@@ -35,7 +35,7 @@ public final class TemporalSchedulerTest
 
     TemporalScheduler.schedule( () -> {
       final int now = TemporalScheduler.now() - start;
-      if ( now <= 40 )
+      if ( now <= 39 )
       {
         errors.add( "Scheduled task 2 executed before expected" );
       }
