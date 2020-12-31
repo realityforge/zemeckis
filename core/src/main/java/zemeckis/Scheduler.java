@@ -112,7 +112,9 @@ public final class Scheduler
 
   /**
    * Run specified task now by queuing on MacroTask VPU and activating VPU.
-   * This is invoked when the browser has triggered a macro task specifically to in response to a queued task.
+   * This is invoked when the browser has triggered a macro task as a result of a callback of some kind.
+   * The specified task is added to the start of the macroTask queue but any tasks present on the queue
+   * will be invoked after the specified task.
    *
    * @param task the task.
    */
