@@ -26,10 +26,6 @@ public final class TemporalSchedulerTest
       {
         errors.add( "Scheduled task 1 executed before expected" );
       }
-      else if ( now >= 40 )
-      {
-        errors.add( "Scheduled task 1 executed after expected - " + now );
-      }
       latch.countDown();
     }, 20 );
 
@@ -38,10 +34,6 @@ public final class TemporalSchedulerTest
       if ( now <= 39 )
       {
         errors.add( "Scheduled task 2 executed before expected" );
-      }
-      else if ( now >= 80 )
-      {
-        errors.add( "Scheduled task 2 executed after expected - " + now );
       }
       latch.countDown();
     }, 40 );
