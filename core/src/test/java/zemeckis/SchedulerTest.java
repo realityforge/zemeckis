@@ -82,7 +82,7 @@ public final class SchedulerTest
     assertInvariantFailure( () -> Scheduler
                               .scheduleAtFixedRate( () -> errors.add( "Scheduled task that has a bad delay." ),
                                                     -1 ),
-                            "Zemeckis-0009: Scheduler.scheduleAtFixedRate(...) passed a negative period. Actual value passed is -1" );
+                            "Zemeckis-0009: Scheduler.scheduleAtFixedRate(...) passed a non-positive period. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );
