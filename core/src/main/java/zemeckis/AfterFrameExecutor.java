@@ -1,6 +1,5 @@
 package zemeckis;
 
-import elemental2.dom.DomGlobal;
 import elemental2.dom.MessageChannel;
 import javax.annotation.Nonnull;
 
@@ -26,6 +25,6 @@ final class AfterFrameExecutor
   @Override
   void scheduleForActivation()
   {
-    DomGlobal.requestAnimationFrame( v -> _channel.port2.postMessage( null ) );
+    Scheduler.animationFrame( () -> _channel.port2.postMessage( null ) );
   }
 }
