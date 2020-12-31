@@ -26,7 +26,7 @@ task 'site:publish' => 'doc' do
     sh 'git add . -f'
     puts `git commit -m "#{message}"`
     if 0 == $?.exitstatus
-      sh 'git push origin master'
+      sh 'git push origin gh-pages'
     end
   end
 end
