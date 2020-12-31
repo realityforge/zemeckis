@@ -6,6 +6,8 @@ complete as there is too much un-said.
 
 ### High Priority Tasks
 
+* Add grim annotations.
+
 * Support scheduling of tasks with delay and repeating tasks inside a WebWorker where the WebWorker
   is responsible for scheduling the tasks. This produces a more stable scheduling at the expense of
   slightly more complexity. Both sides would need to keep a record of which timers are active and when
