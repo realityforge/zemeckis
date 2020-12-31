@@ -20,7 +20,7 @@ final class AfterFrameExecutor
 
   AfterFrameExecutor()
   {
-    _channel.port2.onmessage = m -> activate();
+    _channel.port1.onmessage = m -> activate();
   }
 
   @Override
