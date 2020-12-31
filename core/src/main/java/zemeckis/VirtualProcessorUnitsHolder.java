@@ -63,9 +63,9 @@ final class VirtualProcessorUnitsHolder
    *
    * @return true if there is a current VPU activated.
    */
-  synchronized static boolean isVirtualProcessorUnitActivated()
+  synchronized static boolean isVpuActivated()
   {
-    return CurrentVPU.isVirtualProcessorUnitActivated();
+    return CurrentVPU.isVpuActivated();
   }
 
   /**
@@ -189,7 +189,7 @@ final class VirtualProcessorUnitsHolder
      *
      * @return true if there is a current VPU activated.
      */
-    private static boolean isVirtualProcessorUnitActivated()
+    private static boolean isVpuActivated()
     {
       return null != c_current;
     }

@@ -70,9 +70,9 @@ public final class Scheduler
    *
    * @return true if there is a current VPU activated.
    */
-  public static boolean isVirtualProcessorUnitActivated()
+  public static boolean isVpuActivated()
   {
-    return VirtualProcessorUnitsHolder.isVirtualProcessorUnitActivated();
+    return VirtualProcessorUnitsHolder.isVpuActivated();
   }
 
   /**
