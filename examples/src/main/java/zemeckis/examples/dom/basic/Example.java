@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import zemeckis.Scheduler;
 
-public final class BasicExample
+public final class Example
   implements EntryPoint
 {
   @Nonnull

@@ -5,10 +5,7 @@ require 'buildr/top_level_generate_dir'
 require 'buildr/gwt'
 require 'buildr/jacoco'
 
-GWT_EXAMPLES =
-  {
-    'BasicExample' => 'basic'
-  }
+GWT_EXAMPLES = %w(basic)
 
 ZEMECKIS_TEST_OPTIONS =
   {
@@ -103,8 +100,8 @@ define 'zemeckis' do
                  :gwt_user
 
     gwt_modules = {}
-    GWT_EXAMPLES.each_pair do |gwt_module, path|
-      gwt_modules["zemeckis.examples.dom.#{path}.#{gwt_module}"] = false
+    GWT_EXAMPLES.each do |path|
+      gwt_modules["zemeckis.examples.dom.#{path}.Example"] = false
     end
     iml.add_gwt_facet(gwt_modules,
                       :settings => { :compilerMaxHeapSize => '1024' },
@@ -124,16 +121,16 @@ define 'zemeckis' do
 
   iml.excluded_directories << project._('tmp')
 
-  GWT_EXAMPLES.each_pair do |gwt_module, path|
+  GWT_EXAMPLES.each do |path|
     ipr.add_gwt_configuration(project,
                               :iml_name => 'examples',
-                              :name => gwt_module,
-                              :gwt_module => "zemeckis.examples.dom.#{path}.#{gwt_module}",
+                              :name => "#{path} Example",
+                              :gwt_module => "zemeckis.examples.dom.#{path}.Example",
                               :start_javascript_debugger => false,
                               :open_in_browser => false,
                               :vm_parameters => '-Xmx2G',
-                              :shell_parameters => "-strict -style PRETTY -XmethodNameDisplayMode FULL -nostartServer -incremental -codeServerPort 8889 -bindAddress 0.0.0.0 -deploy #{_(:generated, :gwt, 'deploy')} -extra #{_(:generated, :gwt, 'extra')} -war #{_(:generated, :gwt, 'war')}",
-                              :launch_page => "http://127.0.0.1:8889/#{path}/index.html")
+                              :shell_parameters => "-strict -style PRETTY -XmethodNameDisplayMode FULL -nostartServer -incremental -codeServerPort 8889 -bindAddress 0.0.0.0 -deploy #{_(:generated, :gwt, path, 'deploy')} -extra #{_(:generated, :gwt, path, 'extra')} -war #{_(:generated, :gwt, path, 'war')}",
+                              :launch_page => "http://127.0.0.1:8889/example/index.html")
   end
 
   ipr.add_default_testng_configuration(:jvm_args => '-ea -Dbraincheck.environment=development -Dzemeckis.environment=development -Dzemeckis.output_fixture_data=false -Dzemeckis.fixture_dir=support/processor/src/test/resources -Dzemeckis.core.compile_target=target/zemeckis_core/idea/classes -Dzemeckis.diagnostic_messages_file=core/src/test/java/zemeckis/diagnostic_messages.json')
