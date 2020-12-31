@@ -10,6 +10,9 @@ complete as there is too much un-said.
 
 * Use a WebWorker to schedule repeating tasks
 
+* Add the ability to schedule a task in the "next" macro task (perhaps by scheduling a microTask that
+  schedules a macro task?).
+
 ### Scheduler
 
 * https://github.com/spanicker/main-thread-scheduling
