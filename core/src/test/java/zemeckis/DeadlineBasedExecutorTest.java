@@ -20,11 +20,11 @@ public final class DeadlineBasedExecutorTest
     executor.queue( task2 );
     executor.queue( task3 );
 
-    assertEquals( executor.getScheduleForActivationCount(), 0 );
+    assertEquals( executor.getScheduleForActivationCount(), 1 );
 
     executor.activate();
 
-    assertEquals( executor.getScheduleForActivationCount(), 1 );
+    assertEquals( executor.getScheduleForActivationCount(), 2 );
     assertEquals( executor.getTaskQueue().size(), 3 );
     assertEquals( task1.getRunCount(), 0 );
     assertEquals( task2.getRunCount(), 0 );
@@ -32,7 +32,7 @@ public final class DeadlineBasedExecutorTest
 
     executor.executeTasks( () -> 0 );
 
-    assertEquals( executor.getScheduleForActivationCount(), 2 );
+    assertEquals( executor.getScheduleForActivationCount(), 3 );
     assertEquals( executor.getTaskQueue().size(), 3 );
     assertEquals( task1.getRunCount(), 0 );
     assertEquals( task2.getRunCount(), 0 );
@@ -43,7 +43,7 @@ public final class DeadlineBasedExecutorTest
     timeRemaining.add( 1 );
     executor.executeTasks( () -> timeRemaining.isEmpty() ? 0 : timeRemaining.remove( 0 ) );
 
-    assertEquals( executor.getScheduleForActivationCount(), 3 );
+    assertEquals( executor.getScheduleForActivationCount(), 4 );
     assertEquals( executor.getTaskQueue().size(), 1 );
     assertEquals( task1.getRunCount(), 1 );
     assertEquals( task2.getRunCount(), 1 );
@@ -51,7 +51,7 @@ public final class DeadlineBasedExecutorTest
 
     executor.executeTasks( () -> 1 );
 
-    assertEquals( executor.getScheduleForActivationCount(), 3 );
+    assertEquals( executor.getScheduleForActivationCount(), 4 );
     assertEquals( executor.getTaskQueue().size(), 0 );
     assertEquals( task1.getRunCount(), 1 );
     assertEquals( task2.getRunCount(), 1 );

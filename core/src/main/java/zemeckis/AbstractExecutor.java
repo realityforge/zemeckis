@@ -35,10 +35,15 @@ abstract class AbstractExecutor
   }
 
   @Override
-  public void queue( @Nonnull final Runnable task )
+  public final synchronized void queue( @Nonnull final Runnable task )
   {
+    final boolean needsActivation = 0 == getQueueSize();
     ensureNotQueued( task );
     _taskQueue.add( Objects.requireNonNull( task ) );
+    if ( needsActivation )
+    {
+      scheduleForActivation();
+    }
   }
 
   @Override

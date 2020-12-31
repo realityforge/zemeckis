@@ -2,7 +2,6 @@ package zemeckis;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
 import org.jetbrains.annotations.TestOnly;
 import org.jetbrains.annotations.VisibleForTesting;
 import org.realityforge.braincheck.BrainCheckConfig;
@@ -138,17 +137,6 @@ abstract class RoundBasedExecutor
     {
       fail( () -> "Zemeckis-0010: Runaway task(s) detected. Tasks still running after " + _maxRounds +
                   " rounds. Current tasks include: " + taskNames );
-    }
-  }
-
-  @Override
-  public final synchronized void queue( @Nonnull final Runnable task )
-  {
-    final boolean needsActivation = 0 == getQueueSize();
-    super.queue( task );
-    if ( needsActivation )
-    {
-      scheduleForActivation();
     }
   }
 
