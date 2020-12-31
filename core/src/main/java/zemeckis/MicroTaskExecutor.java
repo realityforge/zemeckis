@@ -11,7 +11,7 @@ final class MicroTaskExecutor
   @Override
   void scheduleForActivation()
   {
-    new Promise<>( null ).then( v -> {
+    Promise.resolve( (Object) null ).then( v -> {
       activate();
       return null;
     } );
