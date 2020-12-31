@@ -16,7 +16,7 @@ complete as there is too much un-said.
   flag which can fallback to local scheduling.
 
 * Support scheduling tasks with delay = 0 by using `MessageChannel.send` as it has less jitter. This
-  feature should be controlled by a compile time flag which can fallback to local scheduling. 
+  feature should be controlled by a compile time flag which can fallback to local scheduling.
 
 ### Scheduler
 
