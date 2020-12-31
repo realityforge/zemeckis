@@ -206,8 +206,8 @@ final class VirtualProcessorUnitsHolder
       if ( Zemeckis.shouldCheckInvariants() )
       {
         invariant( () -> null == c_current,
-                   () -> "Zemeckis-0004: Attempting set current VirtualProcessorUnit to " + processorUnit +
-                         " but there is an existing  VirtualProcessorUnit activated (" + c_current + ")" );
+                   () -> "Zemeckis-0004: Attempting to activate VirtualProcessorUnit named '" + processorUnit +
+                         "' but an existing VirtualProcessorUnit named '" + c_current + "' is activated" );
       }
       c_current = processorUnit;
     }
@@ -224,8 +224,8 @@ final class VirtualProcessorUnitsHolder
       if ( Zemeckis.shouldCheckInvariants() )
       {
         invariant( () -> processorUnit == c_current,
-                   () -> "Zemeckis-0005: Attempting to clear current VirtualProcessorUnit from " + processorUnit +
-                         " but the current VirtualProcessorUnit (" + processorUnit + ") activated does not match." );
+                   () -> "Zemeckis-0005: Attempting to deactivate VirtualProcessorUnit named '" + processorUnit +
+                         "' but no VirtualProcessorUnit is activated" );
       }
       c_current = null;
     }
