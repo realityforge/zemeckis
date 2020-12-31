@@ -95,11 +95,11 @@ final class VirtualProcessorUnitsHolder
   synchronized static void reset()
   {
     CurrentVPU.c_current = null;
-    MacroTaskVPU.VPU.getExecutor().reset();
-    MicroTaskVPU.VPU.getExecutor().reset();
-    AnimationFrameVPU.VPU.getExecutor().reset();
-    AfterFrameVPU.VPU.getExecutor().reset();
-    OnIdleVPU.VPU.getExecutor().reset();
+    macroTaskVpu().getExecutor().reset();
+    microTaskVpu().getExecutor().reset();
+    animationFrameVpu().getExecutor().reset();
+    afterFrameVpu().getExecutor().reset();
+    onIdleVpu().getExecutor().reset();
   }
 
   private static final class MacroTaskVPU
