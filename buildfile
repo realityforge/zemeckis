@@ -7,6 +7,7 @@ require 'buildr/jacoco'
 
 GWT_EXAMPLES =
   {
+    'BasicExample' => 'basic'
   }
 
 ZEMECKIS_TEST_OPTIONS =

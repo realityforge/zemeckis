@@ -1,0 +1,9 @@
+<module rename-to='basic'>
+  <inherits name='com.google.gwt.core.Core'/>
+  <inherits name='zemeckis.ZemeckisDev'/>
+
+  <source path=''/>
+  <public path='public'/>
+
+  <entry-point class='zemeckis.examples.dom.basic.BasicExample'/>
+</module>
