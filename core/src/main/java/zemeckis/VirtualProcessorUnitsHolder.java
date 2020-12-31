@@ -4,6 +4,7 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.jetbrains.annotations.TestOnly;
+import org.jetbrains.annotations.VisibleForTesting;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
@@ -164,7 +165,8 @@ final class VirtualProcessorUnitsHolder
   /**
    * A utility class that contains reference to singleton VPU that is currently active.
    */
-  private static final class CurrentVPU
+  @VisibleForTesting
+  static final class CurrentVPU
   {
     @Nullable
     private static VirtualProcessorUnit c_current = null;
@@ -200,7 +202,8 @@ final class VirtualProcessorUnitsHolder
      *
      * @param processorUnit the VirtualProcessorUnit.
      */
-    private static void activate( @Nonnull final VirtualProcessorUnit processorUnit )
+    @VisibleForTesting
+    static void activate( @Nonnull final VirtualProcessorUnit processorUnit )
     {
       Objects.requireNonNull( processorUnit );
       if ( Zemeckis.shouldCheckInvariants() )
@@ -218,7 +221,8 @@ final class VirtualProcessorUnitsHolder
      *
      * @param processorUnit the VirtualProcessorUnit.
      */
-    private static void deactivate( @Nonnull final VirtualProcessorUnit processorUnit )
+    @VisibleForTesting
+    static void deactivate( @Nonnull final VirtualProcessorUnit processorUnit )
     {
       Objects.requireNonNull( processorUnit );
       if ( Zemeckis.shouldCheckInvariants() )
