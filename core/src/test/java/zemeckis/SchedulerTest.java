@@ -33,7 +33,7 @@ public final class SchedulerTest
     final int start = Scheduler.now();
     Scheduler.schedule( () -> {
       final int now = Scheduler.now() - start;
-      if ( now <= 20 )
+      if ( now <= 19 )
       {
         errors.add( "Scheduled task 1 executed before expected" );
       }
@@ -42,7 +42,7 @@ public final class SchedulerTest
 
     Scheduler.schedule( () -> {
       final int now = Scheduler.now() - start;
-      if ( now <= 40 )
+      if ( now <= 39 )
       {
         errors.add( "Scheduled task 2 executed before expected" );
       }
