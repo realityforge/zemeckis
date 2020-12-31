@@ -11,7 +11,7 @@ complete as there is too much un-said.
 * Use a WebWorker to schedule repeating tasks
 
 * Add the ability to schedule a task in the "next" macro task (perhaps by scheduling a microTask that
-  schedules a macro task?).
+  schedules a macro task?). Or possibly just by `Scheduler.schedule(task, 0)`.
 
 ### Scheduler
 
