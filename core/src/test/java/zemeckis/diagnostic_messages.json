@@ -15,6 +15,16 @@
     "messagePattern": "VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false"
   },
   {
+    "code": 4,
+    "type": "INVARIANT",
+    "messagePattern": "Attempting to activate VirtualProcessorUnit named '%s' but an existing VirtualProcessorUnit named '%s' is activated"
+  },
+  {
+    "code": 5,
+    "type": "INVARIANT",
+    "messagePattern": "Attempting to deactivate VirtualProcessorUnit named '%s' but no VirtualProcessorUnit is activated"
+  },
+  {
     "code": 6,
     "type": "API_INVARIANT",
     "messagePattern": "Attempting to add handler %s that is already in the list of error handlers."
