@@ -35,6 +35,16 @@
     "messagePattern": "Attempting to remove handler %s that is not in the list of error handlers."
   },
   {
+    "code": 8,
+    "type": "API_INVARIANT",
+    "messagePattern": "Scheduler.schedule(...) passed a negative delay. Actual value passed is %s"
+  },
+  {
+    "code": 9,
+    "type": "API_INVARIANT",
+    "messagePattern": "Scheduler.scheduleAtFixedRate(...) passed a negative period. Actual value passed is %s"
+  },
+  {
     "code": 10,
     "type": "FAIL",
     "messagePattern": "Runaway task(s) detected. Tasks still running after %s rounds. Current tasks include: [%s]"
