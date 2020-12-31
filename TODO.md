@@ -6,12 +6,17 @@ complete as there is too much un-said.
 
 ### High Priority Tasks
 
-* Experiment with using MessageChannel.send for MacroTask and compare jitter/delay between the two
+* Support scheduling of tasks with delay and repeating tasks inside a WebWorker where the WebWorker
+  is responsible for scheduling the tasks. This produces a more stable scheduling at the expense of
+  slightly more complexity. Both sides would need to keep a record of which timers are active and when
+  a timer is canceled in the main app it should be cancelled in the WebWorker. When the main app is
+  unloaded, it is also responsible for unloading all registered timers or shutting down the WebWorker.
+  See the [article](https://medium.com/teads-engineering/the-most-accurate-way-to-schedule-a-function-in-a-web-browser-eadcd164da12)
+  for measurements carried out by another party. This feature should be controlled by a compile time
+  flag which can fallback to local scheduling.
 
-* Use a WebWorker to schedule repeating tasks
-
-* Add the ability to schedule a task in the "next" macro task (perhaps by scheduling a microTask that
-  schedules a macro task?). Or possibly just by `Scheduler.schedule(task, 0)`.
+* Support scheduling tasks with delay = 0 by using `MessageChannel.send` as it has less jitter. This
+  feature should be controlled by a compile time flag which can fallback to local scheduling. 
 
 ### Scheduler
 
