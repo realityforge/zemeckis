@@ -24,12 +24,12 @@ abstract class DeadlineBasedExecutor
   /**
    * Returns true if the executor should yield and return control to invoker.
    *
-   * @param function the function that specifies deadline, if any.
+   * @param function the function that specifies deadline, if any. If null the deadline is considered to have passed.
    * @return true to yield to caller, false to continue executing tasks.
    */
   private boolean shouldYield( @Nullable final DeadlineFunction function )
   {
-    return null != function && function.getTimeRemaining() <= MIN_TASK_TIME;
+    return null == function || function.getTimeRemaining() <= MIN_TASK_TIME;
   }
 
   @Override
@@ -40,6 +40,8 @@ abstract class DeadlineBasedExecutor
 
   /**
    * Run tasks until deadline exceeded or all tasks completed.
+   *
+   * @param function the function that specifies deadline, if any. If null the deadline is considered to have passed.
    */
   void executeTasks( @Nullable final DeadlineFunction function )
   {
