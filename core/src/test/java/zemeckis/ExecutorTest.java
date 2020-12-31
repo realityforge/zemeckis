@@ -122,6 +122,8 @@ public final class ExecutorTest
   @Test
   public void executeNextTask_tasksThrowsException()
   {
+    allowUncaughtExceptions();
+
     final TestExecutor executor = new TestExecutor();
     final CircularBuffer<Runnable> taskQueue = executor.getTaskQueue();
     final AtomicInteger runCount = new AtomicInteger();

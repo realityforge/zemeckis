@@ -16,6 +16,7 @@ public class UncaughtErrorHandlerTest
   @Test
   public void basicOperation()
   {
+    allowUncaughtExceptions();
     final Throwable throwable = new IllegalStateException();
 
     final AtomicInteger callCount = new AtomicInteger();
@@ -68,6 +69,7 @@ public class UncaughtErrorHandlerTest
   @Test
   public void multipleHandlers()
   {
+    allowUncaughtExceptions();
     final Throwable throwable = new IllegalStateException();
 
     final AtomicInteger callCount1 = new AtomicInteger();
@@ -94,6 +96,7 @@ public class UncaughtErrorHandlerTest
   @Test
   public void onUncaughtError_whereOneHandlerGeneratesError()
   {
+    allowUncaughtExceptions();
     final Throwable throwable = new IllegalStateException();
 
     final AtomicInteger callCount1 = new AtomicInteger();
@@ -131,6 +134,7 @@ public class UncaughtErrorHandlerTest
   @Test
   public void onUncaughtError_whereOneHandlerGeneratesError_but_Zemeckis_areNamesEnabled_is_false()
   {
+    allowUncaughtExceptions();
     ZemeckisTestUtil.disableNames();
 
     final Throwable throwable = new IllegalStateException();
@@ -158,6 +162,7 @@ public class UncaughtErrorHandlerTest
   @Test
   public void addUncaughtErrorHandler_errorHandlersDisabled()
   {
+    allowUncaughtExceptions();
     ZemeckisTestUtil.disableUncaughtErrorHandlers();
 
     final UncaughtErrorHandler handler = e -> {

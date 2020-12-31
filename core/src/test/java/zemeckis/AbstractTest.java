@@ -1,5 +1,7 @@
 package zemeckis;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import org.realityforge.braincheck.BrainCheckTestUtil;
@@ -17,6 +19,9 @@ public abstract class AbstractTest
   private static final Random c_random = new Random();
   @Nonnull
   private final TestLogger _logger = new TestLogger();
+  @Nonnull
+  private final List<Throwable> _uncaughtExceptions = new ArrayList<>();
+  private boolean _allowUncaughtExceptions;
 
   @BeforeMethod
   protected void beforeTest()
@@ -24,14 +29,26 @@ public abstract class AbstractTest
     BrainCheckTestUtil.resetConfig( false );
     ZemeckisTestUtil.resetConfig( false );
     _logger.getEntries().clear();
+    _uncaughtExceptions.clear();
+    Zemeckis.addUncaughtErrorHandler( _uncaughtExceptions::add );
     ZemeckisTestUtil.setLogger( _logger );
   }
 
   @AfterMethod
   protected void afterTest()
   {
+    if ( !_allowUncaughtExceptions && !_uncaughtExceptions.isEmpty() )
+    {
+      _uncaughtExceptions.forEach( Throwable::printStackTrace );
+      fail( "Uncaught exceptions executing tasks" );
+    }
     BrainCheckTestUtil.resetConfig( true );
     ZemeckisTestUtil.resetConfig( true );
+  }
+
+  protected final void allowUncaughtExceptions()
+  {
+    _allowUncaughtExceptions = true;
   }
 
   @Nonnull
