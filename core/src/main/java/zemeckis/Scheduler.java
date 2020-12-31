@@ -83,7 +83,7 @@ public final class Scheduler
   @Nullable
   public static VirtualProcessorUnit currentVpu()
   {
-    return VirtualProcessorUnitsHolder.current();
+    return VirtualProcessorUnitsHolder.currentVpu();
   }
 
   /**
@@ -107,7 +107,7 @@ public final class Scheduler
   @Nonnull
   public static VirtualProcessorUnit macroTaskVpu()
   {
-    return VirtualProcessorUnitsHolder.macroTask();
+    return VirtualProcessorUnitsHolder.macroTaskVpu();
   }
 
   /**
@@ -144,7 +144,7 @@ public final class Scheduler
   @Nonnull
   public static VirtualProcessorUnit microTaskVpu()
   {
-    return VirtualProcessorUnitsHolder.microTask();
+    return VirtualProcessorUnitsHolder.microTaskVpu();
   }
 
   /**
@@ -168,7 +168,7 @@ public final class Scheduler
   @Nonnull
   public static VirtualProcessorUnit animationFrameVpu()
   {
-    return VirtualProcessorUnitsHolder.animationFrame();
+    return VirtualProcessorUnitsHolder.animationFrameVpu();
   }
 
   /**
@@ -192,7 +192,7 @@ public final class Scheduler
   @Nonnull
   public static VirtualProcessorUnit afterFrameVpu()
   {
-    return VirtualProcessorUnitsHolder.afterFrame();
+    return VirtualProcessorUnitsHolder.afterFrameVpu();
   }
 
   /**
@@ -220,6 +220,6 @@ public final class Scheduler
   @Nonnull
   public static VirtualProcessorUnit onIdleVpu()
   {
-    return VirtualProcessorUnitsHolder.onIdle();
+    return VirtualProcessorUnitsHolder.onIdleVpu();
   }
 }

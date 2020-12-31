@@ -23,37 +23,37 @@ final class VirtualProcessorUnitsHolder
    * @return the VirtualProcessorUnit.
    */
   @Nullable
-  static VirtualProcessorUnit current()
+  static VirtualProcessorUnit currentVpu()
   {
     return CurrentVPU.current();
   }
 
   @Nonnull
-  static VirtualProcessorUnit macroTask()
+  static VirtualProcessorUnit macroTaskVpu()
   {
     return MacroTaskVPU.VPU;
   }
 
   @Nonnull
-  static VirtualProcessorUnit microTask()
+  static VirtualProcessorUnit microTaskVpu()
   {
     return MicroTaskVPU.VPU;
   }
 
   @Nonnull
-  static VirtualProcessorUnit animationFrame()
+  static VirtualProcessorUnit animationFrameVpu()
   {
     return AnimationFrameVPU.VPU;
   }
 
   @Nonnull
-  static VirtualProcessorUnit afterFrame()
+  static VirtualProcessorUnit afterFrameVpu()
   {
     return AfterFrameVPU.VPU;
   }
 
   @Nonnull
-  static VirtualProcessorUnit onIdle()
+  static VirtualProcessorUnit onIdleVpu()
   {
     return OnIdleVPU.VPU;
   }
