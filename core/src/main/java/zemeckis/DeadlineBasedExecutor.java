@@ -9,6 +9,9 @@ import jsinterop.annotations.JsFunction;
 abstract class DeadlineBasedExecutor
   extends AbstractExecutor
 {
+  /**
+   * The minimum time required to run a task.
+   */
   private static final int MIN_TASK_TIME = 1;
 
   @FunctionalInterface
