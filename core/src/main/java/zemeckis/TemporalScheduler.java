@@ -84,6 +84,7 @@ final class TemporalScheduler
     void shutdown()
     {
       _executorService.shutdown();
+      super.shutdown();
     }
 
     @GwtIncompatible
