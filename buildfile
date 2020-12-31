@@ -82,14 +82,15 @@ define 'zemeckis' do
     test.options[:java_args] = ['-ea']
     test.using :testng
 
+    skip_test = ENV['PRODUCT_VERSION'].nil? || ENV['PREVIOUS_PRODUCT_VERSION'].nil? || '0.00' == ENV['PREVIOUS_PRODUCT_VERSION']
     test.compile.enhance do
       mkdir_p _('src/test/resources/fixtures')
       artifact("org.realityforge.zemeckis:zemeckis-core:jar:#{ENV['PREVIOUS_PRODUCT_VERSION']}").invoke
       project('core').package(:jar).invoke
       artifact(:revapi_diff).invoke
-    end unless ENV['TEST'] == 'no' || ENV['PRODUCT_VERSION'].nil? || ENV['PREVIOUS_PRODUCT_VERSION'].nil?
+    end unless skip_test
 
-    test.exclude '*ApiDiffTest' if ENV['PRODUCT_VERSION'].nil? || ENV['PREVIOUS_PRODUCT_VERSION'].nil?
+    test.exclude '*ApiDiffTest' if skip_test
 
     project.jacoco.enabled = false
   end
