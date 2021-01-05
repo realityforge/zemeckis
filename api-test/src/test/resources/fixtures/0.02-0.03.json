@@ -1,0 +1,66 @@
+[
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Scheduler::delayedTask(java.lang.Runnable, int)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Scheduler",
+      "classSimpleName": "Scheduler",
+      "elementKind": "method",
+      "methodName": "delayedTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Scheduler::periodicTask(java.lang.Runnable, int)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Scheduler",
+      "classSimpleName": "Scheduler",
+      "elementKind": "method",
+      "methodName": "periodicTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.removed",
+    "description": "Method was removed.",
+    "oldElement": "method zemeckis.Cancelable zemeckis.Scheduler::schedule(java.lang.Runnable, int)",
+    "classification": {
+      "SOURCE": "BREAKING",
+      "BINARY": "BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Scheduler",
+      "classSimpleName": "Scheduler",
+      "elementKind": "method",
+      "methodName": "schedule",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.removed",
+    "description": "Method was removed.",
+    "oldElement": "method zemeckis.Cancelable zemeckis.Scheduler::scheduleAtFixedRate(java.lang.Runnable, int)",
+    "classification": {
+      "SOURCE": "BREAKING",
+      "BINARY": "BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Scheduler",
+      "classSimpleName": "Scheduler",
+      "elementKind": "method",
+      "methodName": "scheduleAtFixedRate",
+      "package": "zemeckis"
+    }
+  }
+]
