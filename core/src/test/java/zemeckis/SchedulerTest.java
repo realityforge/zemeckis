@@ -89,6 +89,8 @@ public final class SchedulerTest
     final CountDownLatch latch = new CountDownLatch( count );
     final Cancelable schedule =
       Scheduler.periodicTask( () -> {
+        assertTrue( Scheduler.isVpuActivated() );
+        assertEquals( Scheduler.currentVpu(), Scheduler.macroTaskVpu() );
         latch.countDown();
         if ( current.incrementAndGet() >= count )
         {

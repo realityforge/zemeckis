@@ -6,9 +6,6 @@ complete as there is too much un-said.
 
 ### High Priority Tasks
 
-* Rework `Scheduler.periodicTask(...)` to call `becomeMacroTask(...)` to wrap supplied task. Update
-  spritz to take advantage of this.
-
 * Replace the term `macroTask` in API with `task` and maybe rather than scheduling on a subsequent macro task
   it just schedules to the current task?
 

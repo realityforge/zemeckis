@@ -63,7 +63,7 @@ public final class Scheduler
   @Nonnull
   public static Cancelable periodicTask( @Nonnull final Runnable task, final int period )
   {
-    return TemporalScheduler.periodicTask( task, period );
+    return TemporalScheduler.periodicTask( () -> becomeMacroTask( task ), period );
   }
 
   /**
