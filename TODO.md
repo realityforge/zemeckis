@@ -12,7 +12,8 @@ complete as there is too much un-said.
 * Rename `Scheduler.scheduleAtFixedRate` to `Scheduler.periodicMacroTask(...)` and call `becomeMacroTask(...)`
   to wrap supplied task. Update spritz to take advantage of this.
 
-* Replace the term `macroTask` in API with `task`
+* Replace the term `macroTask` in API with `task` and maybe rather than scheduling on a subsequent macro task
+  it just schedules to the current task?
 
 * Remove `becomeMacroTask` from the public API.
 
