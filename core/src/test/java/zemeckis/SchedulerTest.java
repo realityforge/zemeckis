@@ -61,6 +61,24 @@ public final class SchedulerTest
   }
 
   @Test
+  public void delayedTask_canceled()
+    throws Exception
+  {
+    final List<String> errors = new ArrayList<>();
+    final int count = 1;
+    final CountDownLatch latch = new CountDownLatch( count );
+    final Cancelable token =
+      Scheduler.delayedTask( () -> errors.add( "Unexpected task execution" ), 20 );
+    token.cancel();
+    latch.await( 100, TimeUnit.MILLISECONDS );
+    assertEquals( latch.getCount(), count );
+    if ( !errors.isEmpty() )
+    {
+      fail( "Errors detected in other threads:\n" + String.join( "\n", errors ) );
+    }
+  }
+
+  @Test
   public void scheduleAtFixedRate()
     throws Exception
   {
