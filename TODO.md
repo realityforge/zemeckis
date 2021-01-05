@@ -6,6 +6,16 @@ complete as there is too much un-said.
 
 ### High Priority Tasks
 
+* Rename `Scheduler.schedule` to `Scheduler.delayedMacroTask(...)` and call `becomeMacroTask(...)`
+  to wrap supplied task. Update spritz to take advantage of this.
+
+* Rename `Scheduler.scheduleAtFixedRate` to `Scheduler.periodicMacroTask(...)` and call `becomeMacroTask(...)`
+  to wrap supplied task. Update spritz to take advantage of this.
+
+* Determine the feasibility of having the macro/micro/animationFrame/afterFrame/onIdle methods returning a
+  `Cancelable` that will allow the cancelling of a scheduled task. This probably means changing the task queue
+  to contain a wrapper object ala `Task`. This would also allow us to name tasks...
+
 * Add grim annotations.
 
 * Support scheduling of tasks with delay and repeating tasks inside a WebWorker where the WebWorker
