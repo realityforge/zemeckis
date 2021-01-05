@@ -78,7 +78,12 @@ final class TemporalScheduler
       thread.setDaemon( true );
       thread.setUncaughtExceptionHandler( ( t, e ) -> Zemeckis.reportUncaughtError( e ) );
       return thread;
-    } );
+    } )
+    {
+      {
+        setMaximumPoolSize( 1 );
+      }
+    };
 
     @GwtIncompatible
     void shutdown()
