@@ -61,9 +61,9 @@ public final class Scheduler
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
   @Nonnull
-  public static Cancelable scheduleAtFixedRate( @Nonnull final Runnable task, final int period )
+  public static Cancelable periodicTask( @Nonnull final Runnable task, final int period )
   {
-    return TemporalScheduler.scheduleAtFixedRate( task, period );
+    return TemporalScheduler.periodicTask( task, period );
   }
 
   /**

@@ -78,7 +78,7 @@ public final class TemporalSchedulerTest
     final AtomicReference<Cancelable> task = new AtomicReference<>();
     final CountDownLatch latch = new CountDownLatch( count );
     final Cancelable schedule =
-      TemporalScheduler.scheduleAtFixedRate( () -> {
+      TemporalScheduler.periodicTask( () -> {
         latch.countDown();
         if ( current.incrementAndGet() >= count )
         {
@@ -88,9 +88,9 @@ public final class TemporalSchedulerTest
     task.set( schedule );
 
     assertInvariantFailure( () -> TemporalScheduler
-                              .scheduleAtFixedRate( () -> errors.add( "Scheduled task that has a bad delay." ),
-                                                    -1 ),
-                            "Zemeckis-0009: Scheduler.scheduleAtFixedRate(...) passed a non-positive period. Actual value passed is -1" );
+                              .periodicTask( () -> errors.add( "Scheduled task that has a bad delay." ),
+                                             -1 ),
+                            "Zemeckis-0009: Scheduler.periodicTask(...) passed a non-positive period. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );

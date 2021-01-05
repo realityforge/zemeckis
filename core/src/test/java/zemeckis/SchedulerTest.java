@@ -79,7 +79,7 @@ public final class SchedulerTest
   }
 
   @Test
-  public void scheduleAtFixedRate()
+  public void periodicTask()
     throws Exception
   {
     final List<String> errors = new ArrayList<>();
@@ -88,7 +88,7 @@ public final class SchedulerTest
     final AtomicReference<Cancelable> task = new AtomicReference<>();
     final CountDownLatch latch = new CountDownLatch( count );
     final Cancelable schedule =
-      Scheduler.scheduleAtFixedRate( () -> {
+      Scheduler.periodicTask( () -> {
         latch.countDown();
         if ( current.incrementAndGet() >= count )
         {
@@ -98,9 +98,9 @@ public final class SchedulerTest
     task.set( schedule );
 
     assertInvariantFailure( () -> Scheduler
-                              .scheduleAtFixedRate( () -> errors.add( "Scheduled task that has a bad delay." ),
-                                                    -1 ),
-                            "Zemeckis-0009: Scheduler.scheduleAtFixedRate(...) passed a non-positive period. Actual value passed is -1" );
+                              .periodicTask( () -> errors.add( "Scheduled task that has a bad delay." ),
+                                             -1 ),
+                            "Zemeckis-0009: Scheduler.periodicTask(...) passed a non-positive period. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );

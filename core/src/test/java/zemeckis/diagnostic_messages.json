@@ -42,7 +42,7 @@
   {
     "code": 9,
     "type": "API_INVARIANT",
-    "messagePattern": "Scheduler.scheduleAtFixedRate(...) passed a non-positive period. Actual value passed is %s"
+    "messagePattern": "Scheduler.periodicTask(...) passed a non-positive period. Actual value passed is %s"
   },
   {
     "code": 10,

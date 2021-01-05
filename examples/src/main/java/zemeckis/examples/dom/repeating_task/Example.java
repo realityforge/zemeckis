@@ -28,7 +28,7 @@ public final class Example
     {
       _id = id;
       _period = period;
-      Scheduler.scheduleAtFixedRate( this::tick, _period );
+      Scheduler.periodicTask( this::tick, _period );
     }
 
     void tick()

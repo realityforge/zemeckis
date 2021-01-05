@@ -57,9 +57,9 @@ final class TemporalScheduler
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
   @Nonnull
-  static Cancelable scheduleAtFixedRate( @Nonnull final Runnable task, final int period )
+  static Cancelable periodicTask( @Nonnull final Runnable task, final int period )
   {
-    return c_scheduler.scheduleAtFixedRate( task, period );
+    return c_scheduler.periodicTask( task, period );
   }
 
   @TestOnly
@@ -104,7 +104,7 @@ final class TemporalScheduler
     @Nonnull
     @Override
     @GwtIncompatible
-    Cancelable doScheduleAtFixedRate( @Nonnull final Runnable task, final int period )
+    Cancelable doPeriodicTask( @Nonnull final Runnable task, final int period )
     {
       final ScheduledFuture<?> future = _executorService.scheduleAtFixedRate( task, 0, period, TimeUnit.MILLISECONDS );
       return () -> future.cancel( true );
@@ -148,19 +148,19 @@ final class TemporalScheduler
     }
 
     @Nonnull
-    final Cancelable scheduleAtFixedRate( @Nonnull final Runnable task, final int period )
+    final Cancelable periodicTask( @Nonnull final Runnable task, final int period )
     {
       if ( Zemeckis.shouldCheckApiInvariants() )
       {
         apiInvariant( () -> period > 0,
-                      () -> "Zemeckis-0009: Scheduler.scheduleAtFixedRate(...) passed a non-positive period. " +
+                      () -> "Zemeckis-0009: Scheduler.periodicTask(...) passed a non-positive period. " +
                             "Actual value passed is " + period );
       }
-      return doScheduleAtFixedRate( task, period );
+      return doPeriodicTask( task, period );
     }
 
     @Nonnull
-    Cancelable doScheduleAtFixedRate( @Nonnull final Runnable task, final int period )
+    Cancelable doPeriodicTask( @Nonnull final Runnable task, final int period )
     {
       final double timeoutId = DomGlobal.setInterval( v -> task.run(), period );
       return () -> DomGlobal.clearInterval( timeoutId );
