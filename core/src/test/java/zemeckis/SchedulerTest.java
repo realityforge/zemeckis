@@ -99,9 +99,8 @@ public final class SchedulerTest
       }, 20 );
     task.set( schedule );
 
-    assertInvariantFailure( () -> Scheduler
-                              .periodicTask( () -> errors.add( "Scheduled task that has a bad delay." ),
-                                             -1 ),
+    assertInvariantFailure( () -> Scheduler.periodicTask( () -> errors.add( "Scheduled task that has a bad delay." ),
+                                                          -1 ),
                             "Zemeckis-0009: Scheduler.periodicTask(...) passed a non-positive period. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
