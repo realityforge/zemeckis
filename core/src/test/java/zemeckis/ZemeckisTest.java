@@ -9,18 +9,18 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public final class SchedulerTest
+public final class ZemeckisTest
   extends AbstractTest
 {
   @Test
   public void accessors()
   {
-    assertEquals( Scheduler.macroTaskVpu(), VirtualProcessorUnitsHolder.macroTaskVpu() );
-    assertEquals( Scheduler.microTaskVpu(), VirtualProcessorUnitsHolder.microTaskVpu() );
-    assertEquals( Scheduler.animationFrameVpu(), VirtualProcessorUnitsHolder.animationFrameVpu() );
-    assertEquals( Scheduler.animationFrameVpu(), VirtualProcessorUnitsHolder.animationFrameVpu() );
-    assertEquals( Scheduler.onIdleVpu(), VirtualProcessorUnitsHolder.onIdleVpu() );
-    assertEquals( Scheduler.now(), Scheduler.now() );
+    assertEquals( Zemeckis.macroTaskVpu(), VirtualProcessorUnitsHolder.macroTaskVpu() );
+    assertEquals( Zemeckis.microTaskVpu(), VirtualProcessorUnitsHolder.microTaskVpu() );
+    assertEquals( Zemeckis.animationFrameVpu(), VirtualProcessorUnitsHolder.animationFrameVpu() );
+    assertEquals( Zemeckis.animationFrameVpu(), VirtualProcessorUnitsHolder.animationFrameVpu() );
+    assertEquals( Zemeckis.onIdleVpu(), VirtualProcessorUnitsHolder.onIdleVpu() );
+    assertEquals( Zemeckis.now(), Zemeckis.now() );
   }
 
   @Test
@@ -30,30 +30,30 @@ public final class SchedulerTest
     final List<String> errors = new ArrayList<>();
     final int count = 2;
     final CountDownLatch latch = new CountDownLatch( count );
-    final int start = Scheduler.now();
-    Scheduler.delayedTask( () -> {
-      final int now = Scheduler.now() - start;
+    final int start = Zemeckis.now();
+    Zemeckis.delayedTask( () -> {
+      final int now = Zemeckis.now() - start;
       if ( now <= 19 )
       {
         errors.add( "Scheduled task 1 executed before expected" );
       }
-      assertTrue( Scheduler.isVpuActivated() );
-      assertEquals( Scheduler.currentVpu(), Scheduler.macroTaskVpu() );
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
       latch.countDown();
     }, 20 );
 
-    Scheduler.delayedTask( () -> {
-      final int now = Scheduler.now() - start;
+    Zemeckis.delayedTask( () -> {
+      final int now = Zemeckis.now() - start;
       if ( now <= 39 )
       {
         errors.add( "Scheduled task 2 executed before expected" );
       }
-      assertTrue( Scheduler.isVpuActivated() );
-      assertEquals( Scheduler.currentVpu(), Scheduler.macroTaskVpu() );
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
       latch.countDown();
     }, 40 );
-    assertInvariantFailure( () -> Scheduler.delayedTask( () -> errors.add( "Scheduled task 4 that has a bad delay." ),
-                                                         -1 ),
+    assertInvariantFailure( () -> Zemeckis.delayedTask( () -> errors.add( "Scheduled task 4 that has a bad delay." ),
+                                                        -1 ),
                             "Zemeckis-0008: Scheduler.delayedTask(...) passed a negative delay. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
@@ -72,7 +72,7 @@ public final class SchedulerTest
     final int count = 1;
     final CountDownLatch latch = new CountDownLatch( count );
     final Cancelable token =
-      Scheduler.delayedTask( () -> errors.add( "Unexpected task execution" ), 20 );
+      Zemeckis.delayedTask( () -> errors.add( "Unexpected task execution" ), 20 );
     token.cancel();
     latch.await( 100, TimeUnit.MILLISECONDS );
     assertEquals( latch.getCount(), count );
@@ -92,9 +92,9 @@ public final class SchedulerTest
     final AtomicReference<Cancelable> task = new AtomicReference<>();
     final CountDownLatch latch = new CountDownLatch( count );
     final Cancelable schedule =
-      Scheduler.periodicTask( () -> {
-        assertTrue( Scheduler.isVpuActivated() );
-        assertEquals( Scheduler.currentVpu(), Scheduler.macroTaskVpu() );
+      Zemeckis.periodicTask( () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
         latch.countDown();
         if ( current.incrementAndGet() >= count )
         {
@@ -103,8 +103,8 @@ public final class SchedulerTest
       }, 20 );
     task.set( schedule );
 
-    assertInvariantFailure( () -> Scheduler.periodicTask( () -> errors.add( "Scheduled task that has a bad delay." ),
-                                                          -1 ),
+    assertInvariantFailure( () -> Zemeckis.periodicTask( () -> errors.add( "Scheduled task that has a bad delay." ),
+                                                         -1 ),
                             "Zemeckis-0009: Scheduler.periodicTask(...) passed a non-positive period. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
@@ -119,39 +119,39 @@ public final class SchedulerTest
   public void vpu()
     throws Exception
   {
-    assertFalse( Scheduler.isVpuActivated() );
-    assertNull( Scheduler.currentVpu() );
+    assertFalse( Zemeckis.isVpuActivated() );
+    assertNull( Zemeckis.currentVpu() );
 
     final int count = 5;
     final CountDownLatch latch = new CountDownLatch( count );
-    Scheduler.macroTask( () -> {
-      assertTrue( Scheduler.isVpuActivated() );
-      assertEquals( Scheduler.currentVpu(), Scheduler.macroTaskVpu() );
+    Zemeckis.macroTask( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
       latch.countDown();
     } );
-    Scheduler.microTask( () -> {
-      assertTrue( Scheduler.isVpuActivated() );
-      assertEquals( Scheduler.currentVpu(), Scheduler.microTaskVpu() );
+    Zemeckis.microTask( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.microTaskVpu() );
       latch.countDown();
     } );
-    Scheduler.animationFrame( () -> {
-      assertTrue( Scheduler.isVpuActivated() );
-      assertEquals( Scheduler.currentVpu(), Scheduler.animationFrameVpu() );
+    Zemeckis.animationFrame( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.animationFrameVpu() );
       latch.countDown();
     } );
-    Scheduler.afterFrame( () -> {
-      assertTrue( Scheduler.isVpuActivated() );
-      assertEquals( Scheduler.currentVpu(), Scheduler.afterFrameVpu() );
+    Zemeckis.afterFrame( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.afterFrameVpu() );
       latch.countDown();
     } );
-    Scheduler.onIdle( () -> {
-      assertTrue( Scheduler.isVpuActivated() );
-      assertEquals( Scheduler.currentVpu(), Scheduler.onIdleVpu() );
+    Zemeckis.onIdle( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.onIdleVpu() );
       latch.countDown();
     } );
 
-    assertFalse( Scheduler.isVpuActivated() );
-    assertNull( Scheduler.currentVpu() );
+    assertFalse( Zemeckis.isVpuActivated() );
+    assertNull( Zemeckis.currentVpu() );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );
@@ -161,22 +161,22 @@ public final class SchedulerTest
   public void becomeMacroTask()
   {
     final List<String> trace = new ArrayList<>();
-    assertFalse( Scheduler.isVpuActivated() );
-    assertNull( Scheduler.currentVpu() );
+    assertFalse( Zemeckis.isVpuActivated() );
+    assertNull( Zemeckis.currentVpu() );
 
-    ( (AbstractExecutor) Scheduler.macroTaskVpu().getExecutor() ).getTaskQueue().add( () -> trace.add( "A" ) );
+    ( (AbstractExecutor) Zemeckis.macroTaskVpu().getExecutor() ).getTaskQueue().add( () -> trace.add( "A" ) );
 
-    Scheduler.becomeMacroTask( () -> {
-      assertTrue( Scheduler.isVpuActivated() );
-      assertEquals( Scheduler.currentVpu(), Scheduler.macroTaskVpu() );
+    Zemeckis.becomeMacroTask( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
       trace.add( "*" );
-      Scheduler.macroTask( () -> trace.add( "B" ) );
-      assertInvariantFailure( () -> Scheduler.becomeMacroTask( () -> trace.add( "C" ) ),
+      Zemeckis.macroTask( () -> trace.add( "B" ) );
+      assertInvariantFailure( () -> Zemeckis.becomeMacroTask( () -> trace.add( "C" ) ),
                               "Zemeckis-0012: Scheduler.becomeMacroTask(...) invoked but the VirtualProcessorUnit named 'macro' is already active" );
     } );
 
-    assertFalse( Scheduler.isVpuActivated() );
-    assertNull( Scheduler.currentVpu() );
+    assertFalse( Zemeckis.isVpuActivated() );
+    assertNull( Zemeckis.currentVpu() );
 
     assertEquals( String.join( "", trace ), "*AB" );
   }

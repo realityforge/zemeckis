@@ -3,7 +3,7 @@ package zemeckis.examples.dom.repeating_task;
 import com.google.gwt.core.client.EntryPoint;
 import elemental2.dom.DomGlobal;
 import javax.annotation.Nonnull;
-import zemeckis.Scheduler;
+import zemeckis.Zemeckis;
 
 public final class Example
   implements EntryPoint
@@ -28,12 +28,12 @@ public final class Example
     {
       _id = id;
       _period = period;
-      Scheduler.periodicTask( this::tick, _period );
+      Zemeckis.periodicTask( this::tick, _period );
     }
 
     void tick()
     {
-      final int now = Scheduler.now();
+      final int now = Zemeckis.now();
       final int delta = -1 == _lastTime ? 0 : now - _lastTime;
       _lastTime = now;
       DomGlobal.console.log( "%c task " + _id + " Period=" + _period + " Delta=" + delta,

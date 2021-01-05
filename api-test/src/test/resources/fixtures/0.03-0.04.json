@@ -1,0 +1,257 @@
+[
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method boolean zemeckis.Zemeckis::isVpuActivated()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "isVpuActivated",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method int zemeckis.Zemeckis::now()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "now",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method void zemeckis.Zemeckis::afterFrame(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "afterFrame",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method void zemeckis.Zemeckis::animationFrame(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "animationFrame",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method void zemeckis.Zemeckis::macroTask(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "macroTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method void zemeckis.Zemeckis::microTask(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "microTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method void zemeckis.Zemeckis::onIdle(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "onIdle",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::delayedTask(java.lang.Runnable, int)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "delayedTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::periodicTask(java.lang.Runnable, int)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "periodicTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.VirtualProcessorUnit zemeckis.Zemeckis::afterFrameVpu()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "afterFrameVpu",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.VirtualProcessorUnit zemeckis.Zemeckis::animationFrameVpu()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "animationFrameVpu",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.VirtualProcessorUnit zemeckis.Zemeckis::currentVpu()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "currentVpu",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.VirtualProcessorUnit zemeckis.Zemeckis::macroTaskVpu()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "macroTaskVpu",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.VirtualProcessorUnit zemeckis.Zemeckis::microTaskVpu()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "microTaskVpu",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.VirtualProcessorUnit zemeckis.Zemeckis::onIdleVpu()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "onIdleVpu",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.class.removed",
+    "description": "Class was removed.",
+    "oldElement": "class zemeckis.Scheduler",
+    "classification": {
+      "SOURCE": "BREAKING",
+      "BINARY": "BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Scheduler",
+      "classSimpleName": "Scheduler",
+      "elementKind": "class",
+      "package": "zemeckis"
+    }
+  }
+]

@@ -25,6 +25,6 @@ final class AfterFrameExecutor
   @Override
   void scheduleForActivation()
   {
-    Scheduler.animationFrame( () -> _channel.port2.postMessage( null ) );
+    Zemeckis.animationFrame( () -> _channel.port2.postMessage( null ) );
   }
 }

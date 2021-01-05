@@ -5,7 +5,7 @@ import elemental2.dom.DomGlobal;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
-import zemeckis.Scheduler;
+import zemeckis.Zemeckis;
 
 public final class Example
   implements EntryPoint
@@ -26,26 +26,26 @@ public final class Example
   public void onModuleLoad()
   {
     // AfterFrame schedules a macro task after the next render
-    Scheduler.afterFrame( () -> log( "afterFrame", 1 ) );
+    Zemeckis.afterFrame( () -> log( "afterFrame", 1 ) );
     // Schedule a task immediately preceding next render
-    Scheduler.animationFrame( () -> log( "animationFrame", 1 ) );
+    Zemeckis.animationFrame( () -> log( "animationFrame", 1 ) );
 
     // Schedule a macro task
-    Scheduler.macroTask( () -> {
+    Zemeckis.macroTask( () -> {
       log( "macro", 1 );
 
       // Schedule a micro task after the current macro task
-      Scheduler.microTask( () -> log( "micro", 1 ) );
+      Zemeckis.microTask( () -> log( "micro", 1 ) );
       // Schedule a micro task after the current macro task. This will run in
       // the same micro task invocation as the previous task
-      Scheduler.microTask( () -> log( "micro", 2 ) );
+      Zemeckis.microTask( () -> log( "micro", 2 ) );
 
       // Schedule a macro task - this will run in the current macro task
-      Scheduler.macroTask( () -> log( "macro", 2 ) );
+      Zemeckis.macroTask( () -> log( "macro", 2 ) );
     } );
 
     // Schedule a task to execute when the browser is idle
-    Scheduler.onIdle( () -> log( "onIdle", 1 ) );
+    Zemeckis.onIdle( () -> log( "onIdle", 1 ) );
   }
 
   private static void log( @Nonnull final String type, final int id )
