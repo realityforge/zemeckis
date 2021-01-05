@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -106,7 +106,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <hr>
 <br>
-<pre>public final class <a href="../src-html/zemeckis/Scheduler.html#line.27">Scheduler</a>
+<pre>public final class <a href="../src-html/zemeckis/Scheduler.html#line.28">Scheduler</a>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">The scheduler is responsible for scheduling and executing tasks asynchronously.
  The scheduler provides an "abstract asynchronous boundary" to stream operators.
@@ -168,15 +168,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../zemeckis/Scheduler.html#becomeMacroTask-java.lang.Runnable-">becomeMacroTask</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
-<div class="block">Run specified task now by queuing on MacroTask VPU and activating VPU.</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../zemeckis/Scheduler.html#currentVpu--">currentVpu</a></span>()</code>
 <div class="block">Return the current VPU.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static <a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../zemeckis/Scheduler.html#delayedTask-java.lang.Runnable-int-">delayedTask</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+           int&nbsp;delay)</code>
+<div class="block">Schedules the execution of the given task after a specified delay.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
@@ -229,15 +230,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>static <a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../zemeckis/Scheduler.html#schedule-java.lang.Runnable-int-">schedule</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-        int&nbsp;delay)</code>
-<div class="block">Schedules the execution of the given task after a specified delay.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>static <a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../zemeckis/Scheduler.html#scheduleAtFixedRate-java.lang.Runnable-int-">scheduleAtFixedRate</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-                   int&nbsp;period)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../zemeckis/Scheduler.html#periodicTask-java.lang.Runnable-int-">periodicTask</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+            int&nbsp;period)</code>
 <div class="block">Schedules the periodic execution of the given task with specified period.</div>
 </td>
 </tr>
@@ -269,7 +263,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>now</h4>
-<pre>public static&nbsp;int&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.38">now</a>()</pre>
+<pre>public static&nbsp;int&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.39">now</a>()</pre>
 <div class="block">Return a value representing the "current time" of the scheduler.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -277,14 +271,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="schedule-java.lang.Runnable-int-">
+<a name="delayedTask-java.lang.Runnable-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>schedule</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.51">schedule</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-                                           int&nbsp;delay)</pre>
+<h4>delayedTask</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.52">delayedTask</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+                                              int&nbsp;delay)</pre>
 <div class="block">Schedules the execution of the given task after a specified delay.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -295,14 +289,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="scheduleAtFixedRate-java.lang.Runnable-int-">
+<a name="periodicTask-java.lang.Runnable-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>scheduleAtFixedRate</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.64">scheduleAtFixedRate</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
-                                                      int&nbsp;period)</pre>
+<h4>periodicTask</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.65">periodicTask</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task,
+                                               int&nbsp;period)</pre>
 <div class="block">Schedules the periodic execution of the given task with specified period.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -319,7 +313,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>isVpuActivated</h4>
-<pre>public static&nbsp;boolean&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.74">isVpuActivated</a>()</pre>
+<pre>public static&nbsp;boolean&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.75">isVpuActivated</a>()</pre>
 <div class="block">Return true if there is a current VPU activated.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -333,7 +327,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>currentVpu</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.85">currentVpu</a>()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.86">currentVpu</a>()</pre>
 <div class="block">Return the current VPU.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -347,7 +341,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>macroTask</h4>
-<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.97">macroTask</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.98">macroTask</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
 <div class="block">Queue the task to execute in the next "macro" task.
  This is the default VPU in the browser and indicates tasks that are scheduled via a
  call to <code>setTimeout(callback,0)</code>.</div>
@@ -363,7 +357,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>macroTaskVpu</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.109">macroTaskVpu</a>()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.110">macroTaskVpu</a>()</pre>
 <div class="block">Return the "macro" task VPU.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -373,30 +367,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="becomeMacroTask-java.lang.Runnable-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>becomeMacroTask</h4>
-<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.122">becomeMacroTask</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
-<div class="block">Run specified task now by queuing on MacroTask VPU and activating VPU.
- This is invoked when the browser has triggered a macro task as a result of a callback of some kind.
- The specified task is added to the start of the macroTask queue but any tasks present on the queue
- will be invoked after the specified task.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>task</code> - the task.</dd>
-</dl>
-</li>
-</ul>
 <a name="microTask-java.lang.Runnable-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>microTask</h4>
-<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.142">microTask</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.144">microTask</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
 <div class="block">Queue the task to execute in the next "micro" task.
  The "micro" tasks are those that the browser executes after the current "macro" or "micro" task.
  This VPU schedules an activation via a call to <code>Promise.resolve().then( v -&gt; callback() )</code>.</div>
@@ -412,7 +389,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>microTaskVpu</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.154">microTaskVpu</a>()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.156">microTaskVpu</a>()</pre>
 <div class="block">Return the "micro" task VPU.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -428,7 +405,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>animationFrame</h4>
-<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.166">animationFrame</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.168">animationFrame</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
 <div class="block">Queue the task to execute in the next "animationFrame".
  The "animationFrame" occurs prior to the next render frame.
  This VPU schedules an activation via a call to <code>requestAnimationFrame( callback )</code>.</div>
@@ -444,7 +421,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>animationFrameVpu</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.178">animationFrameVpu</a>()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.180">animationFrameVpu</a>()</pre>
 <div class="block">Return the "animationFrame" VPU.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -460,7 +437,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>afterFrame</h4>
-<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.190">afterFrame</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.192">afterFrame</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
 <div class="block">Queue the task to execute after the next browser render.
  The "afterFrame" tasks are invoked after the next frames render by responding to a message on a
  MessageChannel that is sent in <code>requestAnimationFrame()</code>.</div>
@@ -476,7 +453,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>afterFrameVpu</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.202">afterFrameVpu</a>()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.204">afterFrameVpu</a>()</pre>
 <div class="block">Return the "afterFrame" VPU.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -492,7 +469,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>onIdle</h4>
-<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.218">onIdle</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<pre>public static&nbsp;void&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.220">onIdle</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
 <div class="block">Queue the task to execute when the browser is idle.
  The browser activates the onIdle VirtualProcessorUnit when idle and will pass the
  duration for which the VPU may run. The VPU will execute tasks as long as there is tasks
@@ -512,7 +489,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>onIdleVpu</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.230">onIdleVpu</a>()</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public static&nbsp;<a href="../zemeckis/VirtualProcessorUnit.html" title="class in zemeckis">VirtualProcessorUnit</a>&nbsp;<a href="../src-html/zemeckis/Scheduler.html#line.232">onIdleVpu</a>()</pre>
 <div class="block">Return the "onIdle" VPU.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
