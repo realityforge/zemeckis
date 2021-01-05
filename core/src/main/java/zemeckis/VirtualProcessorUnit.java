@@ -65,10 +65,12 @@ public final class VirtualProcessorUnit
    * The task must not be already queued.
    *
    * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  public void queue( @Nonnull final Runnable task )
+  @Nonnull
+  public Cancelable queue( @Nonnull final Runnable task )
   {
-    getExecutor().queue( task );
+    return getExecutor().queue( task );
   }
 
   @Nonnull
@@ -119,8 +121,10 @@ public final class VirtualProcessorUnit
      * The task must not be already queued.
      *
      * @param task the task.
+     * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
      */
-    void queue( @Nonnull Runnable task );
+    @Nonnull
+    Cancelable queue( @Nonnull Runnable task );
 
     /**
      * Queue task for execution next. The executor is not activated. The task must not be already queued.

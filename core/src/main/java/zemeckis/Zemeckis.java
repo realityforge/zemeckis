@@ -181,10 +181,12 @@ public final class Zemeckis
    * call to <code>setTimeout(callback,0)</code>.
    *
    * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  public static void macroTask( @Nonnull final Runnable task )
+  @Nonnull
+  public static Cancelable macroTask( @Nonnull final Runnable task )
   {
-    macroTaskVpu().queue( task );
+    return macroTaskVpu().queue( task );
   }
 
   /**
@@ -227,10 +229,12 @@ public final class Zemeckis
    * This VPU schedules an activation via a call to {@code Promise.resolve().then( v -> callback() )}.
    *
    * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  public static void microTask( @Nonnull final Runnable task )
+  @Nonnull
+  public static Cancelable microTask( @Nonnull final Runnable task )
   {
-    microTaskVpu().queue( task );
+    return microTaskVpu().queue( task );
   }
 
   /**
@@ -251,10 +255,12 @@ public final class Zemeckis
    * This VPU schedules an activation via a call to <code>requestAnimationFrame( callback )</code>.
    *
    * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  public static void animationFrame( @Nonnull final Runnable task )
+  @Nonnull
+  public static Cancelable animationFrame( @Nonnull final Runnable task )
   {
-    animationFrameVpu().queue( task );
+    return animationFrameVpu().queue( task );
   }
 
   /**
@@ -275,10 +281,12 @@ public final class Zemeckis
    * MessageChannel that is sent in {@code requestAnimationFrame()}.
    *
    * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  public static void afterFrame( @Nonnull final Runnable task )
+  @Nonnull
+  public static Cancelable afterFrame( @Nonnull final Runnable task )
   {
-    afterFrameVpu().queue( task );
+    return afterFrameVpu().queue( task );
   }
 
   /**
@@ -303,10 +311,12 @@ public final class Zemeckis
    * This VPU schedules an activation via a call to <code>requestIdleCallback( callback )</code>.
    *
    * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  public static void onIdle( @Nonnull final Runnable task )
+  @Nonnull
+  public static Cancelable onIdle( @Nonnull final Runnable task )
   {
-    onIdleVpu().queue( task );
+    return onIdleVpu().queue( task );
   }
 
   /**

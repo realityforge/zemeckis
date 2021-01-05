@@ -9,9 +9,7 @@ complete as there is too much un-said.
 * Replace the term `macroTask` in API with `task` and maybe rather than scheduling on a subsequent macro task
   it just schedules to the current task?
 
-* Determine the feasibility of having the macro/micro/animationFrame/afterFrame/onIdle methods returning a
-  `Cancelable` that will allow the cancelling of a scheduled task. This probably means changing the task queue
-  to contain a wrapper object ala `Task`. This would also allow us to name tasks...
+* Add the ability to name the tasks for the purposes of debugging.
 
 * Add grim annotations.
 

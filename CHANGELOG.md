@@ -3,6 +3,7 @@
 ### Unreleased
 
 * Move all methods from the `Schedule` class to the `Zemeckis` class.
+* Rework the `Zemeckis.macroTask(...)`, `Zemeckis.microTask(...)`, `Zemeckis.animationFrame(...)`, `Zemeckis.afterFrame(...)` and `Zemeckis.onIdle(...)` methods so that they return a `Cancelable` that can be used to abort the scheduled task before it executes.
 
 ### [v0.03](https://github.com/realityforge/zemeckis/tree/v0.03) (2021-01-05) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.02...v0.03)
 

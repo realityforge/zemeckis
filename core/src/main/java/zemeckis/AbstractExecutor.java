@@ -20,7 +20,7 @@ abstract class AbstractExecutor
    * A queue containing tasks that have been scheduled but are not yet executing.
    */
   @Nonnull
-  private final CircularBuffer<Runnable> _taskQueue;
+  private final CircularBuffer<TaskEntry> _taskQueue;
   @Nullable
   private VirtualProcessorUnit.Context _context;
 
@@ -35,46 +35,49 @@ abstract class AbstractExecutor
   }
 
   @Override
-  public final synchronized void queue( @Nonnull final Runnable task )
+  @Nonnull
+  public final synchronized Cancelable queue( @Nonnull final Runnable task )
   {
     final boolean needsActivation = 0 == getQueueSize();
     ensureNotQueued( task );
-    _taskQueue.add( Objects.requireNonNull( task ) );
+    final TaskEntry entry = new TaskEntry( task );
+    _taskQueue.add( entry );
     if ( needsActivation )
     {
       scheduleForActivation();
     }
+    return entry;
   }
 
   @Override
   public final void queueNext( @Nonnull final Runnable task )
   {
     ensureNotQueued( task );
-    _taskQueue.addFirst( Objects.requireNonNull( task ) );
+    _taskQueue.addFirst( new TaskEntry( task ) );
   }
 
   private void ensureNotQueued( @Nonnull final Runnable task )
   {
     if ( Zemeckis.shouldCheckInvariants() )
     {
-      invariant( () -> !_taskQueue.contains( task ),
+      invariant( () -> _taskQueue.stream().noneMatch( taskEntry -> taskEntry.getTask() == task ),
                  () -> "Zemeckis-0001: Attempting to queue task " + task + " when task is already queued." );
     }
   }
 
   @Nonnull
-  final CircularBuffer<Runnable> getTaskQueue()
+  final CircularBuffer<TaskEntry> getTaskQueue()
   {
     return _taskQueue;
   }
 
   final void executeNextTask()
   {
-    final Runnable task = _taskQueue.pop();
+    final TaskEntry task = _taskQueue.pop();
     assert null != task;
     try
     {
-      task.run();
+      task.execute();
     }
     catch ( final Throwable t )
     {

@@ -32,9 +32,48 @@
     }
   },
   {
+    "code": "java.annotation.added",
+    "description": "Element newly annotated with 'javax.annotation.Nonnull'.",
+    "newElement": "method zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
+    "oldElement": "method void zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "EQUIVALENT",
+      "BINARY": "EQUIVALENT",
+      "SEMANTIC": "POTENTIALLY_BREAKING"
+    },
+    "attachments": {
+      "annotation": "@javax.annotation.Nonnull",
+      "annotationType": "javax.annotation.Nonnull",
+      "classQualifiedName": "zemeckis.VirtualProcessorUnit",
+      "classSimpleName": "VirtualProcessorUnit",
+      "elementKind": "method",
+      "methodName": "queue",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.returnTypeChanged",
+    "description": "The return type changed from 'void' to  'zemeckis.Cancelable'.",
+    "newElement": "method zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
+    "oldElement": "method void zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "POTENTIALLY_BREAKING",
+      "BINARY": "BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.VirtualProcessorUnit",
+      "classSimpleName": "VirtualProcessorUnit",
+      "elementKind": "method",
+      "methodName": "queue",
+      "newType": "zemeckis.Cancelable",
+      "oldType": "void",
+      "package": "zemeckis"
+    }
+  },
+  {
     "code": "java.method.added",
     "description": "Method was added.",
-    "newElement": "method void zemeckis.Zemeckis::afterFrame(java.lang.Runnable)",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::afterFrame(java.lang.Runnable)",
     "classification": {
       "SOURCE": "NON_BREAKING",
       "BINARY": "NON_BREAKING"
@@ -50,7 +89,7 @@
   {
     "code": "java.method.added",
     "description": "Method was added.",
-    "newElement": "method void zemeckis.Zemeckis::animationFrame(java.lang.Runnable)",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::animationFrame(java.lang.Runnable)",
     "classification": {
       "SOURCE": "NON_BREAKING",
       "BINARY": "NON_BREAKING"
@@ -60,54 +99,6 @@
       "classSimpleName": "Zemeckis",
       "elementKind": "method",
       "methodName": "animationFrame",
-      "package": "zemeckis"
-    }
-  },
-  {
-    "code": "java.method.added",
-    "description": "Method was added.",
-    "newElement": "method void zemeckis.Zemeckis::macroTask(java.lang.Runnable)",
-    "classification": {
-      "SOURCE": "NON_BREAKING",
-      "BINARY": "NON_BREAKING"
-    },
-    "attachments": {
-      "classQualifiedName": "zemeckis.Zemeckis",
-      "classSimpleName": "Zemeckis",
-      "elementKind": "method",
-      "methodName": "macroTask",
-      "package": "zemeckis"
-    }
-  },
-  {
-    "code": "java.method.added",
-    "description": "Method was added.",
-    "newElement": "method void zemeckis.Zemeckis::microTask(java.lang.Runnable)",
-    "classification": {
-      "SOURCE": "NON_BREAKING",
-      "BINARY": "NON_BREAKING"
-    },
-    "attachments": {
-      "classQualifiedName": "zemeckis.Zemeckis",
-      "classSimpleName": "Zemeckis",
-      "elementKind": "method",
-      "methodName": "microTask",
-      "package": "zemeckis"
-    }
-  },
-  {
-    "code": "java.method.added",
-    "description": "Method was added.",
-    "newElement": "method void zemeckis.Zemeckis::onIdle(java.lang.Runnable)",
-    "classification": {
-      "SOURCE": "NON_BREAKING",
-      "BINARY": "NON_BREAKING"
-    },
-    "attachments": {
-      "classQualifiedName": "zemeckis.Zemeckis",
-      "classSimpleName": "Zemeckis",
-      "elementKind": "method",
-      "methodName": "onIdle",
       "package": "zemeckis"
     }
   },
@@ -124,6 +115,54 @@
       "classSimpleName": "Zemeckis",
       "elementKind": "method",
       "methodName": "delayedTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::macroTask(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "macroTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::microTask(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "microTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::onIdle(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "onIdle",
       "package": "zemeckis"
     }
   },

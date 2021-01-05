@@ -158,13 +158,77 @@ public final class ZemeckisTest
   }
 
   @Test
+  public void canceledTaskNoRun()
+    throws Exception
+  {
+    assertFalse( Zemeckis.isVpuActivated() );
+    assertNull( Zemeckis.currentVpu() );
+
+    final int count = 5;
+    final CountDownLatch latch = new CountDownLatch( count );
+    Zemeckis.macroTask( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
+      sleep();
+      latch.countDown();
+    } ).cancel();
+    Zemeckis.microTask( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.microTaskVpu() );
+      sleep();
+      latch.countDown();
+    } ).cancel();
+    Zemeckis.animationFrame( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.animationFrameVpu() );
+      sleep();
+      latch.countDown();
+    } ).cancel();
+    Zemeckis.afterFrame( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.afterFrameVpu() );
+      sleep();
+      latch.countDown();
+    } ).cancel();
+    Zemeckis.onIdle( () -> {
+      assertTrue( Zemeckis.isVpuActivated() );
+      assertEquals( Zemeckis.currentVpu(), Zemeckis.onIdleVpu() );
+      sleep();
+      latch.countDown();
+    } ).cancel();
+
+    assertFalse( Zemeckis.isVpuActivated() );
+    assertNull( Zemeckis.currentVpu() );
+
+    latch.await( 100, TimeUnit.MILLISECONDS );
+    // The latch should be 4 or 5. 4 if the scheduled task runs before the
+    // cancel can be invoked. But the scheduler only has one thread so it
+    // will then sleep for 10ms which will ensure all the other tasks can
+    // be cancelled
+    assertTrue( latch.getCount() >= 4 );
+  }
+
+  private void sleep()
+  {
+    try
+    {
+      Thread.sleep( 10 );
+    }
+    catch ( final InterruptedException ignored )
+    {
+    }
+  }
+
+  @Test
   public void becomeMacroTask()
   {
     final List<String> trace = new ArrayList<>();
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );
 
-    ( (AbstractExecutor) Zemeckis.macroTaskVpu().getExecutor() ).getTaskQueue().add( () -> trace.add( "A" ) );
+    ( (AbstractExecutor) Zemeckis.macroTaskVpu().getExecutor() )
+      .getTaskQueue()
+      .add( new TaskEntry( () -> trace.add( "A" ) ) );
 
     Zemeckis.becomeMacroTask( () -> {
       assertTrue( Zemeckis.isVpuActivated() );

@@ -11,7 +11,7 @@ public final class VirtualProcessorUnitTest
   {
     final String name = randomString();
     final TestExecutor executor = new TestExecutor();
-    final CircularBuffer<Runnable> taskQueue = executor.getTaskQueue();
+    final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
     final VirtualProcessorUnit vpu = new VirtualProcessorUnit( name, executor );
     assertEquals( vpu.getName(), name );
     assertEquals( vpu.getExecutor(), executor );
@@ -23,7 +23,9 @@ public final class VirtualProcessorUnitTest
     vpu.queue( task );
     assertEquals( taskQueue.size(), 1 );
     assertEquals( executor.getScheduleCount(), 1 );
-    assertEquals( taskQueue.peek(), task );
+    final TaskEntry entry = taskQueue.peek();
+    assertNotNull( entry );
+    assertEquals( entry.getTask(), task );
   }
 
   @Test

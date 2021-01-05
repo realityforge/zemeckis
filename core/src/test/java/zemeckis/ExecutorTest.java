@@ -1,6 +1,7 @@
 package zemeckis;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -32,7 +33,7 @@ public final class ExecutorTest
   public void queue()
   {
     final TestExecutor executor = new TestExecutor();
-    final CircularBuffer<Runnable> taskQueue = executor.getTaskQueue();
+    final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
 
     final Runnable task1 = new NoopTask();
     final Runnable task2 = new NoopTask();
@@ -41,32 +42,33 @@ public final class ExecutorTest
     assertEquals( executor.getQueueSize(), 0 );
     executor.queue( task1 );
     assertEquals( executor.getQueueSize(), 1 );
-    assertEquals( taskQueue.get( 0 ), task1 );
+    assertTaskAt( taskQueue, 0, task1 );
 
     executor.queue( task2 );
     assertEquals( executor.getQueueSize(), 2 );
-    assertEquals( taskQueue.get( 0 ), task1 );
-    assertEquals( taskQueue.get( 1 ), task2 );
+    assertTaskAt( taskQueue, 0, task1 );
+    assertTaskAt( taskQueue, 1, task2 );
 
     executor.queueNext( task3 );
     assertEquals( executor.getQueueSize(), 3 );
-    assertEquals( taskQueue.get( 0 ), task3 );
-    assertEquals( taskQueue.get( 1 ), task1 );
-    assertEquals( taskQueue.get( 2 ), task2 );
+
+    assertTaskAt( taskQueue, 0, task3 );
+    assertTaskAt( taskQueue, 1, task1 );
+    assertTaskAt( taskQueue, 2, task2 );
   }
 
   @Test
   public void queue_whenAlreadyPresent()
   {
     final TestExecutor executor = new TestExecutor();
-    final CircularBuffer<Runnable> taskQueue = executor.getTaskQueue();
+    final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
 
     final Runnable task = new NoopTask();
 
     assertEquals( executor.getQueueSize(), 0 );
     executor.queue( task );
     assertEquals( executor.getQueueSize(), 1 );
-    assertEquals( taskQueue.get( 0 ), task );
+    assertTaskAt( taskQueue, 0, task );
 
     assertInvariantFailure( () -> executor.queue( task ),
                             "Zemeckis-0001: Attempting to queue task " + task +
@@ -80,43 +82,64 @@ public final class ExecutorTest
   public void executeNextTask()
   {
     final TestExecutor executor = new TestExecutor();
-    final CircularBuffer<Runnable> taskQueue = executor.getTaskQueue();
+    final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
     final NoopTask task1 = new NoopTask();
     final NoopTask task2 = new NoopTask();
     final NoopTask task3 = new NoopTask();
+    final NoopTask task4 = new NoopTask();
 
     assertEquals( executor.getQueueSize(), 0 );
     executor.queue( task1 );
     executor.queue( task2 );
     executor.queue( task3 );
-    assertEquals( executor.getQueueSize(), 3 );
-    assertEquals( taskQueue.get( 0 ), task1 );
-    assertEquals( taskQueue.get( 1 ), task2 );
-    assertEquals( taskQueue.get( 2 ), task3 );
+    final Cancelable cancelable4 = executor.queue( task4 );
+    assertEquals( executor.getQueueSize(), 4 );
+    assertTaskAt( taskQueue, 0, task1 );
+    assertTaskAt( taskQueue, 1, task2 );
+    assertTaskAt( taskQueue, 2, task3 );
+    assertTaskAt( taskQueue, 3, task4 );
     assertEquals( task1.getRunCount(), 0 );
     assertEquals( task2.getRunCount(), 0 );
     assertEquals( task3.getRunCount(), 0 );
+    assertEquals( task4.getRunCount(), 0 );
 
     executor.executeNextTask();
-    assertEquals( executor.getQueueSize(), 2 );
-    assertEquals( taskQueue.get( 0 ), task2 );
-    assertEquals( taskQueue.get( 1 ), task3 );
+    assertEquals( executor.getQueueSize(), 3 );
+    assertTaskAt( taskQueue, 0, task2 );
+    assertTaskAt( taskQueue, 1, task3 );
+    assertTaskAt( taskQueue, 2, task4 );
     assertEquals( task1.getRunCount(), 1 );
     assertEquals( task2.getRunCount(), 0 );
     assertEquals( task3.getRunCount(), 0 );
+    assertEquals( task4.getRunCount(), 0 );
 
     executor.executeNextTask();
-    assertEquals( executor.getQueueSize(), 1 );
-    assertEquals( taskQueue.get( 0 ), task3 );
+    assertEquals( executor.getQueueSize(), 2 );
+    assertTaskAt( taskQueue, 0, task3 );
+    assertTaskAt( taskQueue, 1, task4 );
     assertEquals( task1.getRunCount(), 1 );
     assertEquals( task2.getRunCount(), 1 );
     assertEquals( task3.getRunCount(), 0 );
+    assertEquals( task4.getRunCount(), 0 );
+
+    executor.executeNextTask();
+    assertEquals( executor.getQueueSize(), 1 );
+    assertTaskAt( taskQueue, 0, task4 );
+    assertEquals( task1.getRunCount(), 1 );
+    assertEquals( task2.getRunCount(), 1 );
+    assertEquals( task3.getRunCount(), 1 );
+    assertEquals( task4.getRunCount(), 0 );
+
+    // Cancel task4 so that the runnable is not actually run
+    cancelable4.cancel();
+    cancelable4.cancel();
 
     executor.executeNextTask();
     assertEquals( executor.getQueueSize(), 0 );
     assertEquals( task1.getRunCount(), 1 );
     assertEquals( task2.getRunCount(), 1 );
     assertEquals( task3.getRunCount(), 1 );
+    assertEquals( task4.getRunCount(), 0 );
   }
 
   @Test
@@ -125,7 +148,7 @@ public final class ExecutorTest
     allowUncaughtExceptions();
 
     final TestExecutor executor = new TestExecutor();
-    final CircularBuffer<Runnable> taskQueue = executor.getTaskQueue();
+    final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
     final AtomicInteger runCount = new AtomicInteger();
     final AtomicInteger errorCount = new AtomicInteger();
     final String errorMessage = randomString();
@@ -137,7 +160,7 @@ public final class ExecutorTest
     assertEquals( executor.getQueueSize(), 0 );
     executor.queue( task1 );
     assertEquals( executor.getQueueSize(), 1 );
-    assertEquals( taskQueue.get( 0 ), task1 );
+    assertTaskAt( taskQueue, 0, task1 );
 
     Zemeckis.addUncaughtErrorHandler( e -> {
       errorCount.incrementAndGet();
@@ -153,5 +176,12 @@ public final class ExecutorTest
 
     assertEquals( runCount.get(), 1 );
     assertEquals( errorCount.get(), 1 );
+  }
+
+  private void assertTaskAt( @Nonnull final CircularBuffer<TaskEntry> taskQueue, final int index, @Nonnull final Runnable task )
+  {
+    final TaskEntry entry = taskQueue.get( index );
+    assertNotNull( entry );
+    assertEquals( entry.getTask(), task );
   }
 }
