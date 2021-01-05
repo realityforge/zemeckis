@@ -37,6 +37,8 @@ public final class SchedulerTest
       {
         errors.add( "Scheduled task 1 executed before expected" );
       }
+      assertTrue( Scheduler.isVpuActivated() );
+      assertEquals( Scheduler.currentVpu(), Scheduler.macroTaskVpu() );
       latch.countDown();
     }, 20 );
 
@@ -46,6 +48,8 @@ public final class SchedulerTest
       {
         errors.add( "Scheduled task 2 executed before expected" );
       }
+      assertTrue( Scheduler.isVpuActivated() );
+      assertEquals( Scheduler.currentVpu(), Scheduler.macroTaskVpu() );
       latch.countDown();
     }, 40 );
     assertInvariantFailure( () -> Scheduler.delayedTask( () -> errors.add( "Scheduled task 4 that has a bad delay." ),
