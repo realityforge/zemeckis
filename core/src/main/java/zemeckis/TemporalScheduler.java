@@ -44,9 +44,9 @@ final class TemporalScheduler
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
   @Nonnull
-  static Cancelable schedule( @Nonnull final Runnable task, final int delay )
+  static Cancelable delayedTask( @Nonnull final Runnable task, final int delay )
   {
-    return c_scheduler.schedule( task, delay );
+    return c_scheduler.delayedTask( task, delay );
   }
 
   /**
@@ -90,7 +90,7 @@ final class TemporalScheduler
     @GwtIncompatible
     @Nonnull
     @Override
-    Cancelable doSchedule( @Nonnull final Runnable task, final int delay )
+    Cancelable doDelayedTask( @Nonnull final Runnable task, final int delay )
     {
       final ScheduledFuture<?> future = _executorService.schedule( task, delay, TimeUnit.MILLISECONDS );
       return () -> future.cancel( true );
@@ -124,19 +124,19 @@ final class TemporalScheduler
       return (int) ( System.currentTimeMillis() - getSchedulerStart() );
     }
 
-    final Cancelable schedule( @Nonnull final Runnable task, final int delay )
+    final Cancelable delayedTask( @Nonnull final Runnable task, final int delay )
     {
       if ( Zemeckis.shouldCheckApiInvariants() )
       {
         apiInvariant( () -> delay >= 0,
-                      () -> "Zemeckis-0008: Scheduler.schedule(...) passed a negative delay. " +
+                      () -> "Zemeckis-0008: Scheduler.delayedTask(...) passed a negative delay. " +
                             "Actual value passed is " + delay );
       }
-      return doSchedule( task, delay );
+      return doDelayedTask( task, delay );
     }
 
     @Nonnull
-    Cancelable doSchedule( @Nonnull final Runnable task, final int delay )
+    Cancelable doDelayedTask( @Nonnull final Runnable task, final int delay )
     {
       final double timeoutId = DomGlobal.setTimeout( v -> task.run(), delay );
       return () -> DomGlobal.clearTimeout( timeoutId );

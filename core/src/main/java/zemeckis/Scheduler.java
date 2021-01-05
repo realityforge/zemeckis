@@ -48,9 +48,9 @@ public final class Scheduler
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
   @Nonnull
-  public static Cancelable schedule( @Nonnull final Runnable task, final int delay )
+  public static Cancelable delayedTask( @Nonnull final Runnable task, final int delay )
   {
-    return TemporalScheduler.schedule( task, delay );
+    return TemporalScheduler.delayedTask( task, delay );
   }
 
   /**

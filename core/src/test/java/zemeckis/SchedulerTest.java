@@ -24,14 +24,14 @@ public final class SchedulerTest
   }
 
   @Test
-  public void schedule()
+  public void delayedTask()
     throws Exception
   {
     final List<String> errors = new ArrayList<>();
     final int count = 2;
     final CountDownLatch latch = new CountDownLatch( count );
     final int start = Scheduler.now();
-    Scheduler.schedule( () -> {
+    Scheduler.delayedTask( () -> {
       final int now = Scheduler.now() - start;
       if ( now <= 19 )
       {
@@ -40,7 +40,7 @@ public final class SchedulerTest
       latch.countDown();
     }, 20 );
 
-    Scheduler.schedule( () -> {
+    Scheduler.delayedTask( () -> {
       final int now = Scheduler.now() - start;
       if ( now <= 39 )
       {
@@ -48,9 +48,9 @@ public final class SchedulerTest
       }
       latch.countDown();
     }, 40 );
-    assertInvariantFailure( () -> Scheduler.schedule( () -> errors.add( "Scheduled task 4 that has a bad delay." ),
-                                                      -1 ),
-                            "Zemeckis-0008: Scheduler.schedule(...) passed a negative delay. Actual value passed is -1" );
+    assertInvariantFailure( () -> Scheduler.delayedTask( () -> errors.add( "Scheduled task 4 that has a bad delay." ),
+                                                         -1 ),
+                            "Zemeckis-0008: Scheduler.delayedTask(...) passed a negative delay. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );

@@ -6,8 +6,8 @@ complete as there is too much un-said.
 
 ### High Priority Tasks
 
-* Rename `Scheduler.schedule` to `Scheduler.delayedMacroTask(...)` and call `becomeMacroTask(...)`
-  to wrap supplied task. Update spritz to take advantage of this.
+* Rework `Scheduler.delayedTask(...)` to call `becomeMacroTask(...)` to wrap supplied task. Update
+  spritz to take advantage of this.
 
 * Rename `Scheduler.scheduleAtFixedRate` to `Scheduler.periodicMacroTask(...)` and call `becomeMacroTask(...)`
   to wrap supplied task. Update spritz to take advantage of this.

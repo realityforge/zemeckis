@@ -20,7 +20,7 @@ public final class TemporalSchedulerTest
     final int count = 2;
     final CountDownLatch latch = new CountDownLatch( count );
     final int start = TemporalScheduler.now();
-    TemporalScheduler.schedule( () -> {
+    TemporalScheduler.delayedTask( () -> {
       final int now = TemporalScheduler.now() - start;
       if ( now <= 19 )
       {
@@ -29,7 +29,7 @@ public final class TemporalSchedulerTest
       latch.countDown();
     }, 20 );
 
-    TemporalScheduler.schedule( () -> {
+    TemporalScheduler.delayedTask( () -> {
       final int now = TemporalScheduler.now() - start;
       if ( now <= 39 )
       {
@@ -37,9 +37,9 @@ public final class TemporalSchedulerTest
       }
       latch.countDown();
     }, 40 );
-    assertInvariantFailure( () -> TemporalScheduler.schedule( () -> errors.add( "Scheduled task 4 that has a bad delay." ),
-                                                              -1 ),
-                            "Zemeckis-0008: Scheduler.schedule(...) passed a negative delay. Actual value passed is -1" );
+    assertInvariantFailure( () -> TemporalScheduler.delayedTask( () -> errors.add( "Scheduled task 4 that has a bad delay." ),
+                                                                 -1 ),
+                            "Zemeckis-0008: Scheduler.delayedTask(...) passed a negative delay. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );
