@@ -4,7 +4,7 @@ This document is essentially a list of shorthand notes describing work yet to be
 Unfortunately it is not complete enough for other people to pick work off the list and
 complete as there is too much un-said.
 
-### High Priority Tasks
+### Pre-Beta-Release
 
 * Replace the term `macroTask` in API with `task` and maybe rather than scheduling on a subsequent macro task
   it just schedules to the current task?
@@ -14,6 +14,10 @@ complete as there is too much un-said.
   to contain a wrapper object ala `Task`. This would also allow us to name tasks...
 
 * Add grim annotations.
+
+### Scheduler
+
+* Scheduling using `task(...)` should use the priority and/or VPU of the creating task.
 
 * Support scheduling of tasks with delay and repeating tasks inside a WebWorker where the WebWorker
   is responsible for scheduling the tasks. This produces a more stable scheduling at the expense of
@@ -26,8 +30,6 @@ complete as there is too much un-said.
 
 * Support scheduling tasks with delay = 0 by using `MessageChannel.send` as it has less jitter. This
   feature should be controlled by a compile time flag which can fallback to local scheduling.
-
-### Scheduler
 
 * https://github.com/spanicker/main-thread-scheduling
 
@@ -54,5 +56,3 @@ complete as there is too much un-said.
   - https://philipwalton.com/articles/idle-until-urgent/
   - https://github.com/GoogleChromeLabs/idlize/blob/master/IdleQueue.mjs
   - https://github.com/GoogleChromeLabs/idlize/blob/master/IdleValue.mjs
-
-* Some tasks should be scheduled to current VPU and/or with similar deadlines/priorities as creating task.
