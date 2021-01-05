@@ -9,6 +9,6 @@ final class MacroTaskExecutor
   @Override
   void scheduleForActivation()
   {
-    Scheduler.delayedTask( this::activate, 0 );
+    TemporalScheduler.delayedTask( this::activate, 0 );
   }
 }

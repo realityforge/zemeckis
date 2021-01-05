@@ -50,7 +50,7 @@ public final class Scheduler
   @Nonnull
   public static Cancelable delayedTask( @Nonnull final Runnable task, final int delay )
   {
-    return TemporalScheduler.delayedTask( task, delay );
+    return TemporalScheduler.delayedTask( () -> becomeMacroTask( task ), delay );
   }
 
   /**
