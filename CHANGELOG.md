@@ -6,6 +6,7 @@
 * Rename the method `Scheduler.schedule(...)` to `Scheduler.delayedTask(...)`.
 * Rename the method `Scheduler.scheduleAtFixedRate(...)` to `Scheduler.periodicTask(...)`.
 * Rework the `Scheduler.delayedTask(...)` and `Scheduler.periodicTask(...)` methods to call `becomeMacroTask(...)` to wrap supplied task. This will result in tasks scheduled with a delay and tasks scheduled via `Scheduler.macroTask(...)` behaving the same way.
+* Remove `Schedule.becomeMacroTask(...)` from the public API as should not be needed now that `delayedTask` and `periodicTask` methods invoke this method internally.
 
 ### [v0.02](https://github.com/realityforge/zemeckis/tree/v0.02) (2020-12-31) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.01...v0.02)
 

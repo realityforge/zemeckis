@@ -1,5 +1,23 @@
 [
   {
+    "code": "java.method.visibilityReduced",
+    "description": "visibility reduced",
+    "element": "method void zemeckis.Scheduler::becomeMacroTask(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "BREAKING",
+      "BINARY": "BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Scheduler",
+      "classSimpleName": "Scheduler",
+      "elementKind": "method",
+      "methodName": "becomeMacroTask",
+      "newVisibility": "package",
+      "oldVisibility": "public",
+      "package": "zemeckis"
+    }
+  },
+  {
     "code": "java.method.added",
     "description": "Method was added.",
     "newElement": "method zemeckis.Cancelable zemeckis.Scheduler::delayedTask(java.lang.Runnable, int)",

@@ -3,6 +3,7 @@ package zemeckis;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
@@ -119,7 +120,8 @@ public final class Scheduler
    *
    * @param task the task.
    */
-  public static void becomeMacroTask( @Nonnull final Runnable task )
+  @VisibleForTesting
+  static void becomeMacroTask( @Nonnull final Runnable task )
   {
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
