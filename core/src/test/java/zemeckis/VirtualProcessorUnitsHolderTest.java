@@ -17,13 +17,13 @@ public final class VirtualProcessorUnitsHolderTest
       assertTrue( VirtualProcessorUnitsHolder.isVpuActivated() );
       assertEquals( VirtualProcessorUnitsHolder.currentVpu(), vpu );
       assertInvariantFailure( () -> VirtualProcessorUnitsHolder.CurrentVPU.activate( VirtualProcessorUnitsHolder.microTaskVpu() ),
-                              "Zemeckis-0004: Attempting to activate VirtualProcessorUnit named 'micro' but an existing VirtualProcessorUnit named 'macro' is activated" );
+                              "Zemeckis-0004: Attempting to activate VirtualProcessorUnit named 'Micro' but an existing VirtualProcessorUnit named 'Macro' is activated" );
     } );
 
     assertFalse( VirtualProcessorUnitsHolder.isVpuActivated() );
     assertNull( VirtualProcessorUnitsHolder.currentVpu() );
 
     assertInvariantFailure( () -> VirtualProcessorUnitsHolder.CurrentVPU.deactivate( vpu ),
-                            "Zemeckis-0005: Attempting to deactivate VirtualProcessorUnit named 'macro' but no VirtualProcessorUnit is activated" );
+                            "Zemeckis-0005: Attempting to deactivate VirtualProcessorUnit named 'Macro' but no VirtualProcessorUnit is activated" );
   }
 }

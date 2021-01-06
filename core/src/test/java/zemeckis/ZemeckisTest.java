@@ -290,7 +290,7 @@ public final class ZemeckisTest
       trace.add( "*" );
       Zemeckis.macroTask( () -> trace.add( "B" ) );
       assertInvariantFailure( () -> Zemeckis.becomeMacroTask( "MyCTask", () -> trace.add( "C" ) ),
-                              "Zemeckis-0012: Zemeckis.becomeMacroTask(...) invoked for the task named 'MyCTask' but the VirtualProcessorUnit named 'macro' is already active" );
+                              "Zemeckis-0012: Zemeckis.becomeMacroTask(...) invoked for the task named 'MyCTask' but the VirtualProcessorUnit named 'Macro' is already active" );
     } );
 
     assertFalse( Zemeckis.isVpuActivated() );
