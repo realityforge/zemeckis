@@ -84,14 +84,7 @@ public final class VirtualProcessorUnit
   @Override
   public String toString()
   {
-    if ( Zemeckis.areNamesEnabled() )
-    {
-      return getName();
-    }
-    else
-    {
-      return super.toString();
-    }
+    return Zemeckis.areNamesEnabled() ? getName() : super.toString();
   }
 
   /**
