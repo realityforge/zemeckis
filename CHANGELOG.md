@@ -1,6 +1,10 @@
 # Change Log
 
-### Unreleased
+### [v0.04](https://github.com/realityforge/zemeckis/tree/v0.04) (2021-01-06) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.03...v0.04)
+
+The release includes 22 non breaking API changes, 1 potentially breaking API change and 2 breaking API changes.
+
+Changes in this release:
 
 * Move all methods from the `Schedule` class to the `Zemeckis` class.
 * Rework the `Zemeckis.macroTask(...)`, `Zemeckis.microTask(...)`, `Zemeckis.animationFrame(...)`, `Zemeckis.afterFrame(...)` and `Zemeckis.onIdle(...)` methods so that they return a `Cancelable` that can be used to abort the scheduled task before it executes.
