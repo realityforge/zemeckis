@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
+import org.jetbrains.annotations.TestOnly;
 
 /**
  * Log abstraction for framework.
@@ -30,6 +31,7 @@ final class ZemeckisLogger
     c_logger.log( message, throwable );
   }
 
+  @TestOnly
   @OmitSymbol
   @Nonnull
   static Logger getLogger()
