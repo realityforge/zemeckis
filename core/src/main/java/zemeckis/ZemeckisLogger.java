@@ -35,7 +35,7 @@ final class ZemeckisLogger
   }
 
   /**
-   * Abstraction used to provide logging for Arez system.
+   * Abstraction used to provide logging for Zemeckis system.
    * This abstraction is used to support compile time constants during GWT and/or closure
    * compiler phases and thus allow elimination of code during production variants of the runtime.
    */
