@@ -6,6 +6,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.jetbrains.annotations.TestOnly;
 import static org.realityforge.braincheck.Guards.*;
 
@@ -39,27 +40,29 @@ final class TemporalScheduler
   /**
    * Schedules the execution of the given task after a specified delay.
    *
+   * @param name  A human consumable name for the task. It must be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task  the task to execute.
    * @param delay the delay before the task should execute. Must not be a negative value.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
   @Nonnull
-  static Cancelable delayedTask( @Nonnull final Runnable task, final int delay )
+  static Cancelable delayedTask( @Nullable final String name, @Nonnull final Runnable task, final int delay )
   {
-    return c_scheduler.delayedTask( task, delay );
+    return c_scheduler.delayedTask( name, task, delay );
   }
 
   /**
    * Schedules the periodic execution of the given task with specified period.
    *
+   * @param name   A human consumable name for the task. It must be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task   the task to execute.
    * @param period the period after execution when the task should be re-executed. Must be a value greater than 0.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
   @Nonnull
-  static Cancelable periodicTask( @Nonnull final Runnable task, final int period )
+  static Cancelable periodicTask( @Nullable final String name, @Nonnull final Runnable task, final int period )
   {
-    return c_scheduler.periodicTask( task, period );
+    return c_scheduler.periodicTask( name, task, period );
   }
 
   @TestOnly
@@ -129,15 +132,15 @@ final class TemporalScheduler
       return (int) ( System.currentTimeMillis() - getSchedulerStart() );
     }
 
-    final Cancelable delayedTask( @Nonnull final Runnable task, final int delay )
+    final Cancelable delayedTask( @Nullable final String name, @Nonnull final Runnable task, final int delay )
     {
       if ( Zemeckis.shouldCheckApiInvariants() )
       {
         apiInvariant( () -> delay >= 0,
-                      () -> "Zemeckis-0008: Scheduler.delayedTask(...) passed a negative delay. " +
-                            "Actual value passed is " + delay );
+                      () -> "Zemeckis-0008: Zemeckis.delayedTask(...) named '" + name +
+                            "' passed a negative delay. Actual value passed is " + delay );
       }
-      return doDelayedTask( task, delay );
+      return new TaskEntry( name, task, doDelayedTask( task, delay ) );
     }
 
     @Nonnull
@@ -148,15 +151,16 @@ final class TemporalScheduler
     }
 
     @Nonnull
-    final Cancelable periodicTask( @Nonnull final Runnable task, final int period )
+    final Cancelable periodicTask( @Nullable final String name, @Nonnull final Runnable task, final int period )
     {
       if ( Zemeckis.shouldCheckApiInvariants() )
       {
         apiInvariant( () -> period > 0,
-                      () -> "Zemeckis-0009: Scheduler.periodicTask(...) passed a non-positive period. " +
-                            "Actual value passed is " + period );
+                      () -> "Zemeckis-0009: Zemeckis.periodicTask(...) named '" + name +
+                            "' passed a non-positive period. Actual value passed is " + period );
       }
-      return doPeriodicTask( task, period );
+
+      return new TaskEntry( name, task, doPeriodicTask( task, period ) );
     }
 
     @Nonnull

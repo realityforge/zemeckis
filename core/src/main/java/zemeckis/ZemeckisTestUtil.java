@@ -63,6 +63,7 @@ public final class ZemeckisTestUtil
   private static void resetState()
   {
     setLogger( null );
+    Zemeckis.reset();
     TemporalScheduler.reset();
     UncaughtErrorHandlerSupport.reset();
     VirtualProcessorUnitsHolder.reset();

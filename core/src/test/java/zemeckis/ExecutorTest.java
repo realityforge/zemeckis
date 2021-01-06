@@ -35,21 +35,26 @@ public final class ExecutorTest
     final TestExecutor executor = new TestExecutor();
     final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
 
+    final String name1 = randomString();
+    final String name2 = randomString();
+
     final Runnable task1 = new NoopTask();
     final Runnable task2 = new NoopTask();
     final Runnable task3 = new NoopTask();
 
     assertEquals( executor.getQueueSize(), 0 );
-    executor.queue( task1 );
+    final Cancelable cancelable1 = executor.queue( name1, task1 );
+    assertEquals( cancelable1.toString(), name1 );
     assertEquals( executor.getQueueSize(), 1 );
     assertTaskAt( taskQueue, 0, task1 );
 
-    executor.queue( task2 );
+    final Cancelable cancelable2 = executor.queue( name2, task2 );
+    assertEquals( cancelable2.toString(), name2 );
     assertEquals( executor.getQueueSize(), 2 );
     assertTaskAt( taskQueue, 0, task1 );
     assertTaskAt( taskQueue, 1, task2 );
 
-    executor.queueNext( task3 );
+    executor.queueNext( randomString(), task3 );
     assertEquals( executor.getQueueSize(), 3 );
 
     assertTaskAt( taskQueue, 0, task3 );
@@ -66,16 +71,14 @@ public final class ExecutorTest
     final Runnable task = new NoopTask();
 
     assertEquals( executor.getQueueSize(), 0 );
-    executor.queue( task );
+    executor.queue( randomString(), task );
     assertEquals( executor.getQueueSize(), 1 );
     assertTaskAt( taskQueue, 0, task );
 
-    assertInvariantFailure( () -> executor.queue( task ),
-                            "Zemeckis-0001: Attempting to queue task " + task +
-                            " when task is already queued." );
-    assertInvariantFailure( () -> executor.queueNext( task ),
-                            "Zemeckis-0001: Attempting to queue task " + task +
-                            " when task is already queued." );
+    assertInvariantFailure( () -> executor.queue( "MyTask1", task ),
+                            "Zemeckis-0001: Attempting to queue task named 'MyTask1' when task is already queued." );
+    assertInvariantFailure( () -> executor.queueNext( "MyTask2", task ),
+                            "Zemeckis-0001: Attempting to queue task named 'MyTask2' when task is already queued." );
   }
 
   @Test
@@ -89,10 +92,10 @@ public final class ExecutorTest
     final NoopTask task4 = new NoopTask();
 
     assertEquals( executor.getQueueSize(), 0 );
-    executor.queue( task1 );
-    executor.queue( task2 );
-    executor.queue( task3 );
-    final Cancelable cancelable4 = executor.queue( task4 );
+    executor.queue( randomString(), task1 );
+    executor.queue( randomString(), task2 );
+    executor.queue( randomString(), task3 );
+    final Cancelable cancelable4 = executor.queue( randomString(), task4 );
     assertEquals( executor.getQueueSize(), 4 );
     assertTaskAt( taskQueue, 0, task1 );
     assertTaskAt( taskQueue, 1, task2 );
@@ -158,7 +161,7 @@ public final class ExecutorTest
     };
 
     assertEquals( executor.getQueueSize(), 0 );
-    executor.queue( task1 );
+    executor.queue( randomString(), task1 );
     assertEquals( executor.getQueueSize(), 1 );
     assertTaskAt( taskQueue, 0, task1 );
 

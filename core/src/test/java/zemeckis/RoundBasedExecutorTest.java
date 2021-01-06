@@ -28,9 +28,9 @@ public final class RoundBasedExecutorTest
     final NoopTask task1 = new NoopTask();
     final NoopTask task2 = new NoopTask();
     final NoopTask task3 = new NoopTask();
-    executor.queue( task1 );
-    executor.queue( task2 );
-    executor.queue( task3 );
+    executor.queue( randomString(), task1 );
+    executor.queue( randomString(), task2 );
+    executor.queue( randomString(), task3 );
 
     assertEquals( executor.getMaxRounds(), 2 );
 
@@ -69,8 +69,8 @@ public final class RoundBasedExecutorTest
     assertEquals( task3.getRunCount(), 0 );
 
     // Now we schedule some tasks again to push execution into round 2
-    executor.queue( task1 );
-    executor.queue( task2 );
+    executor.queue( randomString(), task1 );
+    executor.queue( randomString(), task2 );
 
     assertEquals( executor.getQueueSize(), 3 );
 
@@ -124,9 +124,9 @@ public final class RoundBasedExecutorTest
     final NoopTask task1 = new NoopTask();
     final NoopTask task2 = new NoopTask();
     final NoopTask task3 = new NoopTask();
-    executor.queue( task1 );
-    executor.queue( task2 );
-    executor.queue( task3 );
+    executor.queue( randomString(), task1 );
+    executor.queue( randomString(), task2 );
+    executor.queue( randomString(), task3 );
 
     assertEquals( executor.getMaxRounds(), 2 );
     assertEquals( executor.getCurrentRound(), 0 );
@@ -162,9 +162,9 @@ public final class RoundBasedExecutorTest
     final NoopTask task1 = new NoopTask();
     final NoopTask task2 = new NoopTask();
     final NoopTask task3 = new NoopTask();
-    executor.queue( task1 );
-    executor.queue( task2 );
-    executor.queue( task3 );
+    executor.queue( randomString(), task1 );
+    executor.queue( randomString(), task2 );
+    executor.queue( randomString(), task3 );
 
     assertEquals( executor.getMaxRounds(), 2 );
     assertEquals( executor.getCurrentRound(), 0 );
@@ -203,13 +203,14 @@ public final class RoundBasedExecutorTest
 
     final AtomicInteger task1CallCount = new AtomicInteger();
     final AtomicReference<Runnable> taskRef = new AtomicReference<>();
+    final String name = randomString();
     final Runnable task = () -> {
       task1CallCount.incrementAndGet();
-      executor.queue( taskRef.get() );
+      executor.queue( name, taskRef.get() );
     };
     taskRef.set( task );
 
-    executor.queue( task );
+    executor.queue( name, task );
 
     assertEquals( executor.getMaxRounds(), 2 );
     assertEquals( executor.getCurrentRound(), 0 );
@@ -218,7 +219,7 @@ public final class RoundBasedExecutorTest
 
     assertInvariantFailure( executor::executeTasks,
                             "Zemeckis-0010: Runaway task(s) detected. Tasks still running after 2 " +
-                            "rounds. Current tasks include: [" + task + "]" );
+                            "rounds. Current tasks include: [" + name + "]" );
 
     // Ensure tasks purged
     assertEquals( executor.getQueueSize(), 0 );
@@ -238,11 +239,11 @@ public final class RoundBasedExecutorTest
     final AtomicReference<Runnable> taskRef = new AtomicReference<>();
     final Runnable task = () -> {
       task1CallCount.incrementAndGet();
-      executor.queue( taskRef.get() );
+      executor.queue( randomString(), taskRef.get() );
     };
     taskRef.set( task );
 
-    executor.queue( task );
+    executor.queue( randomString(), task );
 
     assertEquals( executor.getMaxRounds(), 2 );
     assertEquals( executor.getCurrentRound(), 0 );
@@ -264,12 +265,13 @@ public final class RoundBasedExecutorTest
 
     final RoundBasedExecutor executor = new TestExecutor( 2 );
 
+    final String name = randomString();
     final Runnable task = new NoopTask();
-    executor.queue( task );
+    executor.queue( name, task );
 
     assertInvariantFailure( executor::onRunawayTasksDetected,
                             "Zemeckis-0010: Runaway task(s) detected. Tasks still running after 2 " +
-                            "rounds. Current tasks include: [" + task + "]" );
+                            "rounds. Current tasks include: [" + name + "]" );
 
     // Ensure tasks purged
     assertEquals( executor.getQueueSize(), 0 );
@@ -282,12 +284,13 @@ public final class RoundBasedExecutorTest
 
     final RoundBasedExecutor executor = new TestExecutor( 2 );
 
+    final String name = randomString();
     final Runnable task = new NoopTask();
-    executor.queue( task );
+    executor.queue( name, task );
 
     assertInvariantFailure( executor::onRunawayTasksDetected,
                             "Zemeckis-0010: Runaway task(s) detected. Tasks still running after 2 " +
-                            "rounds. Current tasks include: [" + task + "]" );
+                            "rounds. Current tasks include: [" + name + "]" );
 
     // Ensure tasks not purged
     assertEquals( executor.getQueueSize(), 1 );

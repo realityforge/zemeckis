@@ -1,5 +1,23 @@
 [
   {
+    "code": "java.annotation.added",
+    "description": "Element newly annotated with 'grim.annotations.OmitClinit'.",
+    "element": "class zemeckis.Zemeckis",
+    "classification": {
+      "SOURCE": "EQUIVALENT",
+      "BINARY": "EQUIVALENT",
+      "SEMANTIC": "POTENTIALLY_BREAKING"
+    },
+    "attachments": {
+      "annotation": "@grim.annotations.OmitClinit",
+      "annotationType": "grim.annotations.OmitClinit",
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "class",
+      "package": "zemeckis"
+    }
+  },
+  {
     "code": "java.method.added",
     "description": "Method was added.",
     "newElement": "method boolean zemeckis.Zemeckis::isVpuActivated()",
@@ -34,7 +52,7 @@
   {
     "code": "java.annotation.added",
     "description": "Element newly annotated with 'javax.annotation.Nonnull'.",
-    "newElement": "method zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
+    "newElement": "method zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(java.lang.String, java.lang.Runnable)",
     "oldElement": "method void zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
     "classification": {
       "SOURCE": "EQUIVALENT",
@@ -52,9 +70,26 @@
     }
   },
   {
+    "code": "java.method.numberOfParametersChanged",
+    "description": "The number of parameters of the method have changed.",
+    "newElement": "method zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(java.lang.String, java.lang.Runnable)",
+    "oldElement": "method void zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "BREAKING",
+      "BINARY": "BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.VirtualProcessorUnit",
+      "classSimpleName": "VirtualProcessorUnit",
+      "elementKind": "method",
+      "methodName": "queue",
+      "package": "zemeckis"
+    }
+  },
+  {
     "code": "java.method.returnTypeChanged",
     "description": "The return type changed from 'void' to  'zemeckis.Cancelable'.",
-    "newElement": "method zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
+    "newElement": "method zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(java.lang.String, java.lang.Runnable)",
     "oldElement": "method void zemeckis.VirtualProcessorUnit::queue(java.lang.Runnable)",
     "classification": {
       "SOURCE": "POTENTIALLY_BREAKING",
@@ -89,7 +124,39 @@
   {
     "code": "java.method.added",
     "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::afterFrame(java.lang.String, java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "afterFrame",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
     "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::animationFrame(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "animationFrame",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::animationFrame(java.lang.String, java.lang.Runnable)",
     "classification": {
       "SOURCE": "NON_BREAKING",
       "BINARY": "NON_BREAKING"
@@ -121,7 +188,39 @@
   {
     "code": "java.method.added",
     "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::delayedTask(java.lang.String, java.lang.Runnable, int)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "delayedTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
     "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::macroTask(java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "macroTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::macroTask(java.lang.String, java.lang.Runnable)",
     "classification": {
       "SOURCE": "NON_BREAKING",
       "BINARY": "NON_BREAKING"
@@ -153,6 +252,22 @@
   {
     "code": "java.method.added",
     "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::microTask(java.lang.String, java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "microTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
     "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::onIdle(java.lang.Runnable)",
     "classification": {
       "SOURCE": "NON_BREAKING",
@@ -169,7 +284,39 @@
   {
     "code": "java.method.added",
     "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::onIdle(java.lang.String, java.lang.Runnable)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "onIdle",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
     "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::periodicTask(java.lang.Runnable, int)",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "periodicTask",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method zemeckis.Cancelable zemeckis.Zemeckis::periodicTask(java.lang.String, java.lang.Runnable, int)",
     "classification": {
       "SOURCE": "NON_BREAKING",
       "BINARY": "NON_BREAKING"
@@ -291,6 +438,48 @@
       "classSimpleName": "Scheduler",
       "elementKind": "class",
       "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.annotation.added",
+    "description": "Element newly annotated with 'javax.annotation.Nullable'.",
+    "newElement": "parameter zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(===java.lang.String===, java.lang.Runnable)",
+    "oldElement": "parameter void zemeckis.VirtualProcessorUnit::queue(===java.lang.Runnable===)",
+    "classification": {
+      "SOURCE": "EQUIVALENT",
+      "BINARY": "EQUIVALENT",
+      "SEMANTIC": "POTENTIALLY_BREAKING"
+    },
+    "attachments": {
+      "annotation": "@javax.annotation.Nullable",
+      "annotationType": "javax.annotation.Nullable",
+      "classQualifiedName": "zemeckis.VirtualProcessorUnit",
+      "classSimpleName": "VirtualProcessorUnit",
+      "elementKind": "parameter",
+      "methodName": "queue",
+      "package": "zemeckis",
+      "parameterIndex": "0"
+    }
+  },
+  {
+    "code": "java.annotation.removed",
+    "description": "Element no longer annotated with 'javax.annotation.Nonnull'.",
+    "newElement": "parameter zemeckis.Cancelable zemeckis.VirtualProcessorUnit::queue(===java.lang.String===, java.lang.Runnable)",
+    "oldElement": "parameter void zemeckis.VirtualProcessorUnit::queue(===java.lang.Runnable===)",
+    "classification": {
+      "SOURCE": "EQUIVALENT",
+      "BINARY": "EQUIVALENT",
+      "SEMANTIC": "POTENTIALLY_BREAKING"
+    },
+    "attachments": {
+      "annotation": "@javax.annotation.Nonnull",
+      "annotationType": "javax.annotation.Nonnull",
+      "classQualifiedName": "zemeckis.VirtualProcessorUnit",
+      "classSimpleName": "VirtualProcessorUnit",
+      "elementKind": "parameter",
+      "methodName": "queue",
+      "package": "zemeckis",
+      "parameterIndex": "0"
     }
   }
 ]

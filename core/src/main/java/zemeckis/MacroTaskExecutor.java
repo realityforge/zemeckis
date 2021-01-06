@@ -9,6 +9,6 @@ final class MacroTaskExecutor
   @Override
   void scheduleForActivation()
   {
-    TemporalScheduler.delayedTask( this::activate, 0 );
+    TemporalScheduler.delayedTask( Zemeckis.areNamesEnabled() ? "MacroTaskExecutor" : null, this::activate, 0 );
   }
 }

@@ -54,7 +54,7 @@ public final class ZemeckisTest
     }, 40 );
     assertInvariantFailure( () -> Zemeckis.delayedTask( () -> errors.add( "Scheduled task 4 that has a bad delay." ),
                                                         -1 ),
-                            "Zemeckis-0008: Scheduler.delayedTask(...) passed a negative delay. Actual value passed is -1" );
+                            "Zemeckis-0008: Zemeckis.delayedTask(...) named 'DelayedTask@2' passed a negative delay. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );
@@ -101,11 +101,13 @@ public final class ZemeckisTest
           task.get().cancel();
         }
       }, 20 );
+    assertEquals( schedule.toString(), "PeriodicTask@0" );
     task.set( schedule );
 
-    assertInvariantFailure( () -> Zemeckis.periodicTask( () -> errors.add( "Scheduled task that has a bad delay." ),
+    assertInvariantFailure( () -> Zemeckis.periodicTask( "P2",
+                                                         () -> errors.add( "Scheduled task that has a bad delay." ),
                                                          -1 ),
-                            "Zemeckis-0009: Scheduler.periodicTask(...) passed a non-positive period. Actual value passed is -1" );
+                            "Zemeckis-0009: Zemeckis.periodicTask(...) named 'P2' passed a non-positive period. Actual value passed is -1" );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );
@@ -122,39 +124,90 @@ public final class ZemeckisTest
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );
 
-    final int count = 5;
+    final String name1 = randomString();
+    final String name2 = randomString();
+    final String name3 = randomString();
+    final String name4 = randomString();
+    final String name5 = randomString();
+
+    final int count = 10;
     final CountDownLatch latch = new CountDownLatch( count );
-    Zemeckis.macroTask( () -> {
-      assertTrue( Zemeckis.isVpuActivated() );
-      assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
-      latch.countDown();
-    } );
-    Zemeckis.microTask( () -> {
-      assertTrue( Zemeckis.isVpuActivated() );
-      assertEquals( Zemeckis.currentVpu(), Zemeckis.microTaskVpu() );
-      latch.countDown();
-    } );
-    Zemeckis.animationFrame( () -> {
-      assertTrue( Zemeckis.isVpuActivated() );
-      assertEquals( Zemeckis.currentVpu(), Zemeckis.animationFrameVpu() );
-      latch.countDown();
-    } );
-    Zemeckis.afterFrame( () -> {
-      assertTrue( Zemeckis.isVpuActivated() );
-      assertEquals( Zemeckis.currentVpu(), Zemeckis.afterFrameVpu() );
-      latch.countDown();
-    } );
-    Zemeckis.onIdle( () -> {
-      assertTrue( Zemeckis.isVpuActivated() );
-      assertEquals( Zemeckis.currentVpu(), Zemeckis.onIdleVpu() );
-      latch.countDown();
-    } );
+    final Cancelable cancelable1 =
+      Zemeckis.macroTask( () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable2 =
+      Zemeckis.macroTask( name1, () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable3 =
+      Zemeckis.microTask( () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.microTaskVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable4 =
+      Zemeckis.microTask( name2, () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.microTaskVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable5 =
+      Zemeckis.animationFrame( () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.animationFrameVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable6 =
+      Zemeckis.animationFrame( name3, () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.animationFrameVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable7 =
+      Zemeckis.afterFrame( () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.afterFrameVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable8 =
+      Zemeckis.afterFrame( name4, () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.afterFrameVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable9 =
+      Zemeckis.onIdle( () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.onIdleVpu() );
+        latch.countDown();
+      } );
+    final Cancelable cancelable10 =
+      Zemeckis.onIdle( name5, () -> {
+        assertTrue( Zemeckis.isVpuActivated() );
+        assertEquals( Zemeckis.currentVpu(), Zemeckis.onIdleVpu() );
+        latch.countDown();
+      } );
 
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );
 
     latch.await( 1, TimeUnit.SECONDS );
     assertEquals( latch.getCount(), 0 );
+    assertEquals( cancelable1.toString(), "MacroTask@0" );
+    assertEquals( cancelable2.toString(), name1 );
+    assertEquals( cancelable3.toString(), "MicroTask@1" );
+    assertEquals( cancelable4.toString(), name2 );
+    assertEquals( cancelable5.toString(), "AnimationFrameTask@2" );
+    assertEquals( cancelable6.toString(), name3 );
+    assertEquals( cancelable7.toString(), "AfterFrameTask@3" );
+    assertEquals( cancelable8.toString(), name4 );
+    assertEquals( cancelable9.toString(), "OnIdleTask@4" );
+    assertEquals( cancelable10.toString(), name5 );
   }
 
   @Test
@@ -228,15 +281,15 @@ public final class ZemeckisTest
 
     ( (AbstractExecutor) Zemeckis.macroTaskVpu().getExecutor() )
       .getTaskQueue()
-      .add( new TaskEntry( () -> trace.add( "A" ) ) );
+      .add( new TaskEntry( "A", () -> trace.add( "A" ), null ) );
 
-    Zemeckis.becomeMacroTask( () -> {
+    Zemeckis.becomeMacroTask( randomString(), () -> {
       assertTrue( Zemeckis.isVpuActivated() );
       assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
       trace.add( "*" );
       Zemeckis.macroTask( () -> trace.add( "B" ) );
-      assertInvariantFailure( () -> Zemeckis.becomeMacroTask( () -> trace.add( "C" ) ),
-                              "Zemeckis-0012: Scheduler.becomeMacroTask(...) invoked but the VirtualProcessorUnit named 'macro' is already active" );
+      assertInvariantFailure( () -> Zemeckis.becomeMacroTask( "MyCTask", () -> trace.add( "C" ) ),
+                              "Zemeckis-0012: Zemeckis.becomeMacroTask(...) invoked for the task named 'MyCTask' but the VirtualProcessorUnit named 'macro' is already active" );
     } );
 
     assertFalse( Zemeckis.isVpuActivated() );

@@ -36,11 +36,11 @@ abstract class AbstractExecutor
 
   @Override
   @Nonnull
-  public final synchronized Cancelable queue( @Nonnull final Runnable task )
+  public final synchronized Cancelable queue( @Nullable final String name, @Nonnull final Runnable task )
   {
     final boolean needsActivation = 0 == getQueueSize();
-    ensureNotQueued( task );
-    final TaskEntry entry = new TaskEntry( task );
+    ensureNotQueued( name, task );
+    final TaskEntry entry = new TaskEntry( name, task, null );
     _taskQueue.add( entry );
     if ( needsActivation )
     {
@@ -50,18 +50,18 @@ abstract class AbstractExecutor
   }
 
   @Override
-  public final void queueNext( @Nonnull final Runnable task )
+  public final void queueNext( @Nullable final String name, @Nonnull final Runnable task )
   {
-    ensureNotQueued( task );
-    _taskQueue.addFirst( new TaskEntry( task ) );
+    ensureNotQueued( name, task );
+    _taskQueue.addFirst( new TaskEntry( name, task, null ) );
   }
 
-  private void ensureNotQueued( @Nonnull final Runnable task )
+  private void ensureNotQueued( @Nullable final String name, @Nonnull final Runnable task )
   {
     if ( Zemeckis.shouldCheckInvariants() )
     {
       invariant( () -> _taskQueue.stream().noneMatch( taskEntry -> taskEntry.getTask() == task ),
-                 () -> "Zemeckis-0001: Attempting to queue task " + task + " when task is already queued." );
+                 () -> "Zemeckis-0001: Attempting to queue task named '" + name + "' when task is already queued." );
     }
   }
 

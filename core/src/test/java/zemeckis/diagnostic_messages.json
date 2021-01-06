@@ -2,7 +2,7 @@
   {
     "code": 1,
     "type": "INVARIANT",
-    "messagePattern": "Attempting to queue task %s when task is already queued."
+    "messagePattern": "Attempting to queue task named '%s' when task is already queued."
   },
   {
     "code": 2,
@@ -37,12 +37,12 @@
   {
     "code": 8,
     "type": "API_INVARIANT",
-    "messagePattern": "Scheduler.delayedTask(...) passed a negative delay. Actual value passed is %s"
+    "messagePattern": "Zemeckis.delayedTask(...) named '%s' passed a negative delay. Actual value passed is %s"
   },
   {
     "code": 9,
     "type": "API_INVARIANT",
-    "messagePattern": "Scheduler.periodicTask(...) passed a non-positive period. Actual value passed is %s"
+    "messagePattern": "Zemeckis.periodicTask(...) named '%s' passed a non-positive period. Actual value passed is %s"
   },
   {
     "code": 10,
@@ -57,6 +57,6 @@
   {
     "code": 12,
     "type": "API_INVARIANT",
-    "messagePattern": "Scheduler.becomeMacroTask(...) invoked but the VirtualProcessorUnit named '%s' is already active"
+    "messagePattern": "Zemeckis.becomeMacroTask(...) invoked for the task named '%s' but the VirtualProcessorUnit named '%s' is already active"
   }
 ]

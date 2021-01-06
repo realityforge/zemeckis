@@ -64,13 +64,14 @@ public final class VirtualProcessorUnit
    * Queue task for execution and enable the executor for activation if necessary.
    * The task must not be already queued.
    *
+   * @param name A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
   @Nonnull
-  public Cancelable queue( @Nonnull final Runnable task )
+  public Cancelable queue( @Nullable final String name, @Nonnull final Runnable task )
   {
-    return getExecutor().queue( task );
+    return getExecutor().queue( name, task );
   }
 
   @Nonnull
@@ -120,18 +121,19 @@ public final class VirtualProcessorUnit
      * Queue task for execution and enable the executor for activation if necessary.
      * The task must not be already queued.
      *
+     * @param name A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
      * @param task the task.
      * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
      */
     @Nonnull
-    Cancelable queue( @Nonnull Runnable task );
+    Cancelable queue( @Nullable String name, @Nonnull Runnable task );
 
     /**
      * Queue task for execution next. The executor is not activated. The task must not be already queued.
      *
      * @param task the task.
      */
-    void queueNext( @Nonnull Runnable task );
+    void queueNext( @Nullable final String name, @Nonnull Runnable task );
 
     /**
      * Activate the executor.

@@ -3,6 +3,7 @@ package zemeckis;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.jetbrains.annotations.TestOnly;
 import org.jetbrains.annotations.VisibleForTesting;
 import org.realityforge.braincheck.BrainCheckConfig;
 import static org.realityforge.braincheck.Guards.*;
@@ -138,7 +139,22 @@ public final class Zemeckis
   @Nonnull
   public static Cancelable delayedTask( @Nonnull final Runnable task, final int delay )
   {
-    return TemporalScheduler.delayedTask( () -> becomeMacroTask( task ), delay );
+    return delayedTask( null, task, delay );
+  }
+
+  /**
+   * Schedules the execution of the given task after a specified delay.
+   *
+   * @param name  A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
+   * @param task  the task to execute.
+   * @param delay the delay before the task should execute. Must be a value greater than 0.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
+   */
+  @Nonnull
+  public static Cancelable delayedTask( @Nullable final String name, @Nonnull final Runnable task, final int delay )
+  {
+    final String actualName = generateName( "DelayedTask", name );
+    return TemporalScheduler.delayedTask( actualName, () -> becomeMacroTask( actualName, task ), delay );
   }
 
   /**
@@ -151,7 +167,22 @@ public final class Zemeckis
   @Nonnull
   public static Cancelable periodicTask( @Nonnull final Runnable task, final int period )
   {
-    return TemporalScheduler.periodicTask( () -> becomeMacroTask( task ), period );
+    return periodicTask( null, task, period );
+  }
+
+  /**
+   * Schedules the periodic execution of the given task with specified period.
+   *
+   * @param name   A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
+   * @param task   the task to execute.
+   * @param period the period after execution when the task should be re-executed. Must be a value greater than 0.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
+   */
+  @Nonnull
+  public static Cancelable periodicTask( @Nullable final String name, @Nonnull final Runnable task, final int period )
+  {
+    final String actualName = generateName( "PeriodicTask", name );
+    return TemporalScheduler.periodicTask( actualName, () -> becomeMacroTask( actualName, task ), period );
   }
 
   /**
@@ -186,7 +217,22 @@ public final class Zemeckis
   @Nonnull
   public static Cancelable macroTask( @Nonnull final Runnable task )
   {
-    return macroTaskVpu().queue( task );
+    return macroTask( null, task );
+  }
+
+  /**
+   * Queue the task to execute in the next "macro" task.
+   * This is the default VPU in the browser and indicates tasks that are scheduled via a
+   * call to <code>setTimeout(callback,0)</code>.
+   *
+   * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
+   * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
+   */
+  @Nonnull
+  public static Cancelable macroTask( @Nullable final String name, @Nonnull final Runnable task )
+  {
+    return macroTaskVpu().queue( generateName( "MacroTask", name ), task );
   }
 
   /**
@@ -207,19 +253,20 @@ public final class Zemeckis
    * The specified task is added to the start of the macroTask queue but any tasks present on the queue
    * will be invoked after the specified task.
    *
+   * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task the task.
    */
   @VisibleForTesting
-  static void becomeMacroTask( @Nonnull final Runnable task )
+  static void becomeMacroTask( @Nullable final String name, @Nonnull final Runnable task )
   {
     if ( shouldCheckApiInvariants() )
     {
       apiInvariant( () -> !isVpuActivated(),
-                    () -> "Zemeckis-0012: Scheduler.becomeMacroTask(...) invoked but the VirtualProcessorUnit " +
-                          "named '" + currentVpu() + "' is already active" );
+                    () -> "Zemeckis-0012: Zemeckis.becomeMacroTask(...) invoked for the task named '" + name +
+                          "' but the VirtualProcessorUnit named '" + currentVpu() + "' is already active" );
     }
     final VirtualProcessorUnit.Executor executor = macroTaskVpu().getExecutor();
-    executor.queueNext( Objects.requireNonNull( task ) );
+    executor.queueNext( name, Objects.requireNonNull( task ) );
     executor.activate();
   }
 
@@ -234,7 +281,22 @@ public final class Zemeckis
   @Nonnull
   public static Cancelable microTask( @Nonnull final Runnable task )
   {
-    return microTaskVpu().queue( task );
+    return microTask( null, task );
+  }
+
+  /**
+   * Queue the task to execute in the next "micro" task.
+   * The "micro" tasks are those that the browser executes after the current "macro" or "micro" task.
+   * This VPU schedules an activation via a call to {@code Promise.resolve().then( v -> callback() )}.
+   *
+   * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
+   * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
+   */
+  @Nonnull
+  public static Cancelable microTask( @Nullable final String name, @Nonnull final Runnable task )
+  {
+    return microTaskVpu().queue( generateName( "MicroTask", name ), task );
   }
 
   /**
@@ -260,7 +322,22 @@ public final class Zemeckis
   @Nonnull
   public static Cancelable animationFrame( @Nonnull final Runnable task )
   {
-    return animationFrameVpu().queue( task );
+    return animationFrame( null, task );
+  }
+
+  /**
+   * Queue the task to execute in the next "animationFrame".
+   * The "animationFrame" occurs prior to the next render frame.
+   * This VPU schedules an activation via a call to <code>requestAnimationFrame( callback )</code>.
+   *
+   * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
+   * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
+   */
+  @Nonnull
+  public static Cancelable animationFrame( @Nullable final String name, @Nonnull final Runnable task )
+  {
+    return animationFrameVpu().queue( generateName( "AnimationFrameTask", name ), task );
   }
 
   /**
@@ -286,7 +363,22 @@ public final class Zemeckis
   @Nonnull
   public static Cancelable afterFrame( @Nonnull final Runnable task )
   {
-    return afterFrameVpu().queue( task );
+    return afterFrame( null, task );
+  }
+
+  /**
+   * Queue the task to execute after the next browser render.
+   * The "afterFrame" tasks are invoked after the next frames render by responding to a message on a
+   * MessageChannel that is sent in {@code requestAnimationFrame()}.
+   *
+   * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
+   * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
+   */
+  @Nonnull
+  public static Cancelable afterFrame( @Nullable final String name, @Nonnull final Runnable task )
+  {
+    return afterFrameVpu().queue( generateName( "AfterFrameTask", name ), task );
   }
 
   /**
@@ -316,7 +408,26 @@ public final class Zemeckis
   @Nonnull
   public static Cancelable onIdle( @Nonnull final Runnable task )
   {
-    return onIdleVpu().queue( task );
+    return onIdle( null, task );
+  }
+
+  /**
+   * Queue the task to execute when the browser is idle.
+   * The browser activates the onIdle VirtualProcessorUnit when idle and will pass the
+   * duration for which the VPU may run. The VPU will execute tasks as long as there is tasks
+   * queued and the deadline has not been reached after which the VPU will return control to the
+   * browser. Unlike other VPUs, when the onIdle VirtualProcessorUnit completes the activation, there
+   * may still be tasks in the queue and if there is the VPU will re-schedule itself for another activation.
+   * This VPU schedules an activation via a call to <code>requestIdleCallback( callback )</code>.
+   *
+   * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
+   * @param task the task.
+   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
+   */
+  @Nonnull
+  public static Cancelable onIdle( @Nullable final String name, @Nonnull final Runnable task )
+  {
+    return onIdleVpu().queue( generateName( "OnIdleTask", name ), task );
   }
 
   /**
@@ -329,5 +440,39 @@ public final class Zemeckis
   public static VirtualProcessorUnit onIdleVpu()
   {
     return VirtualProcessorUnitsHolder.onIdleVpu();
+  }
+
+  /**
+   * Build name for task.
+   * If {@link Zemeckis#areNamesEnabled()} returns false then this method will return null, otherwise the specified
+   * name will be returned or a name synthesized from the prefix and a running number if no name is specified.
+   *
+   * @param prefix the prefix used if this method needs to generate name.
+   * @param name   the name specified by the user.
+   * @return the name.
+   */
+  @Nullable
+  static String generateName( @Nonnull final String prefix, @Nullable final String name )
+  {
+    return Zemeckis.areNamesEnabled() ?
+           null != name ? name : prefix + "@" + IdContainer.c_nextTaskId++ :
+           null;
+  }
+
+  @TestOnly
+  static void reset()
+  {
+    IdContainer.c_nextTaskId = 0;
+  }
+
+  private static final class IdContainer
+  {
+    /**
+     * Id of next node to be created.
+     * This is only used if {@link Zemeckis#areNamesEnabled()} returns true but no name has been supplied.
+     */
+    @OmitSymbol( unless = "zemeckis.enable_names" )
+    private static int c_nextTaskId = 1;
+
   }
 }

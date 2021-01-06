@@ -16,9 +16,9 @@ public final class DeadlineBasedExecutorTest
     final NoopTask task1 = new NoopTask();
     final NoopTask task2 = new NoopTask();
     final NoopTask task3 = new NoopTask();
-    executor.queue( task1 );
-    executor.queue( task2 );
-    executor.queue( task3 );
+    executor.queue( randomString(), task1 );
+    executor.queue( randomString(), task2 );
+    executor.queue( randomString(), task3 );
 
     assertEquals( executor.getScheduleForActivationCount(), 1 );
 

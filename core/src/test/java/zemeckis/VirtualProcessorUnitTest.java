@@ -20,11 +20,13 @@ public final class VirtualProcessorUnitTest
     final Runnable task = new NoopTask();
     assertEquals( taskQueue.size(), 0 );
     assertEquals( executor.getScheduleCount(), 0 );
-    vpu.queue( task );
+    final String taskName = randomString();
+    vpu.queue( taskName, task );
     assertEquals( taskQueue.size(), 1 );
     assertEquals( executor.getScheduleCount(), 1 );
     final TaskEntry entry = taskQueue.peek();
     assertNotNull( entry );
+    assertEquals( entry.toString(), taskName );
     assertEquals( entry.getTask(), task );
   }
 
