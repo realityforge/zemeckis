@@ -31,7 +31,7 @@ final class TaskEntry
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> Zemeckis.areNamesEnabled() || null == name,
-                    () -> "Arez-0013: Task passed a name '" + name + "' but Zemeckis.areNamesEnabled() is false" );
+                    () -> "Zemeckis-0013: Task passed a name '" + name + "' but Zemeckis.areNamesEnabled() is false" );
     }
     _name = Zemeckis.areNamesEnabled() ? Objects.requireNonNull( name ) : null;
     _task = Objects.requireNonNull( task );

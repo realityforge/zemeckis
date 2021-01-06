@@ -46,7 +46,7 @@ public final class TaskEntryTest
     ZemeckisTestUtil.disableNames();
     final String name = randomString();
     assertInvariantFailure( () -> new TaskEntry( name, new NoopTask(), null ),
-                            "Arez-0013: Task passed a name '" + name +
+                            "Zemeckis-0013: Task passed a name '" + name +
                             "' but Zemeckis.areNamesEnabled() is false" );
   }
 

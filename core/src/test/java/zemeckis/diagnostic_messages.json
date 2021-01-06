@@ -58,5 +58,10 @@
     "code": 12,
     "type": "API_INVARIANT",
     "messagePattern": "Zemeckis.becomeMacroTask(...) invoked for the task named '%s' but the VirtualProcessorUnit named '%s' is already active"
+  },
+  {
+    "code": 13,
+    "type": "API_INVARIANT",
+    "messagePattern": "Task passed a name '%s' but Zemeckis.areNamesEnabled() is false"
   }
 ]
