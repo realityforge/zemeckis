@@ -11,6 +11,8 @@ complete as there is too much un-said.
 
 * Add the ability to name the tasks for the purposes of debugging.
 
+* Remove the VirtualProcessorUnit class from the public API
+
 * Add grim annotations.
 
 ### Scheduler
