@@ -11,8 +11,8 @@ complete as there is too much un-said.
 
 * Add the ability to name the tasks for the purposes of debugging.
 
-* Remove the VirtualProcessorUnit class from the public API. ALso remove it and `VPU` from the documentation
-  in the `Zemeckis` class.
+* Remove the `VirtualProcessorUnit` class from the public API. ALso remove it and `VPU` from the documentation
+  in the `Zemeckis` class. Maybe just remove queue from the `VirtualProcessorUnit` API? 
 
 * Add grim annotations.
 
