@@ -5,6 +5,7 @@
 * Move all methods from the `Schedule` class to the `Zemeckis` class.
 * Rework the `Zemeckis.macroTask(...)`, `Zemeckis.microTask(...)`, `Zemeckis.animationFrame(...)`, `Zemeckis.afterFrame(...)` and `Zemeckis.onIdle(...)` methods so that they return a `Cancelable` that can be used to abort the scheduled task before it executes.
 * Make it possible to specify a human-readable name for a task when scheduling a task. Names are only supported if the `Zemeckis.areNamesEnabled()` returns true which is controlled by the compile time parameter `zemeckis.enable_names`.
+* Add `grim` annotations to make it easy to assert which parts of code is expected to be optimized away in different builds.
 
 ### [v0.03](https://github.com/realityforge/zemeckis/tree/v0.03) (2021-01-05) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.02...v0.03)
 

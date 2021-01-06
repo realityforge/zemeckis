@@ -1,5 +1,7 @@
 package zemeckis;
 
+import grim.annotations.OmitClinit;
+import grim.annotations.OmitSymbol;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -9,12 +11,14 @@ import static org.realityforge.braincheck.Guards.*;
 /**
  * Processing unit responsible for executing tasks.
  */
+@OmitClinit
 public final class VirtualProcessorUnit
 {
   /**
    * A human consumable name for node. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns
    * true and <tt>null</tt> otherwise.
    */
+  @OmitSymbol( unless = "zemeckis.enable_names" )
   @Nullable
   private final String _name;
   /**
@@ -48,6 +52,7 @@ public final class VirtualProcessorUnit
    *
    * @return the name of the VirtualProcessorUnit.
    */
+  @OmitSymbol( unless = "zemeckis.enable_names" )
   @Nonnull
   public String getName()
   {
@@ -80,6 +85,7 @@ public final class VirtualProcessorUnit
     return _executor;
   }
 
+  @OmitSymbol( unless = "zemeckis.enable_names" )
   @Nonnull
   @Override
   public String toString()

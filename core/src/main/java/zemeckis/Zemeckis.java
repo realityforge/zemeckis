@@ -1,5 +1,8 @@
 package zemeckis;
 
+import grim.annotations.OmitClinit;
+import grim.annotations.OmitSymbol;
+import grim.annotations.OmitType;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,6 +29,7 @@ import static org.realityforge.braincheck.Guards.*;
  * <li>"onIdle" VPU. Invoked when the browser is idle.</li>
  * </ul>
  */
+@OmitClinit
 public final class Zemeckis
 {
   private Zemeckis()
@@ -451,6 +455,7 @@ public final class Zemeckis
    * @param name   the name specified by the user.
    * @return the name.
    */
+  @OmitSymbol( unless = "zemeckis.enable_names" )
   @Nullable
   static String generateName( @Nonnull final String prefix, @Nullable final String name )
   {
@@ -465,6 +470,7 @@ public final class Zemeckis
     IdContainer.c_nextTaskId = 0;
   }
 
+  @OmitType( unless = "zemeckis.enable_names" )
   private static final class IdContainer
   {
     /**

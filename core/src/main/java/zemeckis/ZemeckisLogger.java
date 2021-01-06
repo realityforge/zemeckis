@@ -1,5 +1,7 @@
 package zemeckis;
 
+import grim.annotations.OmitSymbol;
+import grim.annotations.OmitType;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jsinterop.annotations.JsMethod;
@@ -28,6 +30,7 @@ final class ZemeckisLogger
     c_logger.log( message, throwable );
   }
 
+  @OmitSymbol
   @Nonnull
   static Logger getLogger()
   {
@@ -47,6 +50,7 @@ final class ZemeckisLogger
   /**
    * The noop log provider implementation.
    */
+  @OmitType
   private static final class NoopLogger
     implements Logger
   {
@@ -59,6 +63,7 @@ final class ZemeckisLogger
   /**
    * The console log provider implementation.
    */
+  @OmitType( unless = "zemeckis.logger=console" )
   private static final class ConsoleLogger
     extends AbstractConsoleLogger
   {
@@ -74,6 +79,7 @@ final class ZemeckisLogger
     }
   }
 
+  @OmitType( unless = "zemeckis.logger=console" )
   @JsType( isNative = true, name = "window.console", namespace = JsPackage.GLOBAL )
   private static final class NativeJsLoggerUtil
   {
@@ -84,6 +90,7 @@ final class ZemeckisLogger
   /**
    * The console log provider implementation providing javascript based console logging.
    */
+  @OmitType( unless = "zemeckis.logger=console" )
   private static abstract class AbstractConsoleLogger
     implements Logger
   {
@@ -101,6 +108,7 @@ final class ZemeckisLogger
   /**
    * The log provider implementation that forwards to another logger if present.
    */
+  @OmitType( unless = "zemeckis.logger=proxy" )
   static final class ProxyLogger
     implements Logger
   {

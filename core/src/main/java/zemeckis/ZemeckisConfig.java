@@ -1,12 +1,14 @@
 package zemeckis;
 
 import com.google.gwt.core.client.GWT;
+import grim.annotations.OmitType;
 import javax.annotation.Nonnull;
 
 /**
  * Location of all compile time configuration settings for framework.
  */
 @SuppressWarnings( "FieldMayBeFinal" )
+@OmitType
 final class ZemeckisConfig
 {
   @Nonnull

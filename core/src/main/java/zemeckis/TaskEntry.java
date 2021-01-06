@@ -1,5 +1,6 @@
 package zemeckis;
 
+import grim.annotations.OmitSymbol;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -12,6 +13,7 @@ final class TaskEntry
    * A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns
    * true and <tt>null</tt> otherwise.
    */
+  @OmitSymbol( unless = "zemeckis.enable_names" )
   @Nullable
   private final String _name;
   @Nullable
@@ -71,6 +73,7 @@ final class TaskEntry
     _task = null;
   }
 
+  @OmitSymbol( unless = "zemeckis.enable_names" )
   @Override
   public String toString()
   {

@@ -1,11 +1,13 @@
 package zemeckis;
 
+import grim.annotations.OmitType;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
 /**
  * A place to store utility methods that should not be used outside this package.
  */
+@OmitType( unless = "zemeckis.enable_names" )
 final class ZemeckisUtil
 {
   private ZemeckisUtil()

@@ -12,8 +12,6 @@ complete as there is too much un-said.
 * Remove the `VirtualProcessorUnit` class from the public API. ALso remove it and `VPU` from the documentation
   in the `Zemeckis` class. Maybe just remove queue from the `VirtualProcessorUnit` API? 
 
-* Add grim annotations.
-
 ### Scheduler
 
 * Scheduling using `task(...)` should use the priority and/or VPU of the creating task.
