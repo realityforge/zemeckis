@@ -9,9 +9,6 @@ complete as there is too much un-said.
 * Replace the term `macroTask` in API with `task` and maybe rather than scheduling on a subsequent macro task
   it just schedules to the current task?
 
-* Remove the `VirtualProcessorUnit` class from the public API. ALso remove it and `VPU` from the documentation
-  in the `Zemeckis` class. Maybe just remove queue from the `VirtualProcessorUnit` API? 
-
 ### Scheduler
 
 * Scheduling using `task(...)` should use the priority and/or VPU of the creating task.
