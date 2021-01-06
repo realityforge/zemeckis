@@ -106,7 +106,8 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <hr>
 <br>
-<pre>public final class <a href="../src-html/zemeckis/VirtualProcessorUnit.html#line.12">VirtualProcessorUnit</a>
+<pre>@OmitClinit
+public final class <a href="../src-html/zemeckis/VirtualProcessorUnit.html#line.15">VirtualProcessorUnit</a>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">Processing unit responsible for executing tasks.</div>
 </li>
@@ -134,8 +135,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../zemeckis/VirtualProcessorUnit.html#queue-java.lang.Runnable-">queue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
+<td class="colFirst"><code><a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../zemeckis/VirtualProcessorUnit.html#queue-java.lang.String-java.lang.Runnable-">queue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</code>
 <div class="block">Queue task for execution and enable the executor for activation if necessary.</div>
 </td>
 </tr>
@@ -171,7 +173,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;<a href="../src-html/zemeckis/VirtualProcessorUnit.html#line.52">getName</a>()</pre>
+<pre>@OmitSymbol(unless="zemeckis.enable_names")
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;<a href="../src-html/zemeckis/VirtualProcessorUnit.html#line.57">getName</a>()</pre>
 <div class="block">Return the name of the VirtualProcessorUnit.
  This method should NOT be invoked unless <a href="../zemeckis/Zemeckis.html#areNamesEnabled--"><code>Zemeckis.areNamesEnabled()</code></a> returns true and will throw an
  exception if invariant checking is enabled.</div>
@@ -181,18 +184,22 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="queue-java.lang.Runnable-">
+<a name="queue-java.lang.String-java.lang.Runnable-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>queue</h4>
-<pre>public&nbsp;void&nbsp;<a href="../src-html/zemeckis/VirtualProcessorUnit.html#line.69">queue</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public&nbsp;<a href="../zemeckis/Cancelable.html" title="interface in zemeckis">Cancelable</a>&nbsp;<a href="../src-html/zemeckis/VirtualProcessorUnit.html#line.77">queue</a>(<a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nullable.html?is-external=true" title="class or interface in javax.annotation">@Nullable</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                 <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;task)</pre>
 <div class="block">Queue task for execution and enable the executor for activation if necessary.
  The task must not be already queued.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - A human consumable name for the task. It should be non-null if <a href="../zemeckis/Zemeckis.html#areNamesEnabled--"><code>Zemeckis.areNamesEnabled()</code></a> returns true and <tt>null</tt> otherwise.</dd>
 <dd><code>task</code> - the task.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the <a href="../zemeckis/Cancelable.html" title="interface in zemeckis"><code>Cancelable</code></a> instance that can be used to cancel execution of the task.</dd>
 </dl>
 </li>
 </ul>
@@ -202,7 +209,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;<a href="../src-html/zemeckis/VirtualProcessorUnit.html#line.82">toString</a>()</pre>
+<pre>@OmitSymbol(unless="zemeckis.enable_names")
+ <a href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/Nonnull.html?is-external=true" title="class or interface in javax.annotation">@Nonnull</a> public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;<a href="../src-html/zemeckis/VirtualProcessorUnit.html#line.91">toString</a>()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>

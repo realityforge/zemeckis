@@ -8,168 +8,173 @@
 <div class="sourceContainer">
 <pre><span class="sourceLineNo">001</span>package zemeckis;<a name="line.1"></a>
 <span class="sourceLineNo">002</span><a name="line.2"></a>
-<span class="sourceLineNo">003</span>import java.util.Objects;<a name="line.3"></a>
-<span class="sourceLineNo">004</span>import javax.annotation.Nonnull;<a name="line.4"></a>
-<span class="sourceLineNo">005</span>import javax.annotation.Nullable;<a name="line.5"></a>
-<span class="sourceLineNo">006</span>import org.jetbrains.annotations.TestOnly;<a name="line.6"></a>
-<span class="sourceLineNo">007</span>import static org.realityforge.braincheck.Guards.*;<a name="line.7"></a>
-<span class="sourceLineNo">008</span><a name="line.8"></a>
-<span class="sourceLineNo">009</span>/**<a name="line.9"></a>
-<span class="sourceLineNo">010</span> * Processing unit responsible for executing tasks.<a name="line.10"></a>
-<span class="sourceLineNo">011</span> */<a name="line.11"></a>
-<span class="sourceLineNo">012</span>public final class VirtualProcessorUnit<a name="line.12"></a>
-<span class="sourceLineNo">013</span>{<a name="line.13"></a>
-<span class="sourceLineNo">014</span>  /**<a name="line.14"></a>
-<span class="sourceLineNo">015</span>   * A human consumable name for node. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns<a name="line.15"></a>
-<span class="sourceLineNo">016</span>   * true and &lt;tt&gt;null&lt;/tt&gt; otherwise.<a name="line.16"></a>
-<span class="sourceLineNo">017</span>   */<a name="line.17"></a>
-<span class="sourceLineNo">018</span>  @Nullable<a name="line.18"></a>
-<span class="sourceLineNo">019</span>  private final String _name;<a name="line.19"></a>
-<span class="sourceLineNo">020</span>  /**<a name="line.20"></a>
-<span class="sourceLineNo">021</span>   * The executor responsible for selecting and invoking tasks.<a name="line.21"></a>
-<span class="sourceLineNo">022</span>   */<a name="line.22"></a>
-<span class="sourceLineNo">023</span>  @Nonnull<a name="line.23"></a>
-<span class="sourceLineNo">024</span>  private final Executor _executor;<a name="line.24"></a>
-<span class="sourceLineNo">025</span><a name="line.25"></a>
-<span class="sourceLineNo">026</span>  /**<a name="line.26"></a>
-<span class="sourceLineNo">027</span>   * Create the processor unit.<a name="line.27"></a>
-<span class="sourceLineNo">028</span>   *<a name="line.28"></a>
-<span class="sourceLineNo">029</span>   * @param executor the associated task executor.<a name="line.29"></a>
-<span class="sourceLineNo">030</span>   */<a name="line.30"></a>
-<span class="sourceLineNo">031</span>  VirtualProcessorUnit( @Nullable final String name, @Nonnull final Executor executor )<a name="line.31"></a>
-<span class="sourceLineNo">032</span>  {<a name="line.32"></a>
-<span class="sourceLineNo">033</span>    if ( Zemeckis.shouldCheckApiInvariants() )<a name="line.33"></a>
-<span class="sourceLineNo">034</span>    {<a name="line.34"></a>
-<span class="sourceLineNo">035</span>      apiInvariant( () -&gt; Zemeckis.areNamesEnabled() || null == name,<a name="line.35"></a>
-<span class="sourceLineNo">036</span>                    () -&gt; "Zemeckis-0002: VirtualProcessorUnit passed a name '" + name + "' but " +<a name="line.36"></a>
-<span class="sourceLineNo">037</span>                          "Zemeckis.areNamesEnabled() is false" );<a name="line.37"></a>
-<span class="sourceLineNo">038</span>    }<a name="line.38"></a>
-<span class="sourceLineNo">039</span>    _name = Zemeckis.areNamesEnabled() ? Objects.requireNonNull( name ) : null;<a name="line.39"></a>
-<span class="sourceLineNo">040</span>    _executor = Objects.requireNonNull( executor );<a name="line.40"></a>
-<span class="sourceLineNo">041</span>    _executor.init( activationFn -&gt; VirtualProcessorUnitsHolder.activate( this, activationFn ) );<a name="line.41"></a>
-<span class="sourceLineNo">042</span>  }<a name="line.42"></a>
-<span class="sourceLineNo">043</span><a name="line.43"></a>
-<span class="sourceLineNo">044</span>  /**<a name="line.44"></a>
-<span class="sourceLineNo">045</span>   * Return the name of the VirtualProcessorUnit.<a name="line.45"></a>
-<span class="sourceLineNo">046</span>   * This method should NOT be invoked unless {@link Zemeckis#areNamesEnabled()} returns true and will throw an<a name="line.46"></a>
-<span class="sourceLineNo">047</span>   * exception if invariant checking is enabled.<a name="line.47"></a>
-<span class="sourceLineNo">048</span>   *<a name="line.48"></a>
-<span class="sourceLineNo">049</span>   * @return the name of the VirtualProcessorUnit.<a name="line.49"></a>
-<span class="sourceLineNo">050</span>   */<a name="line.50"></a>
-<span class="sourceLineNo">051</span>  @Nonnull<a name="line.51"></a>
-<span class="sourceLineNo">052</span>  public String getName()<a name="line.52"></a>
-<span class="sourceLineNo">053</span>  {<a name="line.53"></a>
-<span class="sourceLineNo">054</span>    if ( Zemeckis.shouldCheckApiInvariants() )<a name="line.54"></a>
-<span class="sourceLineNo">055</span>    {<a name="line.55"></a>
-<span class="sourceLineNo">056</span>      apiInvariant( Zemeckis::areNamesEnabled,<a name="line.56"></a>
-<span class="sourceLineNo">057</span>                    () -&gt; "Zemeckis-0003: VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false" );<a name="line.57"></a>
-<span class="sourceLineNo">058</span>    }<a name="line.58"></a>
-<span class="sourceLineNo">059</span>    assert null != _name;<a name="line.59"></a>
-<span class="sourceLineNo">060</span>    return _name;<a name="line.60"></a>
-<span class="sourceLineNo">061</span>  }<a name="line.61"></a>
-<span class="sourceLineNo">062</span><a name="line.62"></a>
-<span class="sourceLineNo">063</span>  /**<a name="line.63"></a>
-<span class="sourceLineNo">064</span>   * Queue task for execution and enable the executor for activation if necessary.<a name="line.64"></a>
-<span class="sourceLineNo">065</span>   * The task must not be already queued.<a name="line.65"></a>
-<span class="sourceLineNo">066</span>   *<a name="line.66"></a>
-<span class="sourceLineNo">067</span>   * @param task the task.<a name="line.67"></a>
-<span class="sourceLineNo">068</span>   */<a name="line.68"></a>
-<span class="sourceLineNo">069</span>  public void queue( @Nonnull final Runnable task )<a name="line.69"></a>
-<span class="sourceLineNo">070</span>  {<a name="line.70"></a>
-<span class="sourceLineNo">071</span>    getExecutor().queue( task );<a name="line.71"></a>
-<span class="sourceLineNo">072</span>  }<a name="line.72"></a>
-<span class="sourceLineNo">073</span><a name="line.73"></a>
-<span class="sourceLineNo">074</span>  @Nonnull<a name="line.74"></a>
-<span class="sourceLineNo">075</span>  Executor getExecutor()<a name="line.75"></a>
-<span class="sourceLineNo">076</span>  {<a name="line.76"></a>
-<span class="sourceLineNo">077</span>    return _executor;<a name="line.77"></a>
-<span class="sourceLineNo">078</span>  }<a name="line.78"></a>
-<span class="sourceLineNo">079</span><a name="line.79"></a>
-<span class="sourceLineNo">080</span>  @Nonnull<a name="line.80"></a>
-<span class="sourceLineNo">081</span>  @Override<a name="line.81"></a>
-<span class="sourceLineNo">082</span>  public String toString()<a name="line.82"></a>
-<span class="sourceLineNo">083</span>  {<a name="line.83"></a>
-<span class="sourceLineNo">084</span>    if ( Zemeckis.areNamesEnabled() )<a name="line.84"></a>
-<span class="sourceLineNo">085</span>    {<a name="line.85"></a>
-<span class="sourceLineNo">086</span>      return getName();<a name="line.86"></a>
-<span class="sourceLineNo">087</span>    }<a name="line.87"></a>
-<span class="sourceLineNo">088</span>    else<a name="line.88"></a>
-<span class="sourceLineNo">089</span>    {<a name="line.89"></a>
-<span class="sourceLineNo">090</span>      return super.toString();<a name="line.90"></a>
-<span class="sourceLineNo">091</span>    }<a name="line.91"></a>
-<span class="sourceLineNo">092</span>  }<a name="line.92"></a>
-<span class="sourceLineNo">093</span><a name="line.93"></a>
-<span class="sourceLineNo">094</span>  /**<a name="line.94"></a>
-<span class="sourceLineNo">095</span>   * Interface via which the {@link VirtualProcessorUnit} executes tasks.<a name="line.95"></a>
-<span class="sourceLineNo">096</span>   * The executor is responsible for activating the underlying {@link VirtualProcessorUnit} when required.<a name="line.96"></a>
-<span class="sourceLineNo">097</span>   * Each time the {@link VirtualProcessorUnit} is activated it will use callback to talk to executor<a name="line.97"></a>
-<span class="sourceLineNo">098</span>   * and the executor is responsible for selecting and executing tasks until it decides to return control<a name="line.98"></a>
-<span class="sourceLineNo">099</span>   * to the {@link VirtualProcessorUnit}.<a name="line.99"></a>
-<span class="sourceLineNo">100</span>   */<a name="line.100"></a>
-<span class="sourceLineNo">101</span>  interface Executor<a name="line.101"></a>
-<span class="sourceLineNo">102</span>  {<a name="line.102"></a>
-<span class="sourceLineNo">103</span>    /**<a name="line.103"></a>
-<span class="sourceLineNo">104</span>     * Initialize the executor passing in the context associated with the underlying {@link VirtualProcessorUnit}.<a name="line.104"></a>
-<span class="sourceLineNo">105</span>     *<a name="line.105"></a>
-<span class="sourceLineNo">106</span>     * @param context the context represent the associated {@link VirtualProcessorUnit}.<a name="line.106"></a>
-<span class="sourceLineNo">107</span>     */<a name="line.107"></a>
-<span class="sourceLineNo">108</span>    void init( @Nonnull Context context );<a name="line.108"></a>
-<span class="sourceLineNo">109</span><a name="line.109"></a>
-<span class="sourceLineNo">110</span>    /**<a name="line.110"></a>
-<span class="sourceLineNo">111</span>     * Reset state of executor.<a name="line.111"></a>
-<span class="sourceLineNo">112</span>     * This is only used from within the test framework.<a name="line.112"></a>
-<span class="sourceLineNo">113</span>     */<a name="line.113"></a>
-<span class="sourceLineNo">114</span>    @TestOnly<a name="line.114"></a>
-<span class="sourceLineNo">115</span>    void reset();<a name="line.115"></a>
-<span class="sourceLineNo">116</span><a name="line.116"></a>
-<span class="sourceLineNo">117</span>    /**<a name="line.117"></a>
-<span class="sourceLineNo">118</span>     * Queue task for execution and enable the executor for activation if necessary.<a name="line.118"></a>
-<span class="sourceLineNo">119</span>     * The task must not be already queued.<a name="line.119"></a>
-<span class="sourceLineNo">120</span>     *<a name="line.120"></a>
-<span class="sourceLineNo">121</span>     * @param task the task.<a name="line.121"></a>
-<span class="sourceLineNo">122</span>     */<a name="line.122"></a>
-<span class="sourceLineNo">123</span>    void queue( @Nonnull Runnable task );<a name="line.123"></a>
-<span class="sourceLineNo">124</span><a name="line.124"></a>
-<span class="sourceLineNo">125</span>    /**<a name="line.125"></a>
-<span class="sourceLineNo">126</span>     * Queue task for execution next. The executor is not activated. The task must not be already queued.<a name="line.126"></a>
-<span class="sourceLineNo">127</span>     *<a name="line.127"></a>
-<span class="sourceLineNo">128</span>     * @param task the task.<a name="line.128"></a>
-<span class="sourceLineNo">129</span>     */<a name="line.129"></a>
-<span class="sourceLineNo">130</span>    void queueNext( @Nonnull Runnable task );<a name="line.130"></a>
-<span class="sourceLineNo">131</span><a name="line.131"></a>
-<span class="sourceLineNo">132</span>    /**<a name="line.132"></a>
-<span class="sourceLineNo">133</span>     * Activate the executor.<a name="line.133"></a>
+<span class="sourceLineNo">003</span>import grim.annotations.OmitClinit;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import grim.annotations.OmitSymbol;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import java.util.Objects;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import javax.annotation.Nonnull;<a name="line.6"></a>
+<span class="sourceLineNo">007</span>import javax.annotation.Nullable;<a name="line.7"></a>
+<span class="sourceLineNo">008</span>import org.jetbrains.annotations.TestOnly;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import static org.realityforge.braincheck.Guards.*;<a name="line.9"></a>
+<span class="sourceLineNo">010</span><a name="line.10"></a>
+<span class="sourceLineNo">011</span>/**<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Processing unit responsible for executing tasks.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> */<a name="line.13"></a>
+<span class="sourceLineNo">014</span>@OmitClinit<a name="line.14"></a>
+<span class="sourceLineNo">015</span>public final class VirtualProcessorUnit<a name="line.15"></a>
+<span class="sourceLineNo">016</span>{<a name="line.16"></a>
+<span class="sourceLineNo">017</span>  /**<a name="line.17"></a>
+<span class="sourceLineNo">018</span>   * A human consumable name for node. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns<a name="line.18"></a>
+<span class="sourceLineNo">019</span>   * true and &lt;tt&gt;null&lt;/tt&gt; otherwise.<a name="line.19"></a>
+<span class="sourceLineNo">020</span>   */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>  @OmitSymbol( unless = "zemeckis.enable_names" )<a name="line.21"></a>
+<span class="sourceLineNo">022</span>  @Nullable<a name="line.22"></a>
+<span class="sourceLineNo">023</span>  private final String _name;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>  /**<a name="line.24"></a>
+<span class="sourceLineNo">025</span>   * The executor responsible for selecting and invoking tasks.<a name="line.25"></a>
+<span class="sourceLineNo">026</span>   */<a name="line.26"></a>
+<span class="sourceLineNo">027</span>  @Nonnull<a name="line.27"></a>
+<span class="sourceLineNo">028</span>  private final Executor _executor;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>  /**<a name="line.30"></a>
+<span class="sourceLineNo">031</span>   * Create the processor unit.<a name="line.31"></a>
+<span class="sourceLineNo">032</span>   *<a name="line.32"></a>
+<span class="sourceLineNo">033</span>   * @param executor the associated task executor.<a name="line.33"></a>
+<span class="sourceLineNo">034</span>   */<a name="line.34"></a>
+<span class="sourceLineNo">035</span>  VirtualProcessorUnit( @Nullable final String name, @Nonnull final Executor executor )<a name="line.35"></a>
+<span class="sourceLineNo">036</span>  {<a name="line.36"></a>
+<span class="sourceLineNo">037</span>    if ( Zemeckis.shouldCheckApiInvariants() )<a name="line.37"></a>
+<span class="sourceLineNo">038</span>    {<a name="line.38"></a>
+<span class="sourceLineNo">039</span>      apiInvariant( () -&gt; Zemeckis.areNamesEnabled() || null == name,<a name="line.39"></a>
+<span class="sourceLineNo">040</span>                    () -&gt; "Zemeckis-0002: VirtualProcessorUnit passed a name '" + name + "' but " +<a name="line.40"></a>
+<span class="sourceLineNo">041</span>                          "Zemeckis.areNamesEnabled() is false" );<a name="line.41"></a>
+<span class="sourceLineNo">042</span>    }<a name="line.42"></a>
+<span class="sourceLineNo">043</span>    _name = Zemeckis.areNamesEnabled() ? Objects.requireNonNull( name ) : null;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    _executor = Objects.requireNonNull( executor );<a name="line.44"></a>
+<span class="sourceLineNo">045</span>    _executor.init( activationFn -&gt; VirtualProcessorUnitsHolder.activate( this, activationFn ) );<a name="line.45"></a>
+<span class="sourceLineNo">046</span>  }<a name="line.46"></a>
+<span class="sourceLineNo">047</span><a name="line.47"></a>
+<span class="sourceLineNo">048</span>  /**<a name="line.48"></a>
+<span class="sourceLineNo">049</span>   * Return the name of the VirtualProcessorUnit.<a name="line.49"></a>
+<span class="sourceLineNo">050</span>   * This method should NOT be invoked unless {@link Zemeckis#areNamesEnabled()} returns true and will throw an<a name="line.50"></a>
+<span class="sourceLineNo">051</span>   * exception if invariant checking is enabled.<a name="line.51"></a>
+<span class="sourceLineNo">052</span>   *<a name="line.52"></a>
+<span class="sourceLineNo">053</span>   * @return the name of the VirtualProcessorUnit.<a name="line.53"></a>
+<span class="sourceLineNo">054</span>   */<a name="line.54"></a>
+<span class="sourceLineNo">055</span>  @OmitSymbol( unless = "zemeckis.enable_names" )<a name="line.55"></a>
+<span class="sourceLineNo">056</span>  @Nonnull<a name="line.56"></a>
+<span class="sourceLineNo">057</span>  public String getName()<a name="line.57"></a>
+<span class="sourceLineNo">058</span>  {<a name="line.58"></a>
+<span class="sourceLineNo">059</span>    if ( Zemeckis.shouldCheckApiInvariants() )<a name="line.59"></a>
+<span class="sourceLineNo">060</span>    {<a name="line.60"></a>
+<span class="sourceLineNo">061</span>      apiInvariant( Zemeckis::areNamesEnabled,<a name="line.61"></a>
+<span class="sourceLineNo">062</span>                    () -&gt; "Zemeckis-0003: VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false" );<a name="line.62"></a>
+<span class="sourceLineNo">063</span>    }<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    assert null != _name;<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    return _name;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>  }<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span>  /**<a name="line.68"></a>
+<span class="sourceLineNo">069</span>   * Queue task for execution and enable the executor for activation if necessary.<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   * The task must not be already queued.<a name="line.70"></a>
+<span class="sourceLineNo">071</span>   *<a name="line.71"></a>
+<span class="sourceLineNo">072</span>   * @param name A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns true and &lt;tt&gt;null&lt;/tt&gt; otherwise.<a name="line.72"></a>
+<span class="sourceLineNo">073</span>   * @param task the task.<a name="line.73"></a>
+<span class="sourceLineNo">074</span>   * @return the {@link Cancelable} instance that can be used to cancel execution of the task.<a name="line.74"></a>
+<span class="sourceLineNo">075</span>   */<a name="line.75"></a>
+<span class="sourceLineNo">076</span>  @Nonnull<a name="line.76"></a>
+<span class="sourceLineNo">077</span>  public Cancelable queue( @Nullable final String name, @Nonnull final Runnable task )<a name="line.77"></a>
+<span class="sourceLineNo">078</span>  {<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    return getExecutor().queue( name, task );<a name="line.79"></a>
+<span class="sourceLineNo">080</span>  }<a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>  @Nonnull<a name="line.82"></a>
+<span class="sourceLineNo">083</span>  Executor getExecutor()<a name="line.83"></a>
+<span class="sourceLineNo">084</span>  {<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    return _executor;<a name="line.85"></a>
+<span class="sourceLineNo">086</span>  }<a name="line.86"></a>
+<span class="sourceLineNo">087</span><a name="line.87"></a>
+<span class="sourceLineNo">088</span>  @OmitSymbol( unless = "zemeckis.enable_names" )<a name="line.88"></a>
+<span class="sourceLineNo">089</span>  @Nonnull<a name="line.89"></a>
+<span class="sourceLineNo">090</span>  @Override<a name="line.90"></a>
+<span class="sourceLineNo">091</span>  public String toString()<a name="line.91"></a>
+<span class="sourceLineNo">092</span>  {<a name="line.92"></a>
+<span class="sourceLineNo">093</span>    return Zemeckis.areNamesEnabled() ? getName() : super.toString();<a name="line.93"></a>
+<span class="sourceLineNo">094</span>  }<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>  /**<a name="line.96"></a>
+<span class="sourceLineNo">097</span>   * Interface via which the {@link VirtualProcessorUnit} executes tasks.<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   * The executor is responsible for activating the underlying {@link VirtualProcessorUnit} when required.<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   * Each time the {@link VirtualProcessorUnit} is activated it will use callback to talk to executor<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   * and the executor is responsible for selecting and executing tasks until it decides to return control<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   * to the {@link VirtualProcessorUnit}.<a name="line.101"></a>
+<span class="sourceLineNo">102</span>   */<a name="line.102"></a>
+<span class="sourceLineNo">103</span>  interface Executor<a name="line.103"></a>
+<span class="sourceLineNo">104</span>  {<a name="line.104"></a>
+<span class="sourceLineNo">105</span>    /**<a name="line.105"></a>
+<span class="sourceLineNo">106</span>     * Initialize the executor passing in the context associated with the underlying {@link VirtualProcessorUnit}.<a name="line.106"></a>
+<span class="sourceLineNo">107</span>     *<a name="line.107"></a>
+<span class="sourceLineNo">108</span>     * @param context the context represent the associated {@link VirtualProcessorUnit}.<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     */<a name="line.109"></a>
+<span class="sourceLineNo">110</span>    void init( @Nonnull Context context );<a name="line.110"></a>
+<span class="sourceLineNo">111</span><a name="line.111"></a>
+<span class="sourceLineNo">112</span>    /**<a name="line.112"></a>
+<span class="sourceLineNo">113</span>     * Reset state of executor.<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     * This is only used from within the test framework.<a name="line.114"></a>
+<span class="sourceLineNo">115</span>     */<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    @TestOnly<a name="line.116"></a>
+<span class="sourceLineNo">117</span>    void reset();<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>    /**<a name="line.119"></a>
+<span class="sourceLineNo">120</span>     * Queue task for execution and enable the executor for activation if necessary.<a name="line.120"></a>
+<span class="sourceLineNo">121</span>     * The task must not be already queued.<a name="line.121"></a>
+<span class="sourceLineNo">122</span>     *<a name="line.122"></a>
+<span class="sourceLineNo">123</span>     * @param name A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns true and &lt;tt&gt;null&lt;/tt&gt; otherwise.<a name="line.123"></a>
+<span class="sourceLineNo">124</span>     * @param task the task.<a name="line.124"></a>
+<span class="sourceLineNo">125</span>     * @return the {@link Cancelable} instance that can be used to cancel execution of the task.<a name="line.125"></a>
+<span class="sourceLineNo">126</span>     */<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    @Nonnull<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    Cancelable queue( @Nullable String name, @Nonnull Runnable task );<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>    /**<a name="line.130"></a>
+<span class="sourceLineNo">131</span>     * Queue task for execution next. The executor is not activated. The task must not be already queued.<a name="line.131"></a>
+<span class="sourceLineNo">132</span>     *<a name="line.132"></a>
+<span class="sourceLineNo">133</span>     * @param task the task.<a name="line.133"></a>
 <span class="sourceLineNo">134</span>     */<a name="line.134"></a>
-<span class="sourceLineNo">135</span>    void activate();<a name="line.135"></a>
-<span class="sourceLineNo">136</span>  }<a name="line.136"></a>
-<span class="sourceLineNo">137</span><a name="line.137"></a>
-<span class="sourceLineNo">138</span>  @FunctionalInterface<a name="line.138"></a>
-<span class="sourceLineNo">139</span>  interface ActivationFn<a name="line.139"></a>
-<span class="sourceLineNo">140</span>  {<a name="line.140"></a>
-<span class="sourceLineNo">141</span>    /**<a name="line.141"></a>
-<span class="sourceLineNo">142</span>     * Callback method invoked by {@link Context#activate(ActivationFn)} to process tasks.<a name="line.142"></a>
-<span class="sourceLineNo">143</span>     */<a name="line.143"></a>
-<span class="sourceLineNo">144</span>    void invoke();<a name="line.144"></a>
-<span class="sourceLineNo">145</span>  }<a name="line.145"></a>
-<span class="sourceLineNo">146</span><a name="line.146"></a>
-<span class="sourceLineNo">147</span>  /**<a name="line.147"></a>
-<span class="sourceLineNo">148</span>   * Interface representing {@link VirtualProcessorUnit} passed to {@link Executor} during initialization.<a name="line.148"></a>
-<span class="sourceLineNo">149</span>   * This interface is designed to allow the {@link Executor} to activate the {@link VirtualProcessorUnit}<a name="line.149"></a>
-<span class="sourceLineNo">150</span>   * when it needs to execute tasks.<a name="line.150"></a>
-<span class="sourceLineNo">151</span>   */<a name="line.151"></a>
-<span class="sourceLineNo">152</span>  interface Context<a name="line.152"></a>
-<span class="sourceLineNo">153</span>  {<a name="line.153"></a>
-<span class="sourceLineNo">154</span>    /**<a name="line.154"></a>
-<span class="sourceLineNo">155</span>     * Activate the associated {@link VirtualProcessorUnit}.<a name="line.155"></a>
-<span class="sourceLineNo">156</span>     * This method MUST only be called if there is no {@link VirtualProcessorUnit} unit currently activated.<a name="line.156"></a>
-<span class="sourceLineNo">157</span>     * The activation will set the "current" VPU for the duration of the activation and invoke the<a name="line.157"></a>
-<span class="sourceLineNo">158</span>     * {@link ActivationFn#invoke()} function passed into the method.<a name="line.158"></a>
-<span class="sourceLineNo">159</span>     *<a name="line.159"></a>
-<span class="sourceLineNo">160</span>     * @param activationFn the function passed to process tasks.<a name="line.160"></a>
-<span class="sourceLineNo">161</span>     */<a name="line.161"></a>
-<span class="sourceLineNo">162</span>    void activate( @Nonnull ActivationFn activationFn );<a name="line.162"></a>
-<span class="sourceLineNo">163</span>  }<a name="line.163"></a>
-<span class="sourceLineNo">164</span>}<a name="line.164"></a>
+<span class="sourceLineNo">135</span>    void queueNext( @Nullable final String name, @Nonnull Runnable task );<a name="line.135"></a>
+<span class="sourceLineNo">136</span><a name="line.136"></a>
+<span class="sourceLineNo">137</span>    /**<a name="line.137"></a>
+<span class="sourceLineNo">138</span>     * Activate the executor.<a name="line.138"></a>
+<span class="sourceLineNo">139</span>     */<a name="line.139"></a>
+<span class="sourceLineNo">140</span>    void activate();<a name="line.140"></a>
+<span class="sourceLineNo">141</span>  }<a name="line.141"></a>
+<span class="sourceLineNo">142</span><a name="line.142"></a>
+<span class="sourceLineNo">143</span>  @FunctionalInterface<a name="line.143"></a>
+<span class="sourceLineNo">144</span>  interface ActivationFn<a name="line.144"></a>
+<span class="sourceLineNo">145</span>  {<a name="line.145"></a>
+<span class="sourceLineNo">146</span>    /**<a name="line.146"></a>
+<span class="sourceLineNo">147</span>     * Callback method invoked by {@link Context#activate(ActivationFn)} to process tasks.<a name="line.147"></a>
+<span class="sourceLineNo">148</span>     */<a name="line.148"></a>
+<span class="sourceLineNo">149</span>    void invoke();<a name="line.149"></a>
+<span class="sourceLineNo">150</span>  }<a name="line.150"></a>
+<span class="sourceLineNo">151</span><a name="line.151"></a>
+<span class="sourceLineNo">152</span>  /**<a name="line.152"></a>
+<span class="sourceLineNo">153</span>   * Interface representing {@link VirtualProcessorUnit} passed to {@link Executor} during initialization.<a name="line.153"></a>
+<span class="sourceLineNo">154</span>   * This interface is designed to allow the {@link Executor} to activate the {@link VirtualProcessorUnit}<a name="line.154"></a>
+<span class="sourceLineNo">155</span>   * when it needs to execute tasks.<a name="line.155"></a>
+<span class="sourceLineNo">156</span>   */<a name="line.156"></a>
+<span class="sourceLineNo">157</span>  interface Context<a name="line.157"></a>
+<span class="sourceLineNo">158</span>  {<a name="line.158"></a>
+<span class="sourceLineNo">159</span>    /**<a name="line.159"></a>
+<span class="sourceLineNo">160</span>     * Activate the associated {@link VirtualProcessorUnit}.<a name="line.160"></a>
+<span class="sourceLineNo">161</span>     * This method MUST only be called if there is no {@link VirtualProcessorUnit} unit currently activated.<a name="line.161"></a>
+<span class="sourceLineNo">162</span>     * The activation will set the "current" VPU for the duration of the activation and invoke the<a name="line.162"></a>
+<span class="sourceLineNo">163</span>     * {@link ActivationFn#invoke()} function passed into the method.<a name="line.163"></a>
+<span class="sourceLineNo">164</span>     *<a name="line.164"></a>
+<span class="sourceLineNo">165</span>     * @param activationFn the function passed to process tasks.<a name="line.165"></a>
+<span class="sourceLineNo">166</span>     */<a name="line.166"></a>
+<span class="sourceLineNo">167</span>    void activate( @Nonnull ActivationFn activationFn );<a name="line.167"></a>
+<span class="sourceLineNo">168</span>  }<a name="line.168"></a>
+<span class="sourceLineNo">169</span>}<a name="line.169"></a>
 
 
 
