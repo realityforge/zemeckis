@@ -6,12 +6,9 @@ complete as there is too much un-said.
 
 ### Pre-Beta-Release
 
-* Replace the term `macroTask` in API with `task` and maybe rather than scheduling on a subsequent macro task
-  it just schedules to the current task?
+* Add a `task(...)` method that schedules to the current VPU if any else invokes `becomeMacroTask`.
 
 ### Scheduler
-
-* Scheduling using `task(...)` should use the priority and/or VPU of the creating task.
 
 * Support scheduling of tasks with delay and repeating tasks inside a WebWorker where the WebWorker
   is responsible for scheduling the tasks. This produces a more stable scheduling at the expense of
