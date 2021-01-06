@@ -56,7 +56,7 @@ public final class ZemeckisTest
                                                         -1 ),
                             "Zemeckis-0008: Zemeckis.delayedTask(...) named 'DelayedTask@2' passed a negative delay. Actual value passed is -1" );
 
-    latch.await( 1, TimeUnit.SECONDS );
+    assertTrue( latch.await( 1, TimeUnit.SECONDS ) );
     assertEquals( latch.getCount(), 0 );
     if ( !errors.isEmpty() )
     {
@@ -74,7 +74,7 @@ public final class ZemeckisTest
     final Cancelable token =
       Zemeckis.delayedTask( () -> errors.add( "Unexpected task execution" ), 20 );
     token.cancel();
-    latch.await( 100, TimeUnit.MILLISECONDS );
+    assertFalse( latch.await( 100, TimeUnit.MILLISECONDS ) );
     assertEquals( latch.getCount(), count );
     if ( !errors.isEmpty() )
     {
@@ -109,7 +109,7 @@ public final class ZemeckisTest
                                                          -1 ),
                             "Zemeckis-0009: Zemeckis.periodicTask(...) named 'P2' passed a non-positive period. Actual value passed is -1" );
 
-    latch.await( 1, TimeUnit.SECONDS );
+    assertTrue( latch.await( 1, TimeUnit.SECONDS ) );
     assertEquals( latch.getCount(), 0 );
     if ( !errors.isEmpty() )
     {
@@ -196,7 +196,7 @@ public final class ZemeckisTest
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );
 
-    latch.await( 1, TimeUnit.SECONDS );
+    assertTrue( latch.await( 1, TimeUnit.SECONDS ) );
     assertEquals( latch.getCount(), 0 );
     assertEquals( cancelable1.toString(), "MacroTask@0" );
     assertEquals( cancelable2.toString(), name1 );
@@ -253,6 +253,7 @@ public final class ZemeckisTest
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );
 
+    //noinspection ResultOfMethodCallIgnored
     latch.await( 100, TimeUnit.MILLISECONDS );
     // The latch should be 4 or 5. 4 if the scheduled task runs before the
     // cancel can be invoked. But the scheduler only has one thread so it
