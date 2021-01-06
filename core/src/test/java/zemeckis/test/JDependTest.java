@@ -27,11 +27,9 @@ public class JDependTest
     final JavaPackage zemeckis = constraint.addPackage( "zemeckis" );
     final JavaPackage braincheck = constraint.addPackage( "org.realityforge.braincheck" );
     final JavaPackage jsinterop = constraint.addPackage( "jsinterop.annotations" );
-    final JavaPackage gwt = constraint.addPackage( "com.google.gwt.core.client" );
     final JavaPackage elementalPromise = constraint.addPackage( "elemental2.promise" );
     final JavaPackage elementalDom = constraint.addPackage( "elemental2.dom" );
 
-    zemeckis.dependsUpon( gwt );
     zemeckis.dependsUpon( jsinterop );
     zemeckis.dependsUpon( braincheck );
     zemeckis.dependsUpon( elementalPromise );

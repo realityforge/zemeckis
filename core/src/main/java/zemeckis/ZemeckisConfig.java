@@ -1,6 +1,5 @@
 package zemeckis;
 
-import com.google.gwt.core.client.GWT;
 import grim.annotations.OmitType;
 import javax.annotation.Nonnull;
 
@@ -18,6 +17,7 @@ final class ZemeckisConfig
   private static boolean PURGE_ON_RUNAWAY = PROVIDER.purgeTasksWhenRunawayDetected();
   private static boolean UNCAUGHT_ERROR_HANDLERS = PROVIDER.areUncaughtErrorHandlersEnabled();
   private static final String LOGGER_TYPE = PROVIDER.loggerType();
+  private static final boolean JVM = PROVIDER.isJvm();
 
   private ZemeckisConfig()
   {
@@ -35,7 +35,7 @@ final class ZemeckisConfig
 
   static boolean isJvm()
   {
-    return !GWT.isScript();
+    return JVM;
   }
 
   static boolean purgeTasksWhenRunawayDetected()
@@ -96,6 +96,13 @@ final class ZemeckisConfig
     {
       return System.getProperty( "zemeckis.logger", PRODUCTION_MODE ? "basic" : "proxy" );
     }
+
+    @GwtIncompatible
+    @Override
+    boolean isJvm()
+    {
+      return true;
+    }
   }
 
   @SuppressWarnings( { "unused", "StringEquality" } )
@@ -127,6 +134,11 @@ final class ZemeckisConfig
        * Valid values are: "none", "console" and "proxy" (for testing)
        */
       return System.getProperty( "zemeckis.logger" );
+    }
+
+    boolean isJvm()
+    {
+      return false;
     }
   }
 }
