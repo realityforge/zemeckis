@@ -2,6 +2,24 @@
   {
     "code": "java.annotation.added",
     "description": "Element newly annotated with 'grim.annotations.OmitClinit'.",
+    "element": "class zemeckis.VirtualProcessorUnit",
+    "classification": {
+      "SOURCE": "EQUIVALENT",
+      "BINARY": "EQUIVALENT",
+      "SEMANTIC": "POTENTIALLY_BREAKING"
+    },
+    "attachments": {
+      "annotation": "@grim.annotations.OmitClinit",
+      "annotationType": "grim.annotations.OmitClinit",
+      "classQualifiedName": "zemeckis.VirtualProcessorUnit",
+      "classSimpleName": "VirtualProcessorUnit",
+      "elementKind": "class",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.annotation.added",
+    "description": "Element newly annotated with 'grim.annotations.OmitClinit'.",
     "element": "class zemeckis.Zemeckis",
     "classification": {
       "SOURCE": "EQUIVALENT",
@@ -46,6 +64,44 @@
       "classSimpleName": "Zemeckis",
       "elementKind": "method",
       "methodName": "now",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.annotation.added",
+    "description": "Element newly annotated with 'grim.annotations.OmitSymbol'.",
+    "element": "method java.lang.String zemeckis.VirtualProcessorUnit::getName()",
+    "classification": {
+      "SOURCE": "EQUIVALENT",
+      "BINARY": "EQUIVALENT",
+      "SEMANTIC": "POTENTIALLY_BREAKING"
+    },
+    "attachments": {
+      "annotation": "@grim.annotations.OmitSymbol(unless = \"zemeckis.enable_names\")",
+      "annotationType": "grim.annotations.OmitSymbol",
+      "classQualifiedName": "zemeckis.VirtualProcessorUnit",
+      "classSimpleName": "VirtualProcessorUnit",
+      "elementKind": "method",
+      "methodName": "getName",
+      "package": "zemeckis"
+    }
+  },
+  {
+    "code": "java.annotation.added",
+    "description": "Element newly annotated with 'grim.annotations.OmitSymbol'.",
+    "element": "method java.lang.String zemeckis.VirtualProcessorUnit::toString()",
+    "classification": {
+      "SOURCE": "EQUIVALENT",
+      "BINARY": "EQUIVALENT",
+      "SEMANTIC": "POTENTIALLY_BREAKING"
+    },
+    "attachments": {
+      "annotation": "@grim.annotations.OmitSymbol(unless = \"zemeckis.enable_names\")",
+      "annotationType": "grim.annotations.OmitSymbol",
+      "classQualifiedName": "zemeckis.VirtualProcessorUnit",
+      "classSimpleName": "VirtualProcessorUnit",
+      "elementKind": "method",
+      "methodName": "toString",
       "package": "zemeckis"
     }
   },
