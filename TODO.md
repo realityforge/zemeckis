@@ -8,6 +8,12 @@ complete as there is too much un-said.
 
 * Add a `task(...)` method that schedules to the current VPU if any else invokes `becomeMacroTask`.
 
+* Add mechanism by which a `RepeatingTask` is supported. The `RepeatingTask` is added to either the
+  `OnIdle` or `MacroTask` VPUs. If the `RepeatingTask` exceeds the `TIME_SLICE` (aka 14ms for `MacroTask`
+  VPUs or deadline for `OnIdle` VPU) then the tasks are scheduled onto next scheduling. Replicant should
+  be updated to take advantage of this. The JVM variant will just repeatedly invoke the task until done.
+  The entry point to this may be an `incrementalTask(...)` to match what was previous in GWT.
+
 ### Scheduler
 
 * Support scheduling of tasks with delay and repeating tasks inside a WebWorker where the WebWorker
@@ -21,6 +27,8 @@ complete as there is too much un-said.
 
 * Support scheduling tasks with delay = 0 by using `MessageChannel.send` as it has less jitter. This
   feature should be controlled by a compile time flag which can fallback to local scheduling.
+  Looks like this should be on by default to avoid throttling. See
+  https://www.tenforums.com/tutorials/80233-enable-disable-google-chrome-background-tab-throttling-windows.html
 
 * https://github.com/spanicker/main-thread-scheduling
 
