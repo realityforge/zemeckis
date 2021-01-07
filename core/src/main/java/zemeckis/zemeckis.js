@@ -17,4 +17,7 @@ zemeckis.purge_tasks_when_runaway_detected = goog.define('zemeckis.purge_tasks_w
 zemeckis.enable_uncaught_error_handlers = goog.define('zemeckis.enable_uncaught_error_handlers', 'false');
 
 /** @define {string} */
+zemeckis.use_message_channel_to_schedule_tasks = goog.define('zemeckis.use_message_channel_to_schedule_tasks', 'true');
+
+/** @define {string} */
 zemeckis.logger = goog.define('zemeckis.logger', 'none');

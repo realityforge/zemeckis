@@ -2,6 +2,12 @@
 
 ### Unreleased
 
+* Change the default mechanism for scheduling macro tasks to use `MessageChannel.send` as it is less likely to
+  be throttled by the browser when in a background thread when compared to `setTimeout(...)` style scheduling
+  and it seems to have less jitter. See the explainer [article](https://www.tenforums.com/tutorials/80233-enable-disable-google-chrome-background-tab-throttling-windows.html) for some details about
+  how chrome throttles some timers. The scheduler can use revert to using `setTimeout(...)` by specifying the
+  compile time setting `zemeckis.use_message_channel_to_schedule_tasks` to `false`.
+
 ### [v0.05](https://github.com/realityforge/zemeckis/tree/v0.05) (2021-01-07) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.04...v0.05)
 
 Changes in this release:

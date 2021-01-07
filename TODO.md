@@ -23,11 +23,6 @@ complete as there is too much un-said.
   for measurements carried out by another party. This feature should be controlled by a compile time
   flag which can fallback to local scheduling.
 
-* Support scheduling tasks with delay = 0 by using `MessageChannel.send` as it has less jitter. This
-  feature should be controlled by a compile time flag which can fallback to local scheduling.
-  Looks like this should be on by default to avoid throttling. See
-  https://www.tenforums.com/tutorials/80233-enable-disable-google-chrome-background-tab-throttling-windows.html
-
 ### Scheduler
 
 * https://github.com/spanicker/main-thread-scheduling

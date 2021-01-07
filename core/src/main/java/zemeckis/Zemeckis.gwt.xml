@@ -22,6 +22,15 @@
   <define-property name='zemeckis.enable_uncaught_error_handlers' values='true,false'/>
   <set-property name='zemeckis.enable_uncaught_error_handlers' value='false'/>
 
+  <!--
+    Browsers tend to throttle tasks in background tabs scheduled with setTimeout so we scheduled tasks
+    using message channels by default. For further explanation see the article:
+
+      https://www.tenforums.com/tutorials/80233-enable-disable-google-chrome-background-tab-throttling-windows.html
+  -->
+  <define-property name='zemeckis.use_message_channel_to_schedule_tasks' values='true,false'/>
+  <set-property name='zemeckis.use_message_channel_to_schedule_tasks' value='true'/>
+
   <define-property name='zemeckis.logger' values='console,proxy,none'/>
   <set-property name='zemeckis.logger' value='console'/>
 </module>

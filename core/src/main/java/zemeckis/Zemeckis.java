@@ -55,6 +55,16 @@ public final class Zemeckis
   {
     return ZemeckisConfig.areUncaughtErrorHandlersEnabled();
   }
+  /**
+   * Return true if message channels should be used to schedule tasks in the next macro
+   * task rather than setTimeout(..., 0).
+   *
+   * @return true if message channels should be used to schedule tasks over setTimeout, false otherwise.
+   */
+  public static boolean useMessageChannelToScheduleTasks()
+  {
+    return !ZemeckisConfig.isJvm() && ZemeckisConfig.useMessageChannelToScheduleTasks();
+  }
 
   /**
    * Return true if invariants will be checked.
