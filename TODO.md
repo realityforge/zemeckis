@@ -14,8 +14,6 @@ complete as there is too much un-said.
   be updated to take advantage of this. The JVM variant will just repeatedly invoke the task until done.
   The entry point to this may be an `incrementalTask(...)` to match what was previous in GWT.
 
-### Scheduler
-
 * Support scheduling of tasks with delay and repeating tasks inside a WebWorker where the WebWorker
   is responsible for scheduling the tasks. This produces a more stable scheduling at the expense of
   slightly more complexity. Both sides would need to keep a record of which timers are active and when
@@ -29,6 +27,8 @@ complete as there is too much un-said.
   feature should be controlled by a compile time flag which can fallback to local scheduling.
   Looks like this should be on by default to avoid throttling. See
   https://www.tenforums.com/tutorials/80233-enable-disable-google-chrome-background-tab-throttling-windows.html
+
+### Scheduler
 
 * https://github.com/spanicker/main-thread-scheduling
 
