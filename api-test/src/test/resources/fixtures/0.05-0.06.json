@@ -1,0 +1,18 @@
+[
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method boolean zemeckis.Zemeckis::useMessageChannelToScheduleTasks()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "useMessageChannelToScheduleTasks",
+      "package": "zemeckis"
+    }
+  }
+]
