@@ -12,8 +12,8 @@ import org.realityforge.braincheck.BrainCheckConfig;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
- * The class is provides the access to global configuration settings as well as methods for scheduling
- * and executing tasks asynchronously.
+ * This class is the main entrypoint for the Zemeckis library. It provides the access to global
+ * configuration settings as well as methods for scheduling tasks asynchronously.
  *
  * <p>Zemeckis has an internal clock that represents time as a monotonically increasing
  * <code>int</code> value. The value may or may not have a direct relationship to wall-clock
@@ -200,9 +200,9 @@ public final class Zemeckis
   }
 
   /**
-   * Return true if there is a current VPU activated.
+   * Return true if there is a current VirtualProcessorUnit activated.
    *
-   * @return true if there is a current VPU activated.
+   * @return true if there is a current VirtualProcessorUnit activated.
    */
   public static boolean isVpuActivated()
   {
@@ -210,9 +210,9 @@ public final class Zemeckis
   }
 
   /**
-   * Return the current VPU.
+   * Return the current VirtualProcessorUnit.
    *
-   * @return the current VPU.
+   * @return the current VirtualProcessorUnit.
    */
   @Nullable
   public static VirtualProcessorUnit currentVpu()
@@ -221,9 +221,9 @@ public final class Zemeckis
   }
 
   /**
-   * Queue the task to execute in the next "macro" task.
-   * This is the default VPU in the browser and indicates tasks that are scheduled via a
-   * call to <code>setTimeout(callback,0)</code>.
+   * Queue the task to execute in the current or next "macro" task.
+   * This task is schedule via a {@code setTimeout(callback,0)} call or a send operation on a message channel
+   * depending on the value returned by {@link Zemeckis#useMessageChannelToScheduleTasks()}.
    *
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
@@ -235,9 +235,9 @@ public final class Zemeckis
   }
 
   /**
-   * Queue the task to execute in the next "macro" task.
-   * This is the default VPU in the browser and indicates tasks that are scheduled via a
-   * call to <code>setTimeout(callback,0)</code>.
+   * Queue the task to execute in the current or next "macro" task.
+   * This task is schedule via a {@code setTimeout(callback,0)} call or a send operation on a message channel
+   * depending on the value returned by {@link Zemeckis#useMessageChannelToScheduleTasks()}.
    *
    * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task the task.
@@ -250,9 +250,9 @@ public final class Zemeckis
   }
 
   /**
-   * Return the "macro" task VPU.
+   * Return the "macro" task VirtualProcessorUnit.
    *
-   * @return the "macro" task VPU.
+   * @return the "macro" task VirtualProcessorUnit.
    * @see #macroTask(Runnable)
    */
   @Nonnull
@@ -262,9 +262,9 @@ public final class Zemeckis
   }
 
   /**
-   * Run specified task now by queuing on MacroTask VPU and activating VPU.
-   * This is invoked when the browser has triggered a macro task as a result of a callback of some kind.
-   * The specified task is added to the start of the macroTask queue but any tasks present on the queue
+   * Run specified task now by queuing on the MacroTask queue and activating the MacroTask VirtualProcessorUnit.
+   * This is used internally by the toolkit when the browser has triggered a macro task as a result of a callback
+   * of some kind. The specified task is added to the start of the macroTask queue but any tasks present on the queue
    * will be invoked after the specified task.
    *
    * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
@@ -285,9 +285,9 @@ public final class Zemeckis
   }
 
   /**
-   * Queue the task to execute in the next "micro" task.
-   * The "micro" tasks are those that the browser executes after the current "macro" or "micro" task.
-   * This VPU schedules an activation via a call to {@code Promise.resolve().then( v -> callback() )}.
+   * Queue the task to execute in the current or next "micro" task.
+   * The "micro" tasks are those that the browser executes after the current "macro".
+   * This task is schedule via a call that looks like {@code Promise.resolve().then( v -> callback() )}.
    *
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
@@ -299,9 +299,9 @@ public final class Zemeckis
   }
 
   /**
-   * Queue the task to execute in the next "micro" task.
-   * The "micro" tasks are those that the browser executes after the current "macro" or "micro" task.
-   * This VPU schedules an activation via a call to {@code Promise.resolve().then( v -> callback() )}.
+   * Queue the task to execute in the current or next "micro" task.
+   * The "micro" tasks are those that the browser executes after the current "macro".
+   * The specified task is scheduled via a call that looks like {@code Promise.resolve().then( v -> callback() )}.
    *
    * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task the task.
@@ -314,9 +314,9 @@ public final class Zemeckis
   }
 
   /**
-   * Return the "micro" task VPU.
+   * Return the "micro" task VirtualProcessorUnit.
    *
-   * @return the "micro" task VPU.
+   * @return the "micro" task VirtualProcessorUnit.
    * @see #microTask(Runnable)
    */
   @Nonnull
@@ -326,9 +326,9 @@ public final class Zemeckis
   }
 
   /**
-   * Queue the task to execute in the next "animationFrame".
+   * Queue the task to execute in the current or next "animationFrame".
    * The "animationFrame" occurs prior to the next render frame.
-   * This VPU schedules an activation via a call to <code>requestAnimationFrame( callback )</code>.
+   * The specified task is scheduled via a call that looks like {@code requestAnimationFrame( callback )}.
    *
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
@@ -340,9 +340,9 @@ public final class Zemeckis
   }
 
   /**
-   * Queue the task to execute in the next "animationFrame".
+   * Queue the task to execute in the current or next "animationFrame".
    * The "animationFrame" occurs prior to the next render frame.
-   * This VPU schedules an activation via a call to <code>requestAnimationFrame( callback )</code>.
+   * The specified task is scheduled via a call that looks like {@code requestAnimationFrame( callback )}.
    *
    * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task the task.
@@ -355,9 +355,9 @@ public final class Zemeckis
   }
 
   /**
-   * Return the "animationFrame" VPU.
+   * Return the "animationFrame" VirtualProcessorUnit.
    *
-   * @return the "animationFrame" VPU.
+   * @return the "animationFrame" VirtualProcessorUnit.
    * @see #microTask(Runnable)
    */
   @Nonnull
@@ -369,7 +369,7 @@ public final class Zemeckis
   /**
    * Queue the task to execute after the next browser render.
    * The "afterFrame" tasks are invoked after the next frames render by responding to a message on a
-   * MessageChannel that is sent in {@code requestAnimationFrame()}.
+   * MessageChannel that is sent in a callback scheduled via {@code requestAnimationFrame()}.
    *
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
@@ -383,7 +383,7 @@ public final class Zemeckis
   /**
    * Queue the task to execute after the next browser render.
    * The "afterFrame" tasks are invoked after the next frames render by responding to a message on a
-   * MessageChannel that is sent in {@code requestAnimationFrame()}.
+   * MessageChannel that is sent in a callback scheduled via {@code requestAnimationFrame()}.
    *
    * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task the task.
@@ -396,9 +396,9 @@ public final class Zemeckis
   }
 
   /**
-   * Return the "afterFrame" VPU.
+   * Return the "afterFrame" VirtualProcessorUnit.
    *
-   * @return the "afterFrame" VPU.
+   * @return the "afterFrame" VirtualProcessorUnit.
    * @see #microTask(Runnable)
    */
   @Nonnull
@@ -409,12 +409,13 @@ public final class Zemeckis
 
   /**
    * Queue the task to execute when the browser is idle.
-   * The browser activates the onIdle VirtualProcessorUnit when idle and will pass the
-   * duration for which the VPU may run. The VPU will execute tasks as long as there is tasks
-   * queued and the deadline has not been reached after which the VPU will return control to the
-   * browser. Unlike other VPUs, when the onIdle VirtualProcessorUnit completes the activation, there
-   * may still be tasks in the queue and if there is the VPU will re-schedule itself for another activation.
-   * This VPU schedules an activation via a call to <code>requestIdleCallback( callback )</code>.
+   * The browser activates the onIdle VirtualProcessorUnit when idle and will pass the duration or
+   * deadline until which the VirtualProcessorUnit may run. The VirtualProcessorUnit will execute tasks
+   * scheduled via onIdle as long as there are tasks queued and the deadline has not been reached after
+   * which the VirtualProcessorUnit will return control to the browser. Unlike other scheduling strategies,
+   * when the onIdle VirtualProcessorUnit completes the activation, there may still be tasks in the queue
+   * and if there is the VirtualProcessorUnit will re-schedule itself for another activation.
+   * The specified task is scheduled via a call that looks like {@code requestIdleCallback( callback )}.
    *
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
@@ -427,12 +428,13 @@ public final class Zemeckis
 
   /**
    * Queue the task to execute when the browser is idle.
-   * The browser activates the onIdle VirtualProcessorUnit when idle and will pass the
-   * duration for which the VPU may run. The VPU will execute tasks as long as there is tasks
-   * queued and the deadline has not been reached after which the VPU will return control to the
-   * browser. Unlike other VPUs, when the onIdle VirtualProcessorUnit completes the activation, there
-   * may still be tasks in the queue and if there is the VPU will re-schedule itself for another activation.
-   * This VPU schedules an activation via a call to <code>requestIdleCallback( callback )</code>.
+   * The browser activates the onIdle VirtualProcessorUnit when idle and will pass the duration or
+   * deadline until which the VirtualProcessorUnit may run. The VirtualProcessorUnit will execute tasks
+   * scheduled via onIdle as long as there are tasks queued and the deadline has not been reached after
+   * which the VirtualProcessorUnit will return control to the browser. Unlike other scheduling strategies,
+   * when the onIdle VirtualProcessorUnit completes the activation, there may still be tasks in the queue
+   * and if there is the VirtualProcessorUnit will re-schedule itself for another activation.
+   * The specified task is scheduled via a call that looks like {@code requestIdleCallback( callback )}.
    *
    * @param name A human consumable name for the task. It may be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
    * @param task the task.
@@ -445,9 +447,9 @@ public final class Zemeckis
   }
 
   /**
-   * Return the "onIdle" VPU.
+   * Return the "onIdle" VirtualProcessorUnit.
    *
-   * @return the "onIdle" VPU.
+   * @return the "onIdle" VirtualProcessorUnit.
    * @see #microTask(Runnable)
    */
   @Nonnull
