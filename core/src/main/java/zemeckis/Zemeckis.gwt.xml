@@ -24,7 +24,7 @@
 
   <!--
     Browsers tend to throttle tasks in background tabs scheduled with setTimeout so we scheduled tasks
-    using message channels by default. For further explanation see the article:
+    with timeout 0 using message channels by default. For further explanation see the article:
 
       https://www.tenforums.com/tutorials/80233-enable-disable-google-chrome-background-tab-throttling-windows.html
   -->
