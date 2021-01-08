@@ -8,6 +8,13 @@
   how chrome throttles some timers. The scheduler can use revert to using `setTimeout(...)` by specifying the
   compile time setting `zemeckis.use_message_channel_to_schedule_tasks` to `false`.
 * Improve the clairty of the `Zemeckis` javadocs.
+* Change the default mechanism for scheduling delayed and periodic tasks so that the tasks are scheduled
+  within a `WebWorker` and the web worker sends a message to the main thread to to trigger the task. This
+  results in a more stable scheduling at the expense of additional code complexity and code size. This also
+  eliminates throttling that occurs when the browser tab is in the background. See the [article](https://medium.com/teads-engineering/the-most-accurate-way-to-schedule-a-function-in-a-web-browser-eadcd164da12)
+  for measurements carried out by another party that validates this approach. The toolkit can use revert
+  to using `setTimeout(...)` and `setInterval(...)` by specifying the compile time setting
+  `zemeckis.use_worker_to_schedule_delayed_tasks` to `false`.
 
 ### [v0.05](https://github.com/realityforge/zemeckis/tree/v0.05) (2021-01-07) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.04...v0.05)
 

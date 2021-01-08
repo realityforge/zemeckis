@@ -14,16 +14,12 @@ complete as there is too much un-said.
   be updated to take advantage of this. The JVM variant will just repeatedly invoke the task until done.
   The entry point to this may be an `incrementalTask(...)` to match what was previous in GWT.
 
-* Support scheduling of tasks with delay and repeating tasks inside a WebWorker where the WebWorker
-  is responsible for scheduling the tasks. This produces a more stable scheduling at the expense of
-  slightly more complexity. Both sides would need to keep a record of which timers are active and when
-  a timer is canceled in the main app it should be cancelled in the WebWorker. When the main app is
-  unloaded, it is also responsible for unloading all registered timers or shutting down the WebWorker.
-  See the [article](https://medium.com/teads-engineering/the-most-accurate-way-to-schedule-a-function-in-a-web-browser-eadcd164da12)
-  for measurements carried out by another party. This feature should be controlled by a compile time
-  flag which can fallback to local scheduling.
-
 ### Scheduler
+
+* Consider splitting `delayedTask` and `periodicTask` into those where throttling is acceptable those where
+  throttling is not acceptable. We could probably throttle any UI related tasks but avoid throttling network
+  related incremental tasks etc. Given this would add significantly to our complexity it is unclear whether
+  this is worth the additional complexity.
 
 * https://github.com/spanicker/main-thread-scheduling
 

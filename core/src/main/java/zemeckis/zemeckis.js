@@ -20,4 +20,7 @@ zemeckis.enable_uncaught_error_handlers = goog.define('zemeckis.enable_uncaught_
 zemeckis.use_message_channel_to_schedule_tasks = goog.define('zemeckis.use_message_channel_to_schedule_tasks', 'true');
 
 /** @define {string} */
+zemeckis.use_worker_to_schedule_delayed_tasks = goog.define('zemeckis.use_worker_to_schedule_delayed_tasks', 'true');
+
+/** @define {string} */
 zemeckis.logger = goog.define('zemeckis.logger', 'none');

@@ -17,6 +17,7 @@ final class ZemeckisConfig
   private static boolean PURGE_ON_RUNAWAY = PROVIDER.purgeTasksWhenRunawayDetected();
   private static boolean UNCAUGHT_ERROR_HANDLERS = PROVIDER.areUncaughtErrorHandlersEnabled();
   private static boolean USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS = PROVIDER.useMessageChannelToScheduleTasks();
+  private static boolean USE_WORKER_TO_SCHEDULE_DELAYED_TASKS = PROVIDER.useWorkerToScheduleDelayedTasks();
   private static final String LOGGER_TYPE = PROVIDER.loggerType();
   private static final boolean JVM = PROVIDER.isJvm();
 
@@ -57,6 +58,11 @@ final class ZemeckisConfig
   static boolean useMessageChannelToScheduleTasks()
   {
     return USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS;
+  }
+
+  static boolean useWorkerToScheduleDelayedTasks()
+  {
+    return USE_WORKER_TO_SCHEDULE_DELAYED_TASKS;
   }
 
   static String loggerType()
@@ -105,6 +111,13 @@ final class ZemeckisConfig
 
     @GwtIncompatible
     @Override
+    boolean useWorkerToScheduleDelayedTasks()
+    {
+      return "true".equals( System.getProperty( "zemeckis.use_worker_to_schedule_delayed_tasks", "true" ) );
+    }
+
+    @GwtIncompatible
+    @Override
     String loggerType()
     {
       return System.getProperty( "zemeckis.logger", PRODUCTION_MODE ? "basic" : "proxy" );
@@ -144,6 +157,11 @@ final class ZemeckisConfig
     boolean useMessageChannelToScheduleTasks()
     {
       return "true" == System.getProperty( "zemeckis.use_message_channel_to_schedule_tasks" );
+    }
+
+    boolean useWorkerToScheduleDelayedTasks()
+    {
+      return "true" == System.getProperty( "zemeckis.use_worker_to_schedule_delayed_tasks" );
     }
 
     String loggerType()

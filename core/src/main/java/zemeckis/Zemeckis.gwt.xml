@@ -31,6 +31,16 @@
   <define-property name='zemeckis.use_message_channel_to_schedule_tasks' values='true,false'/>
   <set-property name='zemeckis.use_message_channel_to_schedule_tasks' value='true'/>
 
+  <!--
+    Browsers tend to throttle tasks in background tabs scheduled with setTimeout so instead schedule tasks in a
+    worker which sends a message to the main thread to trigger action by default. For further explanation see the
+    article:
+
+      https://medium.com/teads-engineering/the-most-accurate-way-to-schedule-a-function-in-a-web-browser-eadcd164da12
+  -->
+  <define-property name='zemeckis.use_worker_to_schedule_delayed_tasks' values='true,false'/>
+  <set-property name='zemeckis.use_worker_to_schedule_delayed_tasks' value='true'/>
+
   <define-property name='zemeckis.logger' values='console,proxy,none'/>
   <set-property name='zemeckis.logger' value='console'/>
 </module>

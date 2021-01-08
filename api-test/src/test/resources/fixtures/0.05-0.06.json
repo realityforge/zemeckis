@@ -14,5 +14,21 @@
       "methodName": "useMessageChannelToScheduleTasks",
       "package": "zemeckis"
     }
+  },
+  {
+    "code": "java.method.added",
+    "description": "Method was added.",
+    "newElement": "method boolean zemeckis.Zemeckis::useWorkerToScheduleDelayedTasks()",
+    "classification": {
+      "SOURCE": "NON_BREAKING",
+      "BINARY": "NON_BREAKING"
+    },
+    "attachments": {
+      "classQualifiedName": "zemeckis.Zemeckis",
+      "classSimpleName": "Zemeckis",
+      "elementKind": "method",
+      "methodName": "useWorkerToScheduleDelayedTasks",
+      "package": "zemeckis"
+    }
   }
 ]

@@ -67,6 +67,17 @@ public final class Zemeckis
   }
 
   /**
+   * Return true if delayed tasks should be scheduled in a worker rather than in the main thread.
+   * The worker is less likely to be throttled and suffers form less jitter.
+   *
+   * @return true if delayed tasks should be scheduled in a worker rather than in the main thread, false otherwise.
+   */
+  public static boolean useWorkerToScheduleDelayedTasks()
+  {
+    return !ZemeckisConfig.isJvm() && ZemeckisConfig.useWorkerToScheduleDelayedTasks();
+  }
+
+  /**
    * Return true if invariants will be checked.
    *
    * @return true if invariants will be checked.
