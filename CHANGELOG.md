@@ -1,6 +1,10 @@
 # Change Log
 
-### Unreleased
+### [v0.06](https://github.com/realityforge/zemeckis/tree/v0.06) (2021-01-08) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.05...v0.06)
+
+The release includes 2 non breaking API changes.
+
+Changes in this release:
 
 * Change the default mechanism for scheduling macro tasks to use `MessageChannel.send` as it is less likely to
   be throttled by the browser when in a background thread when compared to `setTimeout(...)` style scheduling
