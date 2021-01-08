@@ -1,5 +1,7 @@
 # Change Log
 
+### Unreleased
+
 ### [v0.06](https://github.com/realityforge/zemeckis/tree/v0.06) (2021-01-08) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.05...v0.06)
 
 The release includes 2 non breaking API changes.
