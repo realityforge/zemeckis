@@ -129,8 +129,8 @@ define 'zemeckis' do
                               :start_javascript_debugger => false,
                               :open_in_browser => false,
                               :vm_parameters => '-Xmx2G',
-                              :shell_parameters => "-strict -style PRETTY -XmethodNameDisplayMode FULL -nostartServer -incremental -codeServerPort 8889 -bindAddress 0.0.0.0 -deploy #{_(:generated, :gwt, path, 'deploy')} -extra #{_(:generated, :gwt, path, 'extra')} -war #{_(:generated, :gwt, path, 'war')}",
-                              :launch_page => "http://127.0.0.1:8889/example/index.html")
+                              :shell_parameters => "-strict -style PRETTY -XmethodNameDisplayMode FULL -nostartServer -incremental -codeServerPort 9889 -bindAddress 0.0.0.0 -deploy #{_(:generated, :gwt, path, 'deploy')} -extra #{_(:generated, :gwt, path, 'extra')} -war #{_(:generated, :gwt, path, 'war')}",
+                              :launch_page => "http://127.0.0.1:9889/example/index.html")
   end
 
   ipr.add_default_testng_configuration(:jvm_args => '-ea -Dbraincheck.environment=development -Dzemeckis.environment=development -Dzemeckis.output_fixture_data=false -Dzemeckis.fixture_dir=support/processor/src/test/resources -Dzemeckis.core.compile_target=target/zemeckis_core/idea/classes -Dzemeckis.diagnostic_messages_file=core/src/test/java/zemeckis/diagnostic_messages.json')
