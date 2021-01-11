@@ -236,9 +236,11 @@ final class TemporalScheduler
         _workerTasks.put( id, task );
         final JsPropertyMap<Object> message = msg( "+", "dt", id );
         message.set( "delay", delay );
+        //DomGlobal.console.log( "[Main] Add Delayed Task: " + id );
         _worker.postMessage( message );
         return () -> {
           _workerTasks.remove( id );
+          //DomGlobal.console.log( "[Main] Remove Delayed Task: " + id );
           _worker.postMessage( msg( "-", "dt", id ) );
         };
       }
@@ -271,9 +273,11 @@ final class TemporalScheduler
         _workerTasks.put( id, task );
         final JsPropertyMap<Object> message = msg( "+", "pt", id );
         message.set( "period", period );
+        //DomGlobal.console.log( "[Main] Add Periodic Task: " + id );
         _worker.postMessage( message );
         return () -> {
           _workerTasks.remove( id );
+          //DomGlobal.console.log( "[Main] Remove Periodic Task: " + id );
           _worker.postMessage( msg( "-", "pt", id ) );
         };
       }
@@ -294,10 +298,12 @@ final class TemporalScheduler
         final String type = data.getAsAny( "type" ).asString();
         if ( "dt".equals( type ) )
         {
+          //DomGlobal.console.log( "[Main] Delayed Task Tick: " + id );
           runTaskIfPresent( _workerTasks.remove( id ) );
         }
         else if ( "pt".equals( type ) )
         {
+          //DomGlobal.console.log( "[Main] Periodic Task Tick: " + id );
           runTaskIfPresent( _workerTasks.get( id ) );
         }
       }
