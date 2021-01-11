@@ -5,5 +5,5 @@
   <source path=''/>
   <public path='public'/>
 
-  <entry-point class='zemeckis.examples.dom.repeating_task.Example'/>
+  <entry-point class='zemeckis.examples.dom.pulse_task.Example'/>
 </module>

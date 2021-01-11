@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Correct the name of the module used in the `pulse_task` example.
+
 ### [v0.07](https://github.com/realityforge/zemeckis/tree/v0.07) (2021-01-11) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.06...v0.07)
 
 Changes in this release:
