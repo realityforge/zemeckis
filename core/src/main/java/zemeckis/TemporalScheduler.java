@@ -159,20 +159,20 @@ final class TemporalScheduler
       "\n" +
       "self.onmessage = m => {\n" +
       ( !LOG ? "" : "  console.log(\"Timers Before Action\", timers)\n" ) +
-      "  if (m.data && m.data.action === '+' && m.data.type === 'dt' && m.data.id && m.data.delay) {\n" +
+      "  if (m.data && m.data.action === '+' && m.data.type === 'dt' && m.data.id !== undefined && m.data.delay !== undefined) {\n" +
       ( !LOG ?
         "" :
         "    console.log(\"[Zemeckis-Worker] Add Delayed Task '\" + m.data.name + \"': \" + m.data.id + \" delay=\" + m.data.delay);\n" ) +
       "    createTimer(m.data.name, m.data.id, m.data.delay);\n" +
-      "  } else if (m.data && m.data.action === '-' && m.data.type === 'dt' && m.data.id) {\n" +
+      "  } else if (m.data && m.data.action === '-' && m.data.type === 'dt' && m.data.id !== undefined) {\n" +
       ( !LOG ? "" : "    console.log(\"[Zemeckis-Worker] Remove Delayed Task '\" + m.data.name + \"': \" + m.data.id);\n" ) +
       "    cancelTimer(m.data.id);\n" +
-      "  } else if (m.data && m.data.action === '+' && m.data.type === 'pt' && m.data.id && m.data.period) {\n" +
+      "  } else if (m.data && m.data.action === '+' && m.data.type === 'pt' && m.data.id !== undefined && m.data.period !== undefined) {\n" +
       ( !LOG ?
         "" :
         "    console.log(\"[Zemeckis-Worker] Add Periodic Task '\" + m.data.name + \"': \" + m.data.id + \" delay=\" + m.data.period);\n" ) +
       "    createPeriodicTimer(m.data.name, m.data.id, m.data.period);\n" +
-      "  } else if (m.data && m.data.action === '-' && m.data.type === 'pt' && m.data.id) {\n" +
+      "  } else if (m.data && m.data.action === '-' && m.data.type === 'pt' && m.data.id !== undefined) {\n" +
       ( !LOG ? "" : "    console.log(\"[Zemeckis-Worker] Remove Periodic Task '\" + m.data.name + \"': \" + m.data.id);\n" ) +
       "    cancelPeriodicTimer(m.data.id);\n" +
       "  }\n" +
