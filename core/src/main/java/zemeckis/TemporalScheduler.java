@@ -175,6 +175,11 @@ final class TemporalScheduler
       "  } else if (m.data && m.data.action === '-' && m.data.type === 'pt' && m.data.id !== undefined) {\n" +
       ( !LOG ? "" : "    console.log(\"[Zemeckis-Worker] Remove Periodic Task '\" + m.data.name + \"': \" + m.data.id);\n" ) +
       "    cancelPeriodicTimer(m.data.id);\n" +
+      (
+        !LOG ? "" :
+        "  } else {\n" +
+        "    console.log(\"[Zemeckis-Worker] Invalid Task request:\", m.data);\n"
+      ) +
       "  }\n" +
       ( !LOG ? "" : "  console.log(\"[Zemeckis-Worker] Timers After Action\", JSON.parse(JSON.stringify(timers)));\n" ) +
       "};";
