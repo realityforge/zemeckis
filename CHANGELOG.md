@@ -6,6 +6,7 @@
 * If workers are used to schedule delayed and periodic tasks then name the worker `ZemeckisTimer` to make identifying the purpose of the worker clear.
 * Inline some let statements that seemed to cause problems for some browsers.
 * Ensure the record of the delayed timer is removed from the Worker cache when the delayed timer is fired. This eliminated a memory leak.
+* Use the correct syntax when deleting properties from objects as the previous syntax is not guaranteed to work without additional libraries.
 
 ### [v0.06](https://github.com/realityforge/zemeckis/tree/v0.06) (2021-01-08) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.05...v0.06)
 

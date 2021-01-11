@@ -133,7 +133,7 @@ final class TemporalScheduler
       "\n" +
       "function cancelTimer(id) {\n" +
       "  self.clearTimeout(timers[id] || 0);\n" +
-      "  timers.delete(id);\n" +
+      "  delete timers[id];\n" +
       "}\n" +
       "\n" +
       "function createTimer(id, delay) {\n" +
@@ -146,7 +146,7 @@ final class TemporalScheduler
       "\n" +
       "function cancelPeriodicTimer(id) {\n" +
       "  self.clearInterval(timers[id] || 0);\n" +
-      "  timers.delete(id);\n" +
+      "  delete timers[id];\n" +
       "}\n" +
       "\n" +
       "function createPeriodicTimer(id, period) {\n" +
