@@ -139,6 +139,7 @@ final class TemporalScheduler
       "\n" +
       "function createTimer(id, delay) {\n" +
       "  timers[id] = self.setTimeout(() => {\n" +
+      //"    console.log(\"[Worker] Delayed Task Tick: \" + id);\n" +
       "    self.postMessage({ type: 'dt', id: id });\n" +
       "  }, delay);\n" +
       "}\n" +
@@ -151,20 +152,27 @@ final class TemporalScheduler
       "\n" +
       "function createPeriodicTimer(id, period) {\n" +
       "  timers[id] = self.setInterval(() => {\n" +
+      //"    console.log( \"[Worker] Periodic Task Tick: \" + id );\n" +
       "    self.postMessage({ type: 'pt', id: id });\n" +
       "  }, period);\n" +
       "}\n" +
       "\n" +
       "self.onmessage = m => {\n" +
+      //"  console.log(\"Timers Before Action\", timers)\n" +
       "  if (m.data && m.data.action === '+' && m.data.type === 'dt') {\n" +
+      //"    console.log(\"[Worker] Add Delayed Task: \" + m.data.id + \" delay=\" + m.data.delay);\n" +
       "    createTimer(m.data.id, m.data.delay);\n" +
       "  } else if (m.data && m.data.action === '-' && m.data.type === 'dt') {\n" +
+      //"    console.log(\"[Worker] Remove Delayed Task: \" + m.data.id);\n" +
       "    cancelTimer(m.data.id);\n" +
       "  } else if (m.data && m.data.action === '+' && m.data.type === 'pt') {\n" +
+      //"    console.log(\"[Worker] Add Periodic Task: \" + m.data.id + \" delay=\" + m.data.period);\n" +
       "    createPeriodicTimer(m.data.id, m.data.period);\n" +
       "  } else if (m.data && m.data.action === '-' && m.data.type === 'pt') {\n" +
+      //"    console.log(\"[Worker] Remove Periodic Task: \" + m.data.id);\n" +
       "    cancelPeriodicTimer(m.data.id);\n" +
       "  }\n" +
+      //"  console.log(\"Timers Before Action\", timers)\n" +
       "};";
     private final long _schedulerStart = System.currentTimeMillis();
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
