@@ -139,6 +139,7 @@ final class TemporalScheduler
       "function createTimer(id, delay) {\n" +
       "  timers[id] = self.setTimeout(() => {\n" +
       //"    console.log(\"[Worker] Delayed Task Tick: \" + id);\n" +
+      "    delete timers[id];\n" +
       "    self.postMessage({ type: 'dt', id: id });\n" +
       "  }, delay);\n" +
       "}\n" +
