@@ -5,6 +5,7 @@ import elemental2.dom.DomGlobal;
 import elemental2.dom.MessageEvent;
 import elemental2.dom.URL;
 import elemental2.dom.Worker;
+import elemental2.dom.WorkerOptions;
 import grim.annotations.OmitSymbol;
 import java.util.HashMap;
 import java.util.Map;
@@ -174,7 +175,8 @@ final class TemporalScheduler
           new Blob(
             new Blob.ConstructorBlobPartsArrayUnionType[]{ Blob.ConstructorBlobPartsArrayUnionType.of( SRC ) }
           )
-        )
+        ),
+        createWorkerOptions()
       ) :
       null;
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
@@ -308,6 +310,14 @@ final class TemporalScheduler
       {
         task.run();
       }
+    }
+
+    @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
+    private WorkerOptions createWorkerOptions()
+    {
+      final WorkerOptions options = WorkerOptions.create();
+      options.setName( "ZemeckisTimer" );
+      return options;
     }
   }
 }

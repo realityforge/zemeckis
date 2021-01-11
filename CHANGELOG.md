@@ -3,6 +3,7 @@
 ### Unreleased
 
 * Add simple the demonstrates the interaction between periodic and delayed tasks.
+* If workers are used to schedule delayed and periodic tasks then name the worker `ZemeckisTimer` to make identifying the purpose of the worker clear.
 
 ### [v0.06](https://github.com/realityforge/zemeckis/tree/v0.06) (2021-01-08) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.05...v0.06)
 
