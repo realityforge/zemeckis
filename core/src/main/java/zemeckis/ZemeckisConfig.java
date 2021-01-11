@@ -18,6 +18,7 @@ final class ZemeckisConfig
   private static boolean UNCAUGHT_ERROR_HANDLERS = PROVIDER.areUncaughtErrorHandlersEnabled();
   private static boolean USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS = PROVIDER.useMessageChannelToScheduleTasks();
   private static boolean USE_WORKER_TO_SCHEDULE_DELAYED_TASKS = PROVIDER.useWorkerToScheduleDelayedTasks();
+  private static final boolean LOG_WORKER_INTERACTIONS = PROVIDER.shouldLogWorkerInteractions();
   @Nonnull
   private static final String LOGGER_TYPE = PROVIDER.loggerType();
   private static final boolean JVM = PROVIDER.isJvm();
@@ -64,6 +65,11 @@ final class ZemeckisConfig
   static boolean useWorkerToScheduleDelayedTasks()
   {
     return USE_WORKER_TO_SCHEDULE_DELAYED_TASKS;
+  }
+
+  static boolean shouldLogWorkerInteractions()
+  {
+    return LOG_WORKER_INTERACTIONS;
   }
 
   @Nonnull
@@ -118,6 +124,11 @@ final class ZemeckisConfig
       return "true".equals( System.getProperty( "zemeckis.use_worker_to_schedule_delayed_tasks", "true" ) );
     }
 
+    boolean shouldLogWorkerInteractions()
+    {
+      return "true".equals( System.getProperty( "zemeckis.log_worker_interactions", "false" ) );
+    }
+
     @GwtIncompatible
     @Nonnull
     @Override
@@ -165,6 +176,11 @@ final class ZemeckisConfig
     boolean useWorkerToScheduleDelayedTasks()
     {
       return "true" == System.getProperty( "zemeckis.use_worker_to_schedule_delayed_tasks" );
+    }
+
+    boolean shouldLogWorkerInteractions()
+    {
+      return "true" == System.getProperty( "zemeckis.log_worker_interactions" );
     }
 
     @Nonnull

@@ -78,6 +78,17 @@ public final class Zemeckis
   }
 
   /**
+   * Return true if interactions with workers for scheduling delayed tasks should be logged.
+   * This is primarily useful when debugging problems with the library and is not expected to be widely used.
+   *
+   * @return true if interactions with workers for scheduling delayed tasks should be logged, false otherwise.
+   */
+  public static boolean shouldLogWorkerInteractions()
+  {
+    return useWorkerToScheduleDelayedTasks() && ZemeckisConfig.shouldLogWorkerInteractions();
+  }
+
+  /**
    * Return true if invariants will be checked.
    *
    * @return true if invariants will be checked.

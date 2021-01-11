@@ -41,6 +41,12 @@
   <define-property name='zemeckis.use_worker_to_schedule_delayed_tasks' values='true,false'/>
   <set-property name='zemeckis.use_worker_to_schedule_delayed_tasks' value='true'/>
 
+  <!--
+    Should interactions with the workers be logged to the console.
+  -->
+  <define-property name='zemeckis.log_worker_interactions' values='true,false'/>
+  <set-property name='zemeckis.log_worker_interactions' value='false'/>
+
   <define-property name='zemeckis.logger' values='console,proxy,none'/>
   <set-property name='zemeckis.logger' value='console'/>
 </module>

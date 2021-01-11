@@ -3,6 +3,7 @@
 ### Unreleased
 
 * Correct the name of the module used in the `pulse_task` example.
+* Add a compile time setting `zemeckis.log_worker_interactions` that will control whether debug logging is emitted to the console when interacting with the Worker for scheduling periodic and delayed tasks.
 
 ### [v0.07](https://github.com/realityforge/zemeckis/tree/v0.07) (2021-01-11) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.06...v0.07)
 

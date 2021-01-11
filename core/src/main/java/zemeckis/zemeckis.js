@@ -23,4 +23,7 @@ zemeckis.use_message_channel_to_schedule_tasks = goog.define('zemeckis.use_messa
 zemeckis.use_worker_to_schedule_delayed_tasks = goog.define('zemeckis.use_worker_to_schedule_delayed_tasks', 'true');
 
 /** @define {string} */
+zemeckis.log_worker_interactions = goog.define('zemeckis.log_worker_interactions', 'false');
+
+/** @define {string} */
 zemeckis.logger = goog.define('zemeckis.logger', 'none');
