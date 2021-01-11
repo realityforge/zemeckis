@@ -1,7 +1,7 @@
 # Zemeckis
 
 [![Build Status](https://api.travis-ci.com/realityforge/zemeckis.png?branch=master)](http://travis-ci.com/realityforge/zemeckis)
-[<img src="https://img.shields.io/maven-central/v/org.realityforge.realityforge/zemeckis-core.svg?label=latest%20release"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.realityforge.zemeckis%22%20a%3A%22zemeckis-core%22)
+[<img src="https://img.shields.io/maven-central/v/org.realityforge.zemeckis/zemeckis-core.svg?label=latest%20release"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.realityforge.zemeckis%22%20a%3A%22zemeckis-core%22)
 [![codecov](https://codecov.io/gh/realityforge/zemeckis/branch/master/graph/badge.svg)](https://codecov.io/gh/realityforge/zemeckis)
 ![GWT3/J2CL compatible](https://img.shields.io/badge/GWT3/J2CL-compatible-brightgreen.svg)
 
