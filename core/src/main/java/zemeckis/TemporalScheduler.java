@@ -158,7 +158,7 @@ final class TemporalScheduler
       "}\n" +
       "\n" +
       "self.onmessage = m => {\n" +
-      ( !LOG ? "" : "  console.log(\"Timers Before Action\", timers)\n" ) +
+      ( !LOG ? "" : "  console.log(\"[Zemeckis-Worker] Timers Before Action\", JSON.parse(JSON.stringify(timers)))\n" ) +
       "  if (m.data && m.data.action === '+' && m.data.type === 'dt' && m.data.id !== undefined && m.data.delay !== undefined) {\n" +
       ( !LOG ?
         "" :
@@ -176,7 +176,7 @@ final class TemporalScheduler
       ( !LOG ? "" : "    console.log(\"[Zemeckis-Worker] Remove Periodic Task '\" + m.data.name + \"': \" + m.data.id);\n" ) +
       "    cancelPeriodicTimer(m.data.id);\n" +
       "  }\n" +
-      ( !LOG ? "" : "  console.log(\"Timers After Action\", timers);\n" ) +
+      ( !LOG ? "" : "  console.log(\"[Zemeckis-Worker] Timers After Action\", JSON.parse(JSON.stringify(timers)));\n" ) +
       "};";
     private final long _schedulerStart = System.currentTimeMillis();
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
