@@ -1,6 +1,8 @@
 # Change Log
 
-### Unreleased
+### [v0.07](https://github.com/realityforge/zemeckis/tree/v0.07) (2021-01-11) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.06...v0.07)
+
+Changes in this release:
 
 * Add simple the demonstrates the interaction between periodic and delayed tasks.
 * If workers are used to schedule delayed and periodic tasks then name the worker `ZemeckisTimer` to make identifying the purpose of the worker clear.
