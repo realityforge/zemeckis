@@ -7,6 +7,7 @@
 * Inline some let statements that seemed to cause problems for some browsers.
 * Ensure the record of the delayed timer is removed from the Worker cache when the delayed timer is fired. This eliminated a memory leak.
 * Use the correct syntax when deleting properties from objects as the previous syntax is not guaranteed to work without additional libraries.
+* Fix a bug when requesting a delayed timer that resulted in the Worker creating a periodic timer and delivering the `tick` message multiple times but the main thread ignoring subsequent ticks. The application behaviour was correct but the code created significant amount of unnecessary load when many delayed tasks were created.
 
 ### [v0.06](https://github.com/realityforge/zemeckis/tree/v0.06) (2021-01-08) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.05...v0.06)
 

@@ -234,7 +234,7 @@ final class TemporalScheduler
       {
         final double id = _nextTimerId++;
         _workerTasks.put( id, task );
-        final JsPropertyMap<Object> message = msg( "+", "pt", id );
+        final JsPropertyMap<Object> message = msg( "+", "dt", id );
         message.set( "delay", delay );
         _worker.postMessage( message );
         return () -> {
