@@ -158,16 +158,16 @@ final class TemporalScheduler
       "\n" +
       "self.onmessage = m => {\n" +
       //"  console.log(\"Timers Before Action\", timers)\n" +
-      "  if (m.data && m.data.action === '+' && m.data.type === 'dt') {\n" +
+      "  if (m.data && m.data.action === '+' && m.data.type === 'dt' && m.data.id && m.data.delay) {\n" +
       //"    console.log(\"[Worker] Add Delayed Task: \" + m.data.id + \" delay=\" + m.data.delay);\n" +
       "    createTimer(m.data.id, m.data.delay);\n" +
-      "  } else if (m.data && m.data.action === '-' && m.data.type === 'dt') {\n" +
+      "  } else if (m.data && m.data.action === '-' && m.data.type === 'dt' && m.data.id) {\n" +
       //"    console.log(\"[Worker] Remove Delayed Task: \" + m.data.id);\n" +
       "    cancelTimer(m.data.id);\n" +
-      "  } else if (m.data && m.data.action === '+' && m.data.type === 'pt') {\n" +
+      "  } else if (m.data && m.data.action === '+' && m.data.type === 'pt' && m.data.id && m.data.period) {\n" +
       //"    console.log(\"[Worker] Add Periodic Task: \" + m.data.id + \" delay=\" + m.data.period);\n" +
       "    createPeriodicTimer(m.data.id, m.data.period);\n" +
-      "  } else if (m.data && m.data.action === '-' && m.data.type === 'pt') {\n" +
+      "  } else if (m.data && m.data.action === '-' && m.data.type === 'pt' && m.data.id) {\n" +
       //"    console.log(\"[Worker] Remove Periodic Task: \" + m.data.id);\n" +
       "    cancelPeriodicTimer(m.data.id);\n" +
       "  }\n" +
