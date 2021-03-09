@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Upgrade the `au.com.stocksoftware.idea.codestyle` artifact to version `1.17`.
+
 ### [v0.08](https://github.com/realityforge/zemeckis/tree/v0.08) (2021-01-11) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.07...v0.08)
 
 Changes in this release:
