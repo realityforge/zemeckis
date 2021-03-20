@@ -143,6 +143,9 @@ define 'zemeckis' do
                                :jvm_args => '-ea -Dbraincheck.environment=development -Dzemeckis.environment=development -Dzemeckis.output_fixture_data=true -Dzemeckis.core.compile_target=../target/zemeckis_core/idea/classes -Dzemeckis.check_diagnostic_messages=true -Dzemeckis.diagnostic_messages_file=src/test/java/zemeckis/diagnostic_messages.json')
 
   ipr.add_component_from_artifact(:idea_codestyle)
+  ipr.add_code_insight_settings
+  ipr.add_nullable_manager
+  ipr.add_javac_settings('-Xlint:all,-processing,-serial -Werror -Xmaxerrs 10000 -Xmaxwarns 10000')
 end
 
 # Avoid uploading any packages except those we explicitly allow
