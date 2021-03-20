@@ -30,8 +30,6 @@ define 'zemeckis' do
 
   desc 'Zemeckis Core Library'
   define 'core' do
-    project.processorpath << artifacts(:grim_processor, :javax_json)
-
     deps = artifacts(:javax_annotation,
                      :jsinterop_annotations,
                      :jsinterop_base,
@@ -45,6 +43,8 @@ define 'zemeckis' do
     pom.dependency_filter = Proc.new { |dep| dep[:scope].to_s != 'test' && deps.include?(dep[:artifact]) }
 
     compile.with deps
+    compile.options[:processor_path] << artifacts(:grim_processor, :javax_json)
+
 
     gwt_enhance(project)
 
