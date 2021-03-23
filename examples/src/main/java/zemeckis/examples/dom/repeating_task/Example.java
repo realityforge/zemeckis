@@ -1,7 +1,7 @@
 package zemeckis.examples.dom.repeating_task;
 
+import akasha.Console;
 import com.google.gwt.core.client.EntryPoint;
-import elemental2.dom.DomGlobal;
 import javax.annotation.Nonnull;
 import zemeckis.Zemeckis;
 
@@ -36,8 +36,7 @@ public final class Example
       final int now = Zemeckis.now();
       final int delta = -1 == _lastTime ? 0 : now - _lastTime;
       _lastTime = now;
-      DomGlobal.console.log( "%c task " + _id + " Period=" + _period + " Delta=" + delta,
-                             COLORS[ _id % COLORS.length ] );
+      Console.log( "%c task " + _id + " Period=" + _period + " Delta=" + delta, COLORS[ _id % COLORS.length ] );
     }
   }
 }

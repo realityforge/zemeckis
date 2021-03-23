@@ -1,7 +1,7 @@
 package zemeckis.examples.dom.basic;
 
+import akasha.Console;
 import com.google.gwt.core.client.EntryPoint;
-import elemental2.dom.DomGlobal;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
@@ -50,6 +50,6 @@ public final class Example
 
   private static void log( @Nonnull final String type, final int id )
   {
-    DomGlobal.console.log( "%c" + type + " task " + id, STYLES.get( type ) );
+    Console.log( "%c" + type + " task " + id, STYLES.get( type ) );
   }
 }

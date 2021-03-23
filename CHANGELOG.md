@@ -4,6 +4,7 @@
 
 * Upgrade the `org.realityforge.grim` artifacts to version `0.05`.
 * Upgrade the `au.com.stocksoftware.idea.codestyle` artifact to version `1.17`.
+* Move from Elemental2 to Akasha as the mechanism for interacting with the browser.
 
 ### [v0.08](https://github.com/realityforge/zemeckis/tree/v0.08) (2021-01-11) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.07...v0.08)
 

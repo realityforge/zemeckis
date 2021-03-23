@@ -36,9 +36,7 @@ define 'zemeckis' do
                      :jsinterop_annotations,
                      :jsinterop_base,
                      :jetbrains_annotations,
-                     :elemental2_core,
-                     :elemental2_dom,
-                     :elemental2_promise,
+                     :akasha,
                      :braincheck,
                      :grim_annotations)
     pom.include_transitive_dependencies << deps

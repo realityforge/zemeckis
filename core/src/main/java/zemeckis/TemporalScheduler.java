@@ -1,11 +1,13 @@
 package zemeckis;
 
-import elemental2.dom.Blob;
-import elemental2.dom.DomGlobal;
-import elemental2.dom.MessageEvent;
-import elemental2.dom.URL;
-import elemental2.dom.Worker;
-import elemental2.dom.WorkerOptions;
+import akasha.Blob;
+import akasha.BlobPart;
+import akasha.Console;
+import akasha.Global;
+import akasha.MessageEvent;
+import akasha.URL;
+import akasha.Worker;
+import akasha.WorkerOptions;
 import grim.annotations.OmitSymbol;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import jsinterop.base.Any;
 import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
 import org.jetbrains.annotations.TestOnly;
@@ -158,14 +161,18 @@ final class TemporalScheduler
       "}\n" +
       "\n" +
       "self.onmessage = m => {\n" +
-      ( !LOG ? "" : "  console.log(\"[Zemeckis-Worker] Timers Before Action\", JSON.parse(JSON.stringify(timers)))\n" ) +
+      ( !LOG ?
+        "" :
+        "  console.log(\"[Zemeckis-Worker] Timers Before Action\", JSON.parse(JSON.stringify(timers)))\n" ) +
       "  if (m.data && m.data.action === '+' && m.data.type === 'dt' && m.data.id !== undefined && m.data.delay !== undefined) {\n" +
       ( !LOG ?
         "" :
         "    console.log(\"[Zemeckis-Worker] Add Delayed Task '\" + m.data.name + \"': \" + m.data.id + \" delay=\" + m.data.delay);\n" ) +
       "    createTimer(m.data.name, m.data.id, m.data.delay);\n" +
       "  } else if (m.data && m.data.action === '-' && m.data.type === 'dt' && m.data.id !== undefined) {\n" +
-      ( !LOG ? "" : "    console.log(\"[Zemeckis-Worker] Remove Delayed Task '\" + m.data.name + \"': \" + m.data.id);\n" ) +
+      ( !LOG ?
+        "" :
+        "    console.log(\"[Zemeckis-Worker] Remove Delayed Task '\" + m.data.name + \"': \" + m.data.id);\n" ) +
       "    cancelTimer(m.data.id);\n" +
       "  } else if (m.data && m.data.action === '+' && m.data.type === 'pt' && m.data.id !== undefined && m.data.period !== undefined) {\n" +
       ( !LOG ?
@@ -173,7 +180,9 @@ final class TemporalScheduler
         "    console.log(\"[Zemeckis-Worker] Add Periodic Task '\" + m.data.name + \"': \" + m.data.id + \" delay=\" + m.data.period);\n" ) +
       "    createPeriodicTimer(m.data.name, m.data.id, m.data.period);\n" +
       "  } else if (m.data && m.data.action === '-' && m.data.type === 'pt' && m.data.id !== undefined) {\n" +
-      ( !LOG ? "" : "    console.log(\"[Zemeckis-Worker] Remove Periodic Task '\" + m.data.name + \"': \" + m.data.id);\n" ) +
+      ( !LOG ?
+        "" :
+        "    console.log(\"[Zemeckis-Worker] Remove Periodic Task '\" + m.data.name + \"': \" + m.data.id);\n" ) +
       "    cancelPeriodicTimer(m.data.id);\n" +
       (
         !LOG ? "" :
@@ -181,20 +190,15 @@ final class TemporalScheduler
         "    console.log(\"[Zemeckis-Worker] Invalid Task request:\", m.data);\n"
       ) +
       "  }\n" +
-      ( !LOG ? "" : "  console.log(\"[Zemeckis-Worker] Timers After Action\", JSON.parse(JSON.stringify(timers)));\n" ) +
+      ( !LOG ?
+        "" :
+        "  console.log(\"[Zemeckis-Worker] Timers After Action\", JSON.parse(JSON.stringify(timers)));\n" ) +
       "};";
     private final long _schedulerStart = System.currentTimeMillis();
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
     private final Worker _worker =
       ENABLE_WORKERS ?
-      new Worker(
-        URL.createObjectURL(
-          new Blob(
-            new Blob.ConstructorBlobPartsArrayUnionType[]{ Blob.ConstructorBlobPartsArrayUnionType.of( SRC ) }
-          )
-        ),
-        createWorkerOptions()
-      ) :
+      new Worker( URL.createObjectURL( new Blob( new BlobPart[]{ BlobPart.of( SRC ) } ) ), createWorkerOptions() ) :
       null;
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
     private final Map<Double, Runnable> _workerTasks = ENABLE_WORKERS ? new HashMap<>() : null;
@@ -248,22 +252,22 @@ final class TemporalScheduler
         message.set( "delay", delay );
         if ( LOG )
         {
-          DomGlobal.console.log( "[Zemeckis-Main] Add Delayed Task '" + name + "': " + id );
+          Console.log( "[Zemeckis-Main] Add Delayed Task '" + name + "': " + id );
         }
         _worker.postMessage( message );
         return () -> {
           _workerTasks.remove( id );
           if ( LOG )
           {
-            DomGlobal.console.log( "[Zemeckis-Main] Remove Delayed Task '" + name + "': " + id );
+            Console.log( "[Zemeckis-Main] Remove Delayed Task '" + name + "': " + id );
           }
           _worker.postMessage( msg( name, "-", "dt", id ) );
         };
       }
       else
       {
-        final double timeoutId = DomGlobal.setTimeout( v -> task.run(), delay );
-        return () -> DomGlobal.clearTimeout( timeoutId );
+        final int timeoutId = Global.setTimeout( task::run, delay );
+        return () -> Global.clearTimeout( timeoutId );
       }
     }
 
@@ -291,38 +295,39 @@ final class TemporalScheduler
         message.set( "period", period );
         if ( LOG )
         {
-          DomGlobal.console.log( "[Zemeckis-Main] Add Periodic Task '" + name + "': " + id );
+          Console.log( "[Zemeckis-Main] Add Periodic Task '" + name + "': " + id );
         }
         _worker.postMessage( message );
         return () -> {
           _workerTasks.remove( id );
           if ( LOG )
           {
-            DomGlobal.console.log( "[Zemeckis-Main] Remove Periodic Task '" + name + "': " + id );
+            Console.log( "[Zemeckis-Main] Remove Periodic Task '" + name + "': " + id );
           }
           _worker.postMessage( msg( name, "-", "pt", id ) );
         };
       }
       else
       {
-        final double timeoutId = DomGlobal.setInterval( v -> task.run(), period );
-        return () -> DomGlobal.clearInterval( timeoutId );
+        final int timeoutId = Global.setInterval( task::run, period );
+        return () -> Global.clearInterval( timeoutId );
       }
     }
 
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
-    private void onWorkerMessage( @Nonnull final MessageEvent<Object> event )
+    private void onWorkerMessage( @Nonnull final MessageEvent event )
     {
-      if ( null != event.data )
+      final Any eventData = event.data();
+      if ( null != eventData )
       {
-        final JsPropertyMap<Object> data = Js.asPropertyMap( event.data );
+        final JsPropertyMap<Object> data = Js.asPropertyMap( eventData );
         final double id = data.getAsAny( "id" ).asDouble();
         final String type = data.getAsAny( "type" ).asString();
         if ( "dt".equals( type ) )
         {
           if ( LOG )
           {
-            DomGlobal.console.log( "[Zemeckis-Main] Delayed Task Tick: " + id );
+            Console.log( "[Zemeckis-Main] Delayed Task Tick: " + id );
           }
           runTaskIfPresent( _workerTasks.remove( id ) );
         }
@@ -330,7 +335,7 @@ final class TemporalScheduler
         {
           if ( LOG )
           {
-            DomGlobal.console.log( "[Zemeckis-Main] Periodic Task Tick: " + id );
+            Console.log( "[Zemeckis-Main] Periodic Task Tick: " + id );
           }
           runTaskIfPresent( _workerTasks.get( id ) );
         }

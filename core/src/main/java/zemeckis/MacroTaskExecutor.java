@@ -1,6 +1,6 @@
 package zemeckis;
 
-import elemental2.dom.MessageChannel;
+import akasha.MessageChannel;
 
 /**
  * Run tasks in next MacroTask.
@@ -14,7 +14,7 @@ final class MacroTaskExecutor
   {
     if ( Zemeckis.useMessageChannelToScheduleTasks() )
     {
-      _channel.port1.onmessage = m -> activate();
+      _channel.port1().onmessage = m -> activate();
     }
   }
 
@@ -23,7 +23,7 @@ final class MacroTaskExecutor
   {
     if ( Zemeckis.useMessageChannelToScheduleTasks() )
     {
-      _channel.port2.postMessage( null );
+      _channel.port2().postMessage( null );
     }
     else
     {

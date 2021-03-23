@@ -1,6 +1,6 @@
 package zemeckis;
 
-import elemental2.dom.DomGlobal;
+import akasha.Global;
 
 /**
  * Run tasks in next AnimationFrame.
@@ -11,6 +11,6 @@ final class AnimationFrameExecutor
   @Override
   void scheduleForActivation()
   {
-    DomGlobal.requestAnimationFrame( v -> activate() );
+    Global.requestAnimationFrame( v -> activate() );
   }
 }

@@ -28,14 +28,14 @@ public class JDependTest
     final JavaPackage braincheck = constraint.addPackage( "org.realityforge.braincheck" );
     final JavaPackage jsinterop = constraint.addPackage( "jsinterop.annotations" );
     final JavaPackage jsinteropBase = constraint.addPackage( "jsinterop.base" );
-    final JavaPackage elementalPromise = constraint.addPackage( "elemental2.promise" );
-    final JavaPackage elementalDom = constraint.addPackage( "elemental2.dom" );
+    final JavaPackage akasha = constraint.addPackage( "akasha" );
+    final JavaPackage akashaPromise = constraint.addPackage( "akasha.promise" );
 
     zemeckis.dependsUpon( jsinterop );
     zemeckis.dependsUpon( jsinteropBase );
     zemeckis.dependsUpon( braincheck );
-    zemeckis.dependsUpon( elementalPromise );
-    zemeckis.dependsUpon( elementalDom );
+    zemeckis.dependsUpon( akasha );
+    zemeckis.dependsUpon( akashaPromise );
 
     final DependencyConstraint.MatchResult result = jdepend.analyzeDependencies( constraint );
 

@@ -1,6 +1,6 @@
 package zemeckis;
 
-import elemental2.dom.MessageChannel;
+import akasha.MessageChannel;
 import javax.annotation.Nonnull;
 
 /**
@@ -19,12 +19,12 @@ final class AfterFrameExecutor
 
   AfterFrameExecutor()
   {
-    _channel.port1.onmessage = m -> activate();
+    _channel.port1().onmessage = m -> activate();
   }
 
   @Override
   void scheduleForActivation()
   {
-    Zemeckis.animationFrame( () -> _channel.port2.postMessage( null ) );
+    Zemeckis.animationFrame( () -> _channel.port2().postMessage( null ) );
   }
 }

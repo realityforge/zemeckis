@@ -1,6 +1,6 @@
 package zemeckis;
 
-import elemental2.promise.Promise;
+import akasha.promise.Promise;
 
 /**
  * Run tasks in next MicroTask.
@@ -11,9 +11,6 @@ final class MicroTaskExecutor
   @Override
   void scheduleForActivation()
   {
-    Promise.resolve( (Object) null ).then( v -> {
-      activate();
-      return null;
-    } );
+    Promise.resolve( (Object) null ).thenAccept( v -> activate() );
   }
 }

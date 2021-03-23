@@ -12,13 +12,13 @@ abstract class DeadlineBasedExecutor
   /**
    * The minimum time required to run a task.
    */
-  private static final int MIN_TASK_TIME = 1;
+  private static final double MIN_TASK_TIME = 1;
 
   @FunctionalInterface
   @JsFunction
   interface DeadlineFunction
   {
-    int getTimeRemaining();
+    double getTimeRemaining();
   }
 
   /**
