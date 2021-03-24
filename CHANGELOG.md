@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Upgrade the `org.realityforge.akasha` artifact to version `0.03`.
+
 ### [v0.09](https://github.com/realityforge/zemeckis/tree/v0.09) (2021-03-23) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.08...v0.09)
 
 Changes in this release:
