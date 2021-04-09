@@ -45,7 +45,6 @@ define 'zemeckis' do
     compile.with deps
     compile.options[:processor_path] << artifacts(:grim_processor, :javax_json)
 
-
     gwt_enhance(project)
 
     package(:jar)
