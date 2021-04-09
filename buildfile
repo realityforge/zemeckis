@@ -37,7 +37,7 @@ define 'zemeckis' do
                      :jsinterop_base,
                      :jetbrains_annotations,
                      :akasha,
-                     :braincheck,
+                     :braincheck_core,
                      :grim_annotations)
     pom.include_transitive_dependencies << deps
     pom.dependency_filter = Proc.new { |dep| dep[:scope].to_s != 'test' && deps.include?(dep[:artifact]) }
@@ -52,7 +52,7 @@ define 'zemeckis' do
     package(:javadoc)
 
     test.using :testng
-    test.compile.with :jdepend, :javax_json
+    test.compile.with :jdepend, :javax_json, :braincheck_testng
 
     test.options[:properties] =
       ZEMECKIS_TEST_OPTIONS.merge('zemeckis.core.compile_target' => compile.target.to_s,
