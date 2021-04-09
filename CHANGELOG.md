@@ -1,6 +1,8 @@
 # Change Log
 
-### Unreleased
+### [v0.10](https://github.com/realityforge/zemeckis/tree/v0.10) (2021-04-10) · [Full Changelog](https://github.com/spritz/spritz/compare/v0.09...v0.10)
+
+Changes in this release:
 
 * Upgrade the `org.realityforge.braincheck` artifact to version `1.30.0`.
 * Upgrade the `org.realityforge.akasha` artifact to version `0.06`.
