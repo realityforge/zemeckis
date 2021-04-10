@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Upgrade the `org.realityforge.braincheck` artifact to version `1.31.0`.
+
 ### [v0.10](https://github.com/realityforge/zemeckis/tree/v0.10) (2021-04-10) · [Full Changelog](https://github.com/spritz/spritz/compare/v0.09...v0.10)
 
 Changes in this release:
