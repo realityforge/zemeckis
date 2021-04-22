@@ -3,9 +3,9 @@ package zemeckis;
 import akasha.Blob;
 import akasha.BlobPart;
 import akasha.Console;
-import akasha.Global;
 import akasha.MessageEvent;
 import akasha.URL;
+import akasha.WindowGlobal;
 import akasha.Worker;
 import akasha.WorkerOptions;
 import grim.annotations.OmitSymbol;
@@ -266,8 +266,8 @@ final class TemporalScheduler
       }
       else
       {
-        final int timeoutId = Global.setTimeout( task::run, delay );
-        return () -> Global.clearTimeout( timeoutId );
+        final int timeoutId = WindowGlobal.setTimeout( task::run, delay );
+        return () -> WindowGlobal.clearTimeout( timeoutId );
       }
     }
 
@@ -309,8 +309,8 @@ final class TemporalScheduler
       }
       else
       {
-        final int timeoutId = Global.setInterval( task::run, period );
-        return () -> Global.clearInterval( timeoutId );
+        final int timeoutId = WindowGlobal.setInterval( task::run, period );
+        return () -> WindowGlobal.clearInterval( timeoutId );
       }
     }
 

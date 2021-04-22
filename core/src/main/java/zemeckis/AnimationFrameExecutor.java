@@ -1,6 +1,6 @@
 package zemeckis;
 
-import akasha.Global;
+import akasha.WindowGlobal;
 
 /**
  * Run tasks in next AnimationFrame.
@@ -11,6 +11,6 @@ final class AnimationFrameExecutor
   @Override
   void scheduleForActivation()
   {
-    Global.requestAnimationFrame( v -> activate() );
+    WindowGlobal.requestAnimationFrame( v -> activate() );
   }
 }

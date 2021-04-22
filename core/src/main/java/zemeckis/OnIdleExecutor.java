@@ -1,6 +1,6 @@
 package zemeckis;
 
-import akasha.Global;
+import akasha.WindowGlobal;
 
 /**
  * Run tasks in next Idle callbacks.
@@ -11,6 +11,6 @@ final class OnIdleExecutor
   @Override
   void scheduleForActivation()
   {
-    Global.requestIdleCallback( deadline -> context().activate( () -> executeTasks( deadline::timeRemaining ) ) );
+    WindowGlobal.requestIdleCallback( deadline -> context().activate( () -> executeTasks( deadline::timeRemaining ) ) );
   }
 }
