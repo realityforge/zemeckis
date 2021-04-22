@@ -60,38 +60,6 @@ define 'zemeckis' do
     test.options[:java_args] = ['-ea']
   end
 
-  desc 'Test Zemeckis API'
-  define 'api-test' do
-    test.compile.with :javax_annotation,
-                      :javax_json,
-                      :gir
-
-    test.options[:properties] =
-      ZEMECKIS_TEST_OPTIONS.merge(
-        'zemeckis.api_test.store_api_diff' => ENV['STORE_API_DIFF'] == 'true',
-        'zemeckis.prev.version' => ENV['PREVIOUS_PRODUCT_VERSION'],
-        'zemeckis.prev.jar' => artifact("org.realityforge.zemeckis:zemeckis-core:jar:#{ENV['PREVIOUS_PRODUCT_VERSION'] || project.version}").to_s,
-        'zemeckis.next.version' => ENV['PRODUCT_VERSION'],
-        'zemeckis.next.jar' => project('core').package(:jar).to_s,
-        'zemeckis.api_test.fixture_dir' => _('src/test/resources/fixtures').to_s,
-        'zemeckis.revapi.jar' => artifact(:revapi_diff).to_s
-      )
-    test.options[:java_args] = ['-ea']
-    test.using :testng
-
-    skip_test = ENV['PRODUCT_VERSION'].nil? || ENV['PREVIOUS_PRODUCT_VERSION'].nil? || '0.00' == ENV['PREVIOUS_PRODUCT_VERSION']
-    test.compile.enhance do
-      mkdir_p _('src/test/resources/fixtures')
-      artifact("org.realityforge.zemeckis:zemeckis-core:jar:#{ENV['PREVIOUS_PRODUCT_VERSION']}").invoke
-      project('core').package(:jar).invoke
-      artifact(:revapi_diff).invoke
-    end unless skip_test
-
-    test.exclude '*ApiDiffTest' if skip_test
-
-    project.jacoco.enabled = false
-  end
-
   desc 'Zemeckis Examples'
   define 'examples' do
     compile.with project('core').package(:jar),
