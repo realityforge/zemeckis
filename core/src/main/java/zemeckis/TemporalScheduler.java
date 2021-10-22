@@ -369,9 +369,7 @@ final class TemporalScheduler
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
     private WorkerOptions createWorkerOptions()
     {
-      final WorkerOptions options = WorkerOptions.create();
-      options.setName( "ZemeckisTimer" );
-      return options;
+      return WorkerOptions.of().name( "ZemeckisTimer" );
     }
   }
 }
