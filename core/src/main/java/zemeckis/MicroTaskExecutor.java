@@ -11,6 +11,7 @@ final class MicroTaskExecutor
   @Override
   void scheduleForActivation()
   {
+    // In the future we should use akasha.WindowGlobal.queueMicrotask(  );
     Promise.resolve( (Object) null ).thenAccept( v -> activate() );
   }
 }
