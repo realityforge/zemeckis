@@ -196,7 +196,7 @@ public final class ZemeckisTest
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );
 
-    assertTrue( latch.await( 1, TimeUnit.SECONDS ) );
+    assertTrue( latch.await( 10, TimeUnit.SECONDS ) );
     assertEquals( latch.getCount(), 0 );
     assertEquals( cancelable1.toString(), "MacroTask@0" );
     assertEquals( cancelable2.toString(), name1 );
