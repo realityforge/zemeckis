@@ -20,7 +20,7 @@ public final class ZemeckisTest
     assertEquals( Zemeckis.animationFrameVpu(), VirtualProcessorUnitsHolder.animationFrameVpu() );
     assertEquals( Zemeckis.animationFrameVpu(), VirtualProcessorUnitsHolder.animationFrameVpu() );
     assertEquals( Zemeckis.onIdleVpu(), VirtualProcessorUnitsHolder.onIdleVpu() );
-    assertEquals( Zemeckis.now(), Zemeckis.now() );
+    Zemeckis.now();
   }
 
   @Test
