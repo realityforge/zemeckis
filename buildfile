@@ -3,7 +3,6 @@ require 'buildr/gpg'
 require 'buildr/single_intermediate_layout'
 require 'buildr/top_level_generate_dir'
 require 'buildr/gwt'
-require 'buildr/jacoco'
 
 Buildr::MavenCentral.define_publish_tasks(:profile_name => 'org.realityforge', :username => 'realityforge')
 
@@ -73,7 +72,6 @@ define 'zemeckis' do
     iml.add_gwt_facet(gwt_modules,
                       :settings => { :compilerMaxHeapSize => '1024' },
                       :gwt_dev_artifact => :gwt_dev)
-    project.jacoco.enabled = false
   end
 
   doc.from(projects(%w(core))).
