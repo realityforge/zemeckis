@@ -21,6 +21,12 @@ public final class ZemeckisTestUtil
    */
   public interface Logger
   {
+    /**
+     * Log message and exception.
+     *
+     * @param message the message.
+     * @param throwable the exception or null.
+     */
     void log( @Nonnull String message, @Nullable Throwable throwable );
   }
 
