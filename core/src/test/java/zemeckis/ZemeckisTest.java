@@ -6,6 +6,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.Lock;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -130,6 +131,8 @@ public final class ZemeckisTest
     final String name4 = randomString();
     final String name5 = randomString();
 
+    final Lock lock = TemporalScheduler.getTestSchedulerLock();
+    lock.lock();
     final int count = 10;
     final CountDownLatch latch = new CountDownLatch( count );
     final Cancelable cancelable1 =
@@ -192,6 +195,7 @@ public final class ZemeckisTest
         assertEquals( Zemeckis.currentVpu(), Zemeckis.onIdleVpu() );
         latch.countDown();
       } );
+    lock.unlock();
 
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );

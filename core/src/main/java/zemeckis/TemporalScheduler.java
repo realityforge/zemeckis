@@ -15,6 +15,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jsinterop.base.Any;
@@ -85,12 +87,35 @@ final class TemporalScheduler
     c_scheduler = new SchedulerImpl();
   }
 
+  @GwtIncompatible
+  @TestOnly
+  @Nonnull
+  static Lock getTestSchedulerLock()
+  {
+    return ((SchedulerImpl) c_scheduler)._lock;
+  }
+
   private static final class SchedulerImpl
     extends AbstractScheduler
   {
+    @Nonnull
+    @GwtIncompatible
+    private final Lock _lock = new ReentrantLock();
+    @Nonnull
     @GwtIncompatible
     private final ScheduledExecutorService _executorService = new ScheduledThreadPoolExecutor( 1, r -> {
-      final Thread thread = new Thread( r, "Scheduler" );
+      final Runnable action = () -> {
+        _lock.lock();
+        try
+        {
+          r.run();
+        }
+        finally
+        {
+          _lock.unlock();
+        }
+      };
+      final Thread thread = new Thread( action, "Scheduler" );
       thread.setDaemon( true );
       thread.setUncaughtExceptionHandler( ( t, e ) -> Zemeckis.reportUncaughtError( e ) );
       return thread;
