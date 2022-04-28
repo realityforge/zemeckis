@@ -22,6 +22,7 @@ define 'zemeckis' do
   compile.options.lint = 'all,-processing,-serial'
   project.compile.options.warnings = true
   project.compile.options.other = %w(-Werror -Xmaxerrs 10000 -Xmaxwarns 10000)
+  project.doc.options.merge!('Xdoclint:all,-missing' => true)
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
 
@@ -40,6 +41,7 @@ define 'zemeckis' do
                      :grim_annotations)
     pom.include_transitive_dependencies << deps
     pom.dependency_filter = Proc.new { |dep| dep[:scope].to_s != 'test' && deps.include?(dep[:artifact]) }
+    project.doc.options.merge!('Xdoclint:all,-missing' => true)
 
     compile.with deps
     compile.options[:processor_path] << artifacts(:grim_processor, :javax_json)
