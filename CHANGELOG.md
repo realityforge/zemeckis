@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Update the `org.realityforge.braincheck` artifacts to version `1.32.0`.
 * Update the `org.realityforge.javax.annotation` artifact to version `1.1.1`.
 
 ### [v0.14](https://github.com/realityforge/zemeckis/tree/v0.14) (2022-04-27) · [Full Changelog](https://github.com/spritz/spritz/compare/v0.13...v0.14)
