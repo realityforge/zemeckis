@@ -1,7 +1,6 @@
 package zemeckis;
 
 import akasha.MessageChannel;
-import javax.annotation.Nonnull;
 
 /**
  * Run tasks after the next browser render frame.
@@ -14,7 +13,6 @@ import javax.annotation.Nonnull;
 final class AfterFrameExecutor
   extends RoundBasedExecutor
 {
-  @Nonnull
   private final MessageChannel _channel = new MessageChannel();
 
   AfterFrameExecutor()

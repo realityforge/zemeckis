@@ -2,8 +2,7 @@ package zemeckis;
 
 import grim.annotations.OmitSymbol;
 import java.util.Objects;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
 final class TaskEntry
@@ -28,7 +27,7 @@ final class TaskEntry
    * @param task         the task.
    * @param cancelAction the code to call to cancel pending task side-effects.
    */
-  TaskEntry( @Nullable final String name, @Nonnull final Runnable task, @Nullable final Cancelable cancelAction )
+  TaskEntry( @Nullable final String name, final Runnable task, @Nullable final Cancelable cancelAction )
   {
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
@@ -77,6 +76,6 @@ final class TaskEntry
   @Override
   public String toString()
   {
-    return Zemeckis.areNamesEnabled() ? _name : super.toString();
+    return Zemeckis.areNamesEnabled() ? Objects.requireNonNull( _name ) : super.toString();
   }
 }

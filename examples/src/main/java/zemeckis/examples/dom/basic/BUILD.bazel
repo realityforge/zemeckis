@@ -4,7 +4,10 @@ package(default_visibility = ["//visibility:public"])
 
 java_library(
     name = "basic",
-    srcs = ["Example.java"],
+    srcs = [
+        "Example.java",
+        "package-info.java",
+    ],
     resources = [
         "Example.gwt.xml",
         "public/index.html",
@@ -13,6 +16,5 @@ java_library(
         "//core/src/main/java/zemeckis:core",
         "//third_party/java:akasha_gwt",
         "//third_party/java:gwt_user",
-        "//third_party/java:javax_annotation",
     ],
 )

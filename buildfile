@@ -32,8 +32,7 @@ define 'zemeckis' do
 
   desc 'Zemeckis Core Library'
   define 'core' do
-    deps = artifacts(:javax_annotation,
-                     :jspecify,
+    deps = artifacts(:jspecify,
                      :jsinterop_annotations,
                      :jsinterop_base,
                      :jetbrains_annotations,
@@ -44,7 +43,9 @@ define 'zemeckis' do
     pom.dependency_filter = Proc.new { |dep| dep[:scope].to_s != 'test' && deps.include?(dep[:artifact]) }
     project.doc.options.merge!('Xdoclint:all,-missing' => true)
 
-    compile.with deps
+    # Released Akasha and Grim GWT sources still import javax.annotation. Keep it on the temporary
+    # Buildr compiler path without publishing it as a Zemeckis dependency.
+    compile.with :javax_annotation, deps
     compile.options[:processor_path] << artifacts(:grim_processor, :javax_json)
 
     gwt_enhance(project)

@@ -4,14 +4,12 @@ import akasha.Console;
 import com.google.gwt.core.client.EntryPoint;
 import java.util.Objects;
 import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import zemeckis.Cancelable;
 import zemeckis.Zemeckis;
 
 public final class Example
   implements EntryPoint
 {
-  @Nonnull
   private static final String[] COLORS = { "color: #006AEB;", "color: #c143eb;" };
 
   @Override
@@ -38,13 +36,11 @@ public final class Example
   {
     private final int _id;
     private final int _period;
-    @Nonnull
     private final Consumer<Cancelable> _action;
-    @Nonnull
     private final Cancelable _self;
     private int _lastTime = -1;
 
-    Timer( final int id, final int period, @Nonnull final Consumer<Cancelable> action )
+    Timer( final int id, final int period, final Consumer<Cancelable> action )
     {
       _id = id;
       _period = period;

@@ -1,8 +1,7 @@
 package zemeckis;
 
 import java.lang.reflect.Field;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 
 /**
@@ -27,7 +26,7 @@ public final class ZemeckisTestUtil
      * @param message the message.
      * @param throwable the exception or null.
      */
-    void log( @Nonnull String message, @Nullable Throwable throwable );
+    void log( String message, @Nullable Throwable throwable );
   }
 
   /**
@@ -174,7 +173,7 @@ public final class ZemeckisTestUtil
   /**
    * Set the specified field name on ZemeckisConfig.
    */
-  private static void setConstant( @Nonnull final String fieldName, final boolean value )
+  private static void setConstant( final String fieldName, final boolean value )
   {
     if ( ZemeckisConfig.isDevelopmentMode() )
     {

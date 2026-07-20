@@ -2,8 +2,7 @@ package zemeckis;
 
 import java.util.Objects;
 import java.util.stream.Stream;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A circular buffer implementation.
@@ -69,13 +68,13 @@ final class CircularBuffer<T>
     }
   }
 
-  void add( @Nonnull final T object )
+  void add( final T object )
   {
     tryGrowBeforeAdd();
     insertLast( Objects.requireNonNull( object ) );
   }
 
-  void addFirst( @Nonnull final T object )
+  void addFirst( final T object )
   {
     tryGrowBeforeAdd();
     insertFirst( Objects.requireNonNull( object ) );
@@ -153,7 +152,7 @@ final class CircularBuffer<T>
    *
    * @param object the object.
    */
-  private void insertFirst( @Nonnull final T object )
+  private void insertFirst( final T object )
   {
     if ( 0 == _head )
     {
@@ -172,7 +171,7 @@ final class CircularBuffer<T>
    *
    * @param object the object.
    */
-  private void insertLast( @Nonnull final T object )
+  private void insertLast( final T object )
   {
     _elements[ _tail ] = object;
     _tail++;

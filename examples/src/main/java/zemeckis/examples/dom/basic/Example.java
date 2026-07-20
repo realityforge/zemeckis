@@ -4,13 +4,11 @@ import akasha.Console;
 import com.google.gwt.core.client.EntryPoint;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nonnull;
 import zemeckis.Zemeckis;
 
 public final class Example
   implements EntryPoint
 {
-  @Nonnull
   private static final Map<String, String> STYLES = createStyles();
 
   @Override
@@ -39,12 +37,11 @@ public final class Example
     Zemeckis.onIdle( () -> log( "onIdle", 1 ) );
   }
 
-  private static void log( @Nonnull final String type, final int id )
+  private static void log( final String type, final int id )
   {
     Console.log( "%c" + type + " task " + id, STYLES.get( type ) );
   }
 
-  @Nonnull
   @SuppressWarnings( "Varifier" )
   private static Map<String, String> createStyles()
   {

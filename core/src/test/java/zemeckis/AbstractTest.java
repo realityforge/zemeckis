@@ -3,7 +3,6 @@ package zemeckis;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javax.annotation.Nonnull;
 import org.realityforge.braincheck.BrainCheckTestUtil;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -13,13 +12,9 @@ import static org.testng.Assert.*;
 @Listeners( MessageCollector.class )
 public abstract class AbstractTest
 {
-  @Nonnull
   private static final String CHARS = "abcdefghijklmnopqrstuvwxyz0123456789";
-  @Nonnull
   private static final Random c_random = new Random();
-  @Nonnull
   private final TestLogger _logger = new TestLogger();
-  @Nonnull
   private final List<Throwable> _uncaughtExceptions = new ArrayList<>();
   private boolean _allowUncaughtExceptions;
 
@@ -51,26 +46,25 @@ public abstract class AbstractTest
     _allowUncaughtExceptions = true;
   }
 
-  @Nonnull
   protected final TestLogger getTestLogger()
   {
     return _logger;
   }
 
-  protected final void assertInvariantFailure( @Nonnull final ThrowingRunnable throwingRunnable,
-                                               @Nonnull final String message )
+  protected final void assertInvariantFailure( final ThrowingRunnable throwingRunnable,
+                                               final String message )
   {
     assertEquals( expectThrows( IllegalStateException.class, throwingRunnable ).getMessage(), message );
   }
 
-  protected final void assertDefaultToStringWhenNamesDisabled( @Nonnull final Object object )
+  protected final void assertDefaultToStringWhenNamesDisabled( final Object object )
   {
     ZemeckisTestUtil.disableNames();
     assertDefaultToString( object );
     ZemeckisTestUtil.enableNames();
   }
 
-  protected final void assertDefaultToString( @Nonnull final Object object )
+  protected final void assertDefaultToString( final Object object )
   {
     assertEquals( object.toString(), object.getClass().getName() + "@" + Integer.toHexString( object.hashCode() ) );
   }
@@ -80,20 +74,17 @@ public abstract class AbstractTest
     return getRandom().nextInt();
   }
 
-  @Nonnull
   protected final Random getRandom()
   {
     return c_random;
   }
 
-  @Nonnull
   protected final String randomString()
   {
     return randomString( 12 );
   }
 
   @SuppressWarnings( "SameParameterValue" )
-  @Nonnull
   protected final String randomString( final int stringLength )
   {
     final var sb = new StringBuilder( stringLength );

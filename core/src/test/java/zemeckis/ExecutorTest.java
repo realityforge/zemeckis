@@ -1,7 +1,7 @@
 package zemeckis;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -181,10 +181,9 @@ public final class ExecutorTest
     assertEquals( errorCount.get(), 1 );
   }
 
-  private void assertTaskAt( @Nonnull final CircularBuffer<TaskEntry> taskQueue, final int index, @Nonnull final Runnable task )
+  private void assertTaskAt( final CircularBuffer<TaskEntry> taskQueue, final int index, final Runnable task )
   {
-    final TaskEntry entry = taskQueue.get( index );
-    assertNotNull( entry );
+    final TaskEntry entry = Objects.requireNonNull( taskQueue.get( index ) );
     assertEquals( entry.getTask(), task );
   }
 }

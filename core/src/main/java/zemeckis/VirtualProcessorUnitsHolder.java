@@ -1,8 +1,7 @@
 package zemeckis;
 
 import java.util.Objects;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 import org.jetbrains.annotations.VisibleForTesting;
 import static org.realityforge.braincheck.Guards.*;
@@ -18,31 +17,26 @@ final class VirtualProcessorUnitsHolder
   {
   }
 
-  @Nonnull
   static VirtualProcessorUnit macroTaskVpu()
   {
     return MacroTaskVPU.VPU;
   }
 
-  @Nonnull
   static VirtualProcessorUnit microTaskVpu()
   {
     return MicroTaskVPU.VPU;
   }
 
-  @Nonnull
   static VirtualProcessorUnit animationFrameVpu()
   {
     return AnimationFrameVPU.VPU;
   }
 
-  @Nonnull
   static VirtualProcessorUnit afterFrameVpu()
   {
     return AfterFrameVPU.VPU;
   }
 
-  @Nonnull
   static VirtualProcessorUnit onIdleVpu()
   {
     return OnIdleVPU.VPU;
@@ -78,8 +72,8 @@ final class VirtualProcessorUnitsHolder
    * @param activationFn  the activation function.
    * @see VirtualProcessorUnit.Context#activate(VirtualProcessorUnit.ActivationFn)
    */
-  synchronized static void activate( @Nonnull final VirtualProcessorUnit processorUnit,
-                                     @Nonnull final VirtualProcessorUnit.ActivationFn activationFn )
+  synchronized static void activate( final VirtualProcessorUnit processorUnit,
+                                     final VirtualProcessorUnit.ActivationFn activationFn )
   {
     CurrentVPU.activate( processorUnit );
     try
@@ -109,7 +103,6 @@ final class VirtualProcessorUnitsHolder
     {
     }
 
-    @Nonnull
     private static final VirtualProcessorUnit VPU =
       new VirtualProcessorUnit( Zemeckis.areNamesEnabled() ? "Macro" : null, new MacroTaskExecutor() );
   }
@@ -120,7 +113,6 @@ final class VirtualProcessorUnitsHolder
     {
     }
 
-    @Nonnull
     private static final VirtualProcessorUnit VPU =
       new VirtualProcessorUnit( Zemeckis.areNamesEnabled() ? "Micro" : null,
                                 ZemeckisConfig.isJvm() ? new MacroTaskExecutor() : new MicroTaskExecutor() );
@@ -132,7 +124,6 @@ final class VirtualProcessorUnitsHolder
     {
     }
 
-    @Nonnull
     private static final VirtualProcessorUnit VPU =
       new VirtualProcessorUnit( Zemeckis.areNamesEnabled() ? "AnimationFrame" : null,
                                 ZemeckisConfig.isJvm() ? new MacroTaskExecutor() : new AnimationFrameExecutor() );
@@ -144,7 +135,6 @@ final class VirtualProcessorUnitsHolder
     {
     }
 
-    @Nonnull
     private static final VirtualProcessorUnit VPU =
       new VirtualProcessorUnit( Zemeckis.areNamesEnabled() ? "AfterFrame" : null,
                                 ZemeckisConfig.isJvm() ? new MacroTaskExecutor() : new AfterFrameExecutor() );
@@ -156,7 +146,6 @@ final class VirtualProcessorUnitsHolder
     {
     }
 
-    @Nonnull
     private static final VirtualProcessorUnit VPU =
       new VirtualProcessorUnit( Zemeckis.areNamesEnabled() ? "OnIdle" : null,
                                 ZemeckisConfig.isJvm() ? new MacroTaskExecutor() : new OnIdleExecutor() );
@@ -203,7 +192,7 @@ final class VirtualProcessorUnitsHolder
      * @param processorUnit the VirtualProcessorUnit.
      */
     @VisibleForTesting
-    static void activate( @Nonnull final VirtualProcessorUnit processorUnit )
+    static void activate( final VirtualProcessorUnit processorUnit )
     {
       Objects.requireNonNull( processorUnit );
       if ( Zemeckis.shouldCheckInvariants() )
@@ -222,7 +211,7 @@ final class VirtualProcessorUnitsHolder
      * @param processorUnit the VirtualProcessorUnit.
      */
     @VisibleForTesting
-    static void deactivate( @Nonnull final VirtualProcessorUnit processorUnit )
+    static void deactivate( final VirtualProcessorUnit processorUnit )
     {
       Objects.requireNonNull( processorUnit );
       if ( Zemeckis.shouldCheckInvariants() )

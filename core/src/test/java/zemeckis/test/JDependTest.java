@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
 import jdepend.framework.DependencyConstraint;
 import jdepend.framework.JDepend;
 import jdepend.framework.JavaPackage;
@@ -28,11 +27,13 @@ public class JDependTest
     final JavaPackage braincheck = constraint.addPackage( "org.realityforge.braincheck" );
     final JavaPackage jsinterop = constraint.addPackage( "jsinterop.annotations" );
     final JavaPackage jsinteropBase = constraint.addPackage( "jsinterop.base" );
+    final JavaPackage jspecify = constraint.addPackage( "org.jspecify.annotations" );
     final JavaPackage akasha = constraint.addPackage( "akasha" );
     final JavaPackage akashaPromise = constraint.addPackage( "akasha.promise" );
 
     zemeckis.dependsUpon( jsinterop );
     zemeckis.dependsUpon( jsinteropBase );
+    zemeckis.dependsUpon( jspecify );
     zemeckis.dependsUpon( braincheck );
     zemeckis.dependsUpon( akasha );
     zemeckis.dependsUpon( akashaPromise );
@@ -104,7 +105,6 @@ public class JDependTest
     }
   }
 
-  @Nonnull
   private String compileTargetDir()
   {
     final String fixtureDir = System.getProperty( "zemeckis.core.compile_target" );

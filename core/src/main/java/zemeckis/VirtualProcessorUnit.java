@@ -3,8 +3,7 @@ package zemeckis;
 import grim.annotations.OmitClinit;
 import grim.annotations.OmitSymbol;
 import java.util.Objects;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 import static org.realityforge.braincheck.Guards.*;
 
@@ -24,7 +23,6 @@ public final class VirtualProcessorUnit
   /**
    * The executor responsible for selecting and invoking tasks.
    */
-  @Nonnull
   private final Executor _executor;
 
   /**
@@ -32,7 +30,7 @@ public final class VirtualProcessorUnit
    *
    * @param executor the associated task executor.
    */
-  VirtualProcessorUnit( @Nullable final String name, @Nonnull final Executor executor )
+  VirtualProcessorUnit( @Nullable final String name, final Executor executor )
   {
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
@@ -53,7 +51,6 @@ public final class VirtualProcessorUnit
    * @return the name of the VirtualProcessorUnit.
    */
   @OmitSymbol( unless = "zemeckis.enable_names" )
-  @Nonnull
   public String getName()
   {
     if ( Zemeckis.shouldCheckApiInvariants() )
@@ -61,8 +58,7 @@ public final class VirtualProcessorUnit
       apiInvariant( Zemeckis::areNamesEnabled,
                     () -> "Zemeckis-0003: VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false" );
     }
-    assert null != _name;
-    return _name;
+    return Objects.requireNonNull( _name );
   }
 
   /**
@@ -73,20 +69,17 @@ public final class VirtualProcessorUnit
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public Cancelable queue( @Nullable final String name, @Nonnull final Runnable task )
+  public Cancelable queue( @Nullable final String name, final Runnable task )
   {
     return getExecutor().queue( name, task );
   }
 
-  @Nonnull
   Executor getExecutor()
   {
     return _executor;
   }
 
   @OmitSymbol( unless = "zemeckis.enable_names" )
-  @Nonnull
   @Override
   public String toString()
   {
@@ -107,7 +100,7 @@ public final class VirtualProcessorUnit
      *
      * @param context the context represent the associated {@link VirtualProcessorUnit}.
      */
-    void init( @Nonnull Context context );
+    void init( Context context );
 
     /**
      * Reset state of executor.
@@ -124,15 +117,14 @@ public final class VirtualProcessorUnit
      * @param task the task.
      * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
      */
-    @Nonnull
-    Cancelable queue( @Nullable String name, @Nonnull Runnable task );
+    Cancelable queue( @Nullable String name, Runnable task );
 
     /**
      * Queue task for execution next. The executor is not activated. The task must not be already queued.
      *
      * @param task the task.
      */
-    void queueNext( @Nullable final String name, @Nonnull Runnable task );
+    void queueNext( @Nullable final String name, Runnable task );
 
     /**
      * Activate the executor.
@@ -164,6 +156,6 @@ public final class VirtualProcessorUnit
      *
      * @param activationFn the function passed to process tasks.
      */
-    void activate( @Nonnull ActivationFn activationFn );
+    void activate( ActivationFn activationFn );
   }
 }

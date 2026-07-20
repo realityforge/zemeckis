@@ -1,6 +1,5 @@
 package zemeckis;
 
-import javax.annotation.Nonnull;
 
 /**
  * Interface defining handler invoked when an unexpected error occurs.
@@ -13,5 +12,5 @@ public interface UncaughtErrorHandler
    *
    * @param error the exception.
    */
-  void onUncaughtError( @Nonnull Throwable error );
+  void onUncaughtError( Throwable error );
 }

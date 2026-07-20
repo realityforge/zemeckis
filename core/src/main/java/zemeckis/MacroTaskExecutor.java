@@ -1,7 +1,8 @@
 package zemeckis;
 
 import akasha.MessageChannel;
-import javax.annotation.Nullable;
+import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Run tasks in next MacroTask.
@@ -16,7 +17,7 @@ final class MacroTaskExecutor
   {
     if ( Zemeckis.useMessageChannelToScheduleTasks() )
     {
-      _channel.port1().onmessage = m -> activate();
+      channel().port1().onmessage = m -> activate();
     }
   }
 
@@ -25,11 +26,16 @@ final class MacroTaskExecutor
   {
     if ( Zemeckis.useMessageChannelToScheduleTasks() )
     {
-      _channel.port2().postMessage( null );
+      channel().port2().postMessage( null );
     }
     else
     {
       TemporalScheduler.delayedTask( Zemeckis.areNamesEnabled() ? "MacroTaskExecutor" : null, this::activate, 0 );
     }
+  }
+
+  private MessageChannel channel()
+  {
+    return Objects.requireNonNull( _channel );
   }
 }

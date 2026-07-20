@@ -2,13 +2,11 @@ package zemeckis.examples.dom.repeating_task;
 
 import akasha.Console;
 import com.google.gwt.core.client.EntryPoint;
-import javax.annotation.Nonnull;
 import zemeckis.Zemeckis;
 
 public final class Example
   implements EntryPoint
 {
-  @Nonnull
   private static final String[] COLORS = { "color: #006AEB;", "color: #c143eb;" };
 
   @Override

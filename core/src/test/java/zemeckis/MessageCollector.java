@@ -1,7 +1,6 @@
 package zemeckis;
 
 import java.io.File;
-import javax.annotation.Nonnull;
 import org.realityforge.braincheck.AbstractTestNGMessageCollector;
 import org.realityforge.braincheck.GuardMessageCollector;
 import static org.testng.Assert.*;
@@ -15,7 +14,6 @@ public final class MessageCollector
     return System.getProperty( "zemeckis.check_diagnostic_messages", "true" ).equals( "true" );
   }
 
-  @Nonnull
   @Override
   protected GuardMessageCollector createCollector()
   {

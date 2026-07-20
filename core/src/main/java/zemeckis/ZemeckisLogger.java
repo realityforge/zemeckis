@@ -2,8 +2,7 @@ package zemeckis;
 
 import grim.annotations.OmitSymbol;
 import grim.annotations.OmitType;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
@@ -26,14 +25,13 @@ final class ZemeckisLogger
   /**
    * Log a message with an optional exception.
    */
-  static void log( @Nonnull final String message, @Nullable final Throwable throwable )
+  static void log( final String message, @Nullable final Throwable throwable )
   {
     c_logger.log( message, throwable );
   }
 
   @TestOnly
   @OmitSymbol
-  @Nonnull
   static Logger getLogger()
   {
     return c_logger;
@@ -46,7 +44,7 @@ final class ZemeckisLogger
    */
   interface Logger
   {
-    void log( @Nonnull String message, @Nullable Throwable throwable );
+    void log( String message, @Nullable Throwable throwable );
   }
 
   /**
@@ -57,7 +55,7 @@ final class ZemeckisLogger
     implements Logger
   {
     @Override
-    public void log( @Nonnull final String message, @Nullable final Throwable throwable )
+    public void log( final String message, @Nullable final Throwable throwable )
     {
     }
   }
@@ -71,7 +69,7 @@ final class ZemeckisLogger
   {
     @GwtIncompatible
     @Override
-    public void log( @Nonnull final String message, @Nullable final Throwable throwable )
+    public void log( final String message, @Nullable final Throwable throwable )
     {
       System.out.println( message );
       if ( null != throwable )
@@ -97,7 +95,7 @@ final class ZemeckisLogger
     implements Logger
   {
     @Override
-    public void log( @Nonnull final String message, @Nullable final Throwable throwable )
+    public void log( final String message, @Nullable final Throwable throwable )
     {
       NativeJsLoggerUtil.log( message );
       if ( null != throwable )
@@ -123,7 +121,7 @@ final class ZemeckisLogger
     }
 
     @Override
-    public void log( @Nonnull final String message, @Nullable final Throwable throwable )
+    public void log( final String message, @Nullable final Throwable throwable )
     {
       if ( null != _logger )
       {

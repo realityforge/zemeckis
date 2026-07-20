@@ -1,8 +1,7 @@
 package zemeckis;
 
 import java.util.Objects;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 import static org.realityforge.braincheck.Guards.*;
 
@@ -19,10 +18,8 @@ abstract class AbstractExecutor
   /**
    * A queue containing tasks that have been scheduled but are not yet executing.
    */
-  @Nonnull
   private final CircularBuffer<TaskEntry> _taskQueue;
-  @Nullable
-  private VirtualProcessorUnit.Context _context;
+  private VirtualProcessorUnit.@Nullable Context _context;
 
   AbstractExecutor()
   {
@@ -35,9 +32,8 @@ abstract class AbstractExecutor
   }
 
   @Override
-  @Nonnull
   @SuppressWarnings( "Varifier" )
-  public final synchronized Cancelable queue( @Nullable final String name, @Nonnull final Runnable task )
+  public final synchronized Cancelable queue( @Nullable final String name, final Runnable task )
   {
     final boolean needsActivation = 0 == getQueueSize();
     ensureNotQueued( name, task );
@@ -51,13 +47,13 @@ abstract class AbstractExecutor
   }
 
   @Override
-  public final void queueNext( @Nullable final String name, @Nonnull final Runnable task )
+  public final void queueNext( @Nullable final String name, final Runnable task )
   {
     ensureNotQueued( name, task );
     _taskQueue.addFirst( new TaskEntry( name, task, null ) );
   }
 
-  private void ensureNotQueued( @Nullable final String name, @Nonnull final Runnable task )
+  private void ensureNotQueued( @Nullable final String name, final Runnable task )
   {
     if ( Zemeckis.shouldCheckInvariants() )
     {
@@ -66,7 +62,6 @@ abstract class AbstractExecutor
     }
   }
 
-  @Nonnull
   final CircularBuffer<TaskEntry> getTaskQueue()
   {
     return _taskQueue;
@@ -74,8 +69,7 @@ abstract class AbstractExecutor
 
   final void executeNextTask()
   {
-    final TaskEntry task = _taskQueue.pop();
-    assert null != task;
+    final TaskEntry task = Objects.requireNonNull( _taskQueue.pop() );
     try
     {
       task.execute();
@@ -87,7 +81,7 @@ abstract class AbstractExecutor
   }
 
   @Override
-  public void init( @Nonnull final VirtualProcessorUnit.Context context )
+  public void init( final VirtualProcessorUnit.Context context )
   {
     _context = Objects.requireNonNull( context );
   }
@@ -100,11 +94,10 @@ abstract class AbstractExecutor
     _taskQueue.truncate( INITIAL_QUEUE_SIZE );
   }
 
-  @Nonnull
   final VirtualProcessorUnit.Context context()
   {
     assert null != _context;
-    return _context;
+    return Objects.requireNonNull( _context );
   }
 
   /**

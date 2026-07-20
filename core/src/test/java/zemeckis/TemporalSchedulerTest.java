@@ -2,6 +2,7 @@ package zemeckis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -84,7 +85,7 @@ public final class TemporalSchedulerTest
         latch.countDown();
         if ( current.incrementAndGet() >= count )
         {
-          task.get().cancel();
+          Objects.requireNonNull( task.get() ).cancel();
         }
       }, 20 );
     task.set( schedule );

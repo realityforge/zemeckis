@@ -9,6 +9,7 @@ java_testng_test(
         "JDependTest.java",
         "UncaughtErrorHandlerTest.java",
         "ZemeckisTestUtilTest.java",
+        "package-info.java",
     ],
     data = [
         "//core/src/main/java/zemeckis:core",
@@ -28,7 +29,6 @@ java_testng_test(
     deps = [
         "//core/src/main/java/zemeckis:core",
         "//core/src/test/java/zemeckis:test_support",
-        "//third_party/java:javax_annotation",
         "//third_party/java:jdepend",
         "//third_party/java:testng",
     ],

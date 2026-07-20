@@ -4,8 +4,7 @@ import grim.annotations.OmitClinit;
 import grim.annotations.OmitSymbol;
 import grim.annotations.OmitType;
 import java.util.Objects;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 import org.jetbrains.annotations.VisibleForTesting;
 import org.realityforge.braincheck.BrainCheckConfig;
@@ -125,7 +124,7 @@ public final class Zemeckis
    *
    * @param handler the error handler.
    */
-  public static void addUncaughtErrorHandler( @Nonnull final UncaughtErrorHandler handler )
+  public static void addUncaughtErrorHandler( final UncaughtErrorHandler handler )
   {
     UncaughtErrorHandlerSupport.get().addUncaughtErrorHandler( handler );
   }
@@ -137,7 +136,7 @@ public final class Zemeckis
    *
    * @param handler the error handler.
    */
-  public static void removeUncaughtErrorHandler( @Nonnull final UncaughtErrorHandler handler )
+  public static void removeUncaughtErrorHandler( final UncaughtErrorHandler handler )
   {
     UncaughtErrorHandlerSupport.get().removeUncaughtErrorHandler( handler );
   }
@@ -147,7 +146,7 @@ public final class Zemeckis
    *
    * @param error the error.
    */
-  public static void reportUncaughtError( @Nonnull final Throwable error )
+  public static void reportUncaughtError( final Throwable error )
   {
     if ( areUncaughtErrorHandlersEnabled() )
     {
@@ -172,8 +171,7 @@ public final class Zemeckis
    * @param delay the delay before the task should execute. Must be a value greater than 0.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable delayedTask( @Nonnull final Runnable task, final int delay )
+  public static Cancelable delayedTask( final Runnable task, final int delay )
   {
     return delayedTask( null, task, delay );
   }
@@ -186,8 +184,7 @@ public final class Zemeckis
    * @param delay the delay before the task should execute. Must be a value greater than 0.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable delayedTask( @Nullable final String name, @Nonnull final Runnable task, final int delay )
+  public static Cancelable delayedTask( @Nullable final String name, final Runnable task, final int delay )
   {
     final String actualName = generateName( "DelayedTask", name );
     return TemporalScheduler.delayedTask( actualName, () -> becomeMacroTask( actualName, task ), delay );
@@ -200,8 +197,7 @@ public final class Zemeckis
    * @param period the period after execution when the task should be re-executed. Must be a value greater than 0.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable periodicTask( @Nonnull final Runnable task, final int period )
+  public static Cancelable periodicTask( final Runnable task, final int period )
   {
     return periodicTask( null, task, period );
   }
@@ -214,8 +210,7 @@ public final class Zemeckis
    * @param period the period after execution when the task should be re-executed. Must be a value greater than 0.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable periodicTask( @Nullable final String name, @Nonnull final Runnable task, final int period )
+  public static Cancelable periodicTask( @Nullable final String name, final Runnable task, final int period )
   {
     final String actualName = generateName( "PeriodicTask", name );
     return TemporalScheduler.periodicTask( actualName, () -> becomeMacroTask( actualName, task ), period );
@@ -250,8 +245,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable macroTask( @Nonnull final Runnable task )
+  public static Cancelable macroTask( final Runnable task )
   {
     return macroTask( null, task );
   }
@@ -265,8 +259,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable macroTask( @Nullable final String name, @Nonnull final Runnable task )
+  public static Cancelable macroTask( @Nullable final String name, final Runnable task )
   {
     return macroTaskVpu().queue( generateName( "MacroTask", name ), task );
   }
@@ -277,7 +270,6 @@ public final class Zemeckis
    * @return the "macro" task VirtualProcessorUnit.
    * @see #macroTask(Runnable)
    */
-  @Nonnull
   public static VirtualProcessorUnit macroTaskVpu()
   {
     return VirtualProcessorUnitsHolder.macroTaskVpu();
@@ -293,7 +285,7 @@ public final class Zemeckis
    * @param task the task.
    */
   @VisibleForTesting
-  static void becomeMacroTask( @Nullable final String name, @Nonnull final Runnable task )
+  static void becomeMacroTask( @Nullable final String name, final Runnable task )
   {
     if ( shouldCheckApiInvariants() )
     {
@@ -314,8 +306,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable microTask( @Nonnull final Runnable task )
+  public static Cancelable microTask( final Runnable task )
   {
     return microTask( null, task );
   }
@@ -329,8 +320,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable microTask( @Nullable final String name, @Nonnull final Runnable task )
+  public static Cancelable microTask( @Nullable final String name, final Runnable task )
   {
     return microTaskVpu().queue( generateName( "MicroTask", name ), task );
   }
@@ -341,7 +331,6 @@ public final class Zemeckis
    * @return the "micro" task VirtualProcessorUnit.
    * @see #microTask(Runnable)
    */
-  @Nonnull
   public static VirtualProcessorUnit microTaskVpu()
   {
     return VirtualProcessorUnitsHolder.microTaskVpu();
@@ -355,8 +344,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable animationFrame( @Nonnull final Runnable task )
+  public static Cancelable animationFrame( final Runnable task )
   {
     return animationFrame( null, task );
   }
@@ -370,8 +358,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable animationFrame( @Nullable final String name, @Nonnull final Runnable task )
+  public static Cancelable animationFrame( @Nullable final String name, final Runnable task )
   {
     return animationFrameVpu().queue( generateName( "AnimationFrameTask", name ), task );
   }
@@ -382,7 +369,6 @@ public final class Zemeckis
    * @return the "animationFrame" VirtualProcessorUnit.
    * @see #microTask(Runnable)
    */
-  @Nonnull
   public static VirtualProcessorUnit animationFrameVpu()
   {
     return VirtualProcessorUnitsHolder.animationFrameVpu();
@@ -396,8 +382,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable afterFrame( @Nonnull final Runnable task )
+  public static Cancelable afterFrame( final Runnable task )
   {
     return afterFrame( null, task );
   }
@@ -411,8 +396,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable afterFrame( @Nullable final String name, @Nonnull final Runnable task )
+  public static Cancelable afterFrame( @Nullable final String name, final Runnable task )
   {
     return afterFrameVpu().queue( generateName( "AfterFrameTask", name ), task );
   }
@@ -423,7 +407,6 @@ public final class Zemeckis
    * @return the "afterFrame" VirtualProcessorUnit.
    * @see #microTask(Runnable)
    */
-  @Nonnull
   public static VirtualProcessorUnit afterFrameVpu()
   {
     return VirtualProcessorUnitsHolder.afterFrameVpu();
@@ -442,8 +425,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable onIdle( @Nonnull final Runnable task )
+  public static Cancelable onIdle( final Runnable task )
   {
     return onIdle( null, task );
   }
@@ -462,8 +444,7 @@ public final class Zemeckis
    * @param task the task.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  public static Cancelable onIdle( @Nullable final String name, @Nonnull final Runnable task )
+  public static Cancelable onIdle( @Nullable final String name, final Runnable task )
   {
     return onIdleVpu().queue( generateName( "OnIdleTask", name ), task );
   }
@@ -474,7 +455,6 @@ public final class Zemeckis
    * @return the "onIdle" VirtualProcessorUnit.
    * @see #microTask(Runnable)
    */
-  @Nonnull
   public static VirtualProcessorUnit onIdleVpu()
   {
     return VirtualProcessorUnitsHolder.onIdleVpu();
@@ -491,7 +471,7 @@ public final class Zemeckis
    */
   @OmitSymbol( unless = "zemeckis.enable_names" )
   @Nullable
-  static String generateName( @Nonnull final String prefix, @Nullable final String name )
+  static String generateName( final String prefix, @Nullable final String name )
   {
     return Zemeckis.areNamesEnabled() ?
            null != name ? name : prefix + "@" + IdContainer.c_nextTaskId++ :

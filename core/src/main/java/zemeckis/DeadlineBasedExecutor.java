@@ -1,6 +1,6 @@
 package zemeckis;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import jsinterop.annotations.JsFunction;
 
 /**

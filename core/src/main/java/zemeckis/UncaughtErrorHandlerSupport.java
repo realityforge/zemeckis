@@ -3,7 +3,6 @@ package zemeckis;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nonnull;
 import org.jetbrains.annotations.TestOnly;
 import org.realityforge.braincheck.BrainCheckConfig;
 import static org.realityforge.braincheck.Guards.*;
@@ -14,15 +13,12 @@ import static org.realityforge.braincheck.Guards.*;
 final class UncaughtErrorHandlerSupport
   implements UncaughtErrorHandler
 {
-  @Nonnull
   private static UncaughtErrorHandlerSupport c_instance = new UncaughtErrorHandlerSupport();
   /**
    * The list of error handlers to call when an error is received.
    */
-  @Nonnull
   private final List<UncaughtErrorHandler> _errorHandlers = new ArrayList<>();
 
-  @Nonnull
   static UncaughtErrorHandlerSupport get()
   {
     if ( Zemeckis.shouldCheckInvariants() )
@@ -49,7 +45,7 @@ final class UncaughtErrorHandlerSupport
    *
    * @param handler the error handler.
    */
-  void addUncaughtErrorHandler( @Nonnull final UncaughtErrorHandler handler )
+  void addUncaughtErrorHandler( final UncaughtErrorHandler handler )
   {
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
@@ -66,7 +62,7 @@ final class UncaughtErrorHandlerSupport
    *
    * @param handler the error handler.
    */
-  void removeUncaughtErrorHandler( @Nonnull final UncaughtErrorHandler handler )
+  void removeUncaughtErrorHandler( final UncaughtErrorHandler handler )
   {
     if ( Zemeckis.shouldCheckApiInvariants() )
     {
@@ -78,7 +74,7 @@ final class UncaughtErrorHandlerSupport
   }
 
   @Override
-  public void onUncaughtError( @Nonnull final Throwable error )
+  public void onUncaughtError( final Throwable error )
   {
     for ( final UncaughtErrorHandler errorHandler : _errorHandlers )
     {

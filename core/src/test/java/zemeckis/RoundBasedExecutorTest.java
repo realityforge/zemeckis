@@ -1,5 +1,6 @@
 package zemeckis;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import org.realityforge.braincheck.BrainCheckTestUtil;
@@ -206,7 +207,7 @@ public final class RoundBasedExecutorTest
     final String name = randomString();
     final Runnable task = () -> {
       task1CallCount.incrementAndGet();
-      executor.queue( name, taskRef.get() );
+      executor.queue( name, Objects.requireNonNull( taskRef.get() ) );
     };
     taskRef.set( task );
 
@@ -239,7 +240,7 @@ public final class RoundBasedExecutorTest
     final AtomicReference<Runnable> taskRef = new AtomicReference<>();
     final Runnable task = () -> {
       task1CallCount.incrementAndGet();
-      executor.queue( randomString(), taskRef.get() );
+      executor.queue( randomString(), Objects.requireNonNull( taskRef.get() ) );
     };
     taskRef.set( task );
 

@@ -1,7 +1,6 @@
 package zemeckis;
 
 import grim.annotations.OmitType;
-import javax.annotation.Nonnull;
 
 /**
  * Location of all compile time configuration settings for framework.
@@ -10,7 +9,6 @@ import javax.annotation.Nonnull;
 @OmitType
 final class ZemeckisConfig
 {
-  @Nonnull
   private static final ConfigProvider PROVIDER = new ConfigProvider();
   private static final boolean PRODUCTION_MODE = PROVIDER.isProductionMode();
   private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
@@ -19,7 +17,6 @@ final class ZemeckisConfig
   private static boolean USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS = PROVIDER.useMessageChannelToScheduleTasks();
   private static boolean USE_WORKER_TO_SCHEDULE_DELAYED_TASKS = PROVIDER.useWorkerToScheduleDelayedTasks();
   private static final boolean LOG_WORKER_INTERACTIONS = PROVIDER.shouldLogWorkerInteractions();
-  @Nonnull
   private static final String LOGGER_TYPE = PROVIDER.loggerType();
   private static final boolean JVM = PROVIDER.isJvm();
 
@@ -72,7 +69,6 @@ final class ZemeckisConfig
     return LOG_WORKER_INTERACTIONS;
   }
 
-  @Nonnull
   static String loggerType()
   {
     return LOGGER_TYPE;
@@ -131,7 +127,6 @@ final class ZemeckisConfig
     }
 
     @GwtIncompatible
-    @Nonnull
     @Override
     String loggerType()
     {
@@ -184,7 +179,6 @@ final class ZemeckisConfig
       return "true" == System.getProperty( "zemeckis.log_worker_interactions" );
     }
 
-    @Nonnull
     String loggerType()
     {
       /*

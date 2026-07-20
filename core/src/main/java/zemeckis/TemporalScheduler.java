@@ -11,14 +11,14 @@ import akasha.WorkerOptions;
 import grim.annotations.OmitSymbol;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import jsinterop.base.Any;
 import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
@@ -35,7 +35,6 @@ import static org.realityforge.braincheck.Guards.*;
  */
 final class TemporalScheduler
 {
-  @Nonnull
   private static AbstractScheduler c_scheduler = new SchedulerImpl();
 
   private TemporalScheduler()
@@ -60,8 +59,7 @@ final class TemporalScheduler
    * @param delay the delay before the task should execute. Must not be a negative value.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  static Cancelable delayedTask( @Nullable final String name, @Nonnull final Runnable task, final int delay )
+  static Cancelable delayedTask( @Nullable final String name, final Runnable task, final int delay )
   {
     return c_scheduler.delayedTask( name, task, delay );
   }
@@ -74,8 +72,7 @@ final class TemporalScheduler
    * @param period the period after execution when the task should be re-executed. Must be a value greater than 0.
    * @return the {@link Cancelable} instance that can be used to cancel execution of the task.
    */
-  @Nonnull
-  static Cancelable periodicTask( @Nullable final String name, @Nonnull final Runnable task, final int period )
+  static Cancelable periodicTask( @Nullable final String name, final Runnable task, final int period )
   {
     return c_scheduler.periodicTask( name, task, period );
   }
@@ -89,7 +86,6 @@ final class TemporalScheduler
 
   @GwtIncompatible
   @TestOnly
-  @Nonnull
   static Lock getTestSchedulerLock()
   {
     return ((SchedulerImpl) c_scheduler)._lock;
@@ -98,10 +94,8 @@ final class TemporalScheduler
   private static final class SchedulerImpl
     extends AbstractScheduler
   {
-    @Nonnull
     @GwtIncompatible
     private final Lock _lock = new ReentrantLock();
-    @Nonnull
     @GwtIncompatible
     private final ScheduledExecutorService _executorService = new ScheduledThreadPoolExecutor( 1, r -> {
       final Runnable action = () -> {
@@ -135,18 +129,16 @@ final class TemporalScheduler
     }
 
     @GwtIncompatible
-    @Nonnull
     @Override
-    Cancelable doDelayedTask( @Nullable final String name, @Nonnull final Runnable task, final int delay )
+    Cancelable doDelayedTask( @Nullable final String name, final Runnable task, final int delay )
     {
       final ScheduledFuture<?> future = _executorService.schedule( task, delay, TimeUnit.MILLISECONDS );
       return () -> future.cancel( true );
     }
 
-    @Nonnull
     @Override
     @GwtIncompatible
-    Cancelable doPeriodicTask( @Nullable final String name, @Nonnull final Runnable task, final int period )
+    Cancelable doPeriodicTask( @Nullable final String name, final Runnable task, final int period )
     {
       final ScheduledFuture<?> future = _executorService.scheduleAtFixedRate( task, 0, period, TimeUnit.MILLISECONDS );
       return () -> future.cancel( true );
@@ -157,7 +149,6 @@ final class TemporalScheduler
   {
     private static final boolean ENABLE_WORKERS = Zemeckis.useWorkerToScheduleDelayedTasks();
     private static final boolean LOG = Zemeckis.shouldLogWorkerInteractions();
-    @Nonnull
     private static final String SRC =
       "var timers = {};\n" +
       "\n" +
@@ -236,7 +227,7 @@ final class TemporalScheduler
     {
       if ( ENABLE_WORKERS )
       {
-        _worker.onmessage = this::onWorkerMessage;
+        worker().onmessage = this::onWorkerMessage;
       }
     }
 
@@ -249,7 +240,7 @@ final class TemporalScheduler
     {
       if ( Zemeckis.useWorkerToScheduleDelayedTasks() )
       {
-        _worker.terminate();
+        worker().terminate();
       }
     }
 
@@ -258,7 +249,7 @@ final class TemporalScheduler
       return (int) ( System.currentTimeMillis() - getSchedulerStart() );
     }
 
-    final Cancelable delayedTask( @Nullable final String name, @Nonnull final Runnable task, final int delay )
+    final Cancelable delayedTask( @Nullable final String name, final Runnable task, final int delay )
     {
       if ( Zemeckis.shouldCheckApiInvariants() )
       {
@@ -269,27 +260,26 @@ final class TemporalScheduler
       return new TaskEntry( name, task, doDelayedTask( name, task, delay ) );
     }
 
-    @Nonnull
-    Cancelable doDelayedTask( @Nullable final String name, @Nonnull final Runnable task, final int delay )
+    Cancelable doDelayedTask( @Nullable final String name, final Runnable task, final int delay )
     {
       if ( Zemeckis.useWorkerToScheduleDelayedTasks() )
       {
         final double id = _nextTimerId++;
-        _workerTasks.put( id, task );
+        workerTasks().put( id, task );
         final JsPropertyMap<Object> message = msg( name, "+", "dt", id );
         message.set( "delay", delay );
         if ( LOG )
         {
           Console.log( "[Zemeckis-Main] Add Delayed Task '" + name + "': " + id );
         }
-        _worker.postMessage( message );
+        worker().postMessage( message );
         return () -> {
-          _workerTasks.remove( id );
+          workerTasks().remove( id );
           if ( LOG )
           {
             Console.log( "[Zemeckis-Main] Remove Delayed Task '" + name + "': " + id );
           }
-          _worker.postMessage( msg( name, "-", "dt", id ) );
+          worker().postMessage( msg( name, "-", "dt", id ) );
         };
       }
       else
@@ -299,8 +289,7 @@ final class TemporalScheduler
       }
     }
 
-    @Nonnull
-    final Cancelable periodicTask( @Nullable final String name, @Nonnull final Runnable task, final int period )
+    final Cancelable periodicTask( @Nullable final String name, final Runnable task, final int period )
     {
       if ( Zemeckis.shouldCheckApiInvariants() )
       {
@@ -312,27 +301,26 @@ final class TemporalScheduler
       return new TaskEntry( name, task, doPeriodicTask( name, task, period ) );
     }
 
-    @Nonnull
-    Cancelable doPeriodicTask( @Nullable final String name, @Nonnull final Runnable task, final int period )
+    Cancelable doPeriodicTask( @Nullable final String name, final Runnable task, final int period )
     {
       if ( Zemeckis.useWorkerToScheduleDelayedTasks() )
       {
         final double id = _nextTimerId++;
-        _workerTasks.put( id, task );
+        workerTasks().put( id, task );
         final JsPropertyMap<Object> message = msg( name, "+", "pt", id );
         message.set( "period", period );
         if ( LOG )
         {
           Console.log( "[Zemeckis-Main] Add Periodic Task '" + name + "': " + id );
         }
-        _worker.postMessage( message );
+        worker().postMessage( message );
         return () -> {
-          _workerTasks.remove( id );
+          workerTasks().remove( id );
           if ( LOG )
           {
             Console.log( "[Zemeckis-Main] Remove Periodic Task '" + name + "': " + id );
           }
-          _worker.postMessage( msg( name, "-", "pt", id ) );
+          worker().postMessage( msg( name, "-", "pt", id ) );
         };
       }
       else
@@ -343,7 +331,7 @@ final class TemporalScheduler
     }
 
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
-    private void onWorkerMessage( @Nonnull final MessageEvent event )
+    private void onWorkerMessage( final MessageEvent event )
     {
       final Any eventData = event.data();
       if ( null != eventData )
@@ -357,7 +345,7 @@ final class TemporalScheduler
           {
             Console.log( "[Zemeckis-Main] Delayed Task Tick: " + id );
           }
-          runTaskIfPresent( _workerTasks.remove( id ) );
+          runTaskIfPresent( workerTasks().remove( id ) );
         }
         else if ( "pt".equals( type ) )
         {
@@ -365,17 +353,16 @@ final class TemporalScheduler
           {
             Console.log( "[Zemeckis-Main] Periodic Task Tick: " + id );
           }
-          runTaskIfPresent( _workerTasks.get( id ) );
+          runTaskIfPresent( workerTasks().get( id ) );
         }
       }
     }
 
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
-    @Nonnull
     @SuppressWarnings( "Varifier" )
     private JsPropertyMap<Object> msg( @Nullable String name,
-                                       @Nonnull final String action,
-                                       @Nonnull final String type,
+                                       final String action,
+                                       final String type,
                                        final double id )
     {
       final JsPropertyMap<Object> msg = JsPropertyMap.of( "action", action, "type", type, "id", id );
@@ -393,6 +380,18 @@ final class TemporalScheduler
       {
         task.run();
       }
+    }
+
+    @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
+    private Worker worker()
+    {
+      return Objects.requireNonNull( _worker );
+    }
+
+    @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
+    private Map<Double, Runnable> workerTasks()
+    {
+      return Objects.requireNonNull( _workerTasks );
     }
 
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )

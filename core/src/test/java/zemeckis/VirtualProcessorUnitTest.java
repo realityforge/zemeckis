@@ -1,5 +1,6 @@
 package zemeckis;
 
+import java.util.Objects;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -24,8 +25,7 @@ public final class VirtualProcessorUnitTest
     vpu.queue( taskName, task );
     assertEquals( taskQueue.size(), 1 );
     assertEquals( executor.getScheduleCount(), 1 );
-    final TaskEntry entry = taskQueue.peek();
-    assertNotNull( entry );
+    final TaskEntry entry = Objects.requireNonNull( taskQueue.peek() );
     assertEquals( entry.toString(), taskName );
     assertEquals( entry.getTask(), task );
   }

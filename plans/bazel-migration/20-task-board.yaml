@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T06
+current_focus: T07
 
 tasks:
   - id: T01
@@ -146,10 +146,13 @@ tasks:
         result: pass; strict Error Prone compiled 39 Bazel targets and all 3 Bazel tests passed
       - command: inspect rules.bzl against Braincheck commit 4451a6e
         result: pass; strict pre-NullAway policy matches Braincheck
+    commit:
+      hash: d73adc5
+      message: "chore(build): enable strict Error Prone checks"
 
   - id: T06
     title: Migrate to JSpecify and NullAway
-    status: in_progress
+    status: completed
     priority: high
     depends_on: [T05]
     acceptance_criteria:
@@ -168,10 +171,21 @@ tasks:
       - tools/check.sh
       - bundle exec buildr clean test package
       - rg verifies removed javax.annotation nullness usage
+    evidence:
+      - command: tools/check.sh
+        result: pass; NullAway and RequireExplicitNullMarking compiled 49 Bazel targets and all 3 tests passed
+      - command: bundle exec buildr clean test package
+        result: pass; both GWT module compiles, all 51 tests, examples, and package generation passed
+      - command: inspect generated Buildr POM
+        result: pass; JSpecify is published and javax.annotation is not a direct Zemeckis dependency
+      - command: rg for javax.annotation and Nonnull in core and examples
+        result: pass; no source usage remains
+      - command: inspect retained Buildr compiler path
+        result: released Akasha 0.34 and Grim 0.09 require a private javax.annotation compiler input; it is not published and is removed with Buildr in T14
 
   - id: T07
     title: Apply Java formatting
-    status: pending
+    status: in_progress
     priority: medium
     depends_on: [T06]
     acceptance_criteria:
@@ -345,3 +359,7 @@ history:
     task: T04
     commit: 12498a6
     note: Resolved strict Error Prone findings while preserving GWT compatibility.
+  - timestamp: "2026-07-20"
+    task: T05
+    commit: d73adc5
+    note: Enabled Braincheck's strict pre-NullAway Error Prone policy.

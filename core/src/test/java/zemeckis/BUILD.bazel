@@ -13,12 +13,12 @@ java_library(
         "NoopTask.java",
         "TestExecutor.java",
         "TestLogger.java",
+        "package-info.java",
     ],
     deps = [
         "//core/src/main/java/zemeckis:core",
         "//third_party/java:braincheck_core",
         "//third_party/java:braincheck_testng",
-        "//third_party/java:javax_annotation",
         "//third_party/java:testng",
     ],
 )
@@ -38,6 +38,7 @@ java_testng_test(
         "ZemeckisLoggerTest.java",
         "ZemeckisTest.java",
         "ZemeckisUtilTest.java",
+        "package-info.java",
     ],
     data = ["diagnostic_messages.json"],
     jvm_flags = [
@@ -62,7 +63,6 @@ java_testng_test(
         ":test_support",
         "//core/src/main/java/zemeckis:core",
         "//third_party/java:braincheck_core",
-        "//third_party/java:javax_annotation",
         "//third_party/java:testng",
     ],
 )
