@@ -2,7 +2,8 @@ name: CI
 
 on:
   pull_request:
-  push:
+    branches:
+      - master
   workflow_dispatch:
 
 permissions:
@@ -45,7 +46,6 @@ jobs:
           bazelisk-cache: true
           repository-cache: true
           disk-cache: ${{ github.workflow }}
-          cache-save: ${{ github.event_name != 'pull_request' }}
 
       - name: Install ripgrep
         run: |
