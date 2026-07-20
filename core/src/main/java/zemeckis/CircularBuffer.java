@@ -183,6 +183,7 @@ final class CircularBuffer<T>
     }
   }
 
+  @SuppressWarnings( "Varifier" )
   private void resizeElements( final int newSize, final int size )
   {
     @SuppressWarnings( "unchecked" )
@@ -221,6 +222,7 @@ final class CircularBuffer<T>
   /*
    * This method is very inefficient and should only be used in invariant checking code.
    */
+  @SuppressWarnings( "Varifier" )
   Stream<T> stream()
   {
     final int size = size();

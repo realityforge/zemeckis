@@ -11,16 +11,7 @@ public final class Example
   implements EntryPoint
 {
   @Nonnull
-  private static final Map<String, String> STYLES = new HashMap<String, String>()
-  {
-    {
-      put( "macro", "color: #006AEB; font-weight: normal;" );
-      put( "micro", "color: #c143eb; font-weight: normal;" );
-      put( "animationFrame", "color: #FFBA49; font-weight: normal;" );
-      put( "afterFrame", "color: #10a210; font-weight: normal;" );
-      put( "onIdle", "color: #A18008; font-weight: normal;" );
-    }
-  };
+  private static final Map<String, String> STYLES = createStyles();
 
   @Override
   public void onModuleLoad()
@@ -51,5 +42,18 @@ public final class Example
   private static void log( @Nonnull final String type, final int id )
   {
     Console.log( "%c" + type + " task " + id, STYLES.get( type ) );
+  }
+
+  @Nonnull
+  @SuppressWarnings( "Varifier" )
+  private static Map<String, String> createStyles()
+  {
+    final Map<String, String> styles = new HashMap<>();
+    styles.put( "macro", "color: #006AEB; font-weight: normal;" );
+    styles.put( "micro", "color: #c143eb; font-weight: normal;" );
+    styles.put( "animationFrame", "color: #FFBA49; font-weight: normal;" );
+    styles.put( "afterFrame", "color: #10a210; font-weight: normal;" );
+    styles.put( "onIdle", "color: #A18008; font-weight: normal;" );
+    return styles;
   }
 }

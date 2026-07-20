@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T04
+current_focus: T05
 
 tasks:
   - id: T01
@@ -97,10 +97,13 @@ tasks:
         result: pass; major version 61
       - command: rg for glob usage in Bazel files
         result: pass; no glob calls
+    commit:
+      hash: 98f5ba8
+      message: "feat(build): add Bazel build"
 
   - id: T04
     title: Fix strict Error Prone findings
-    status: in_progress
+    status: completed
     priority: high
     depends_on: [T03]
     acceptance_criteria:
@@ -112,10 +115,17 @@ tasks:
     validation:
       - tools/check.sh with the strict Error Prone policy applied temporarily
       - bundle exec buildr test
+    evidence:
+      - command: tools/check.sh with Braincheck's strict pre-NullAway Error Prone policy
+        result: pass; 39 Bazel targets and all 3 Bazel tests passed
+      - command: bundle exec buildr test
+        result: pass; both retained GWT module compiles and all 51 tests passed
+      - command: bundle exec buildr test before GWT-compatible Varifier suppressions
+        result: failed as expected; GWT rejected local-variable var in reachable sources, establishing the need for narrow suppressions
 
   - id: T05
     title: Enable strict Error Prone tooling
-    status: pending
+    status: in_progress
     priority: high
     depends_on: [T04]
     acceptance_criteria:
@@ -319,3 +329,7 @@ history:
     task: T02
     commit: 84895b4
     note: Updated the released dependency baseline and kept Buildr passing.
+  - timestamp: "2026-07-20"
+    task: T03
+    commit: 98f5ba8
+    note: Added the verified base Bazel build while retaining Buildr.

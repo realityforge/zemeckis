@@ -10,9 +10,9 @@ public final class VirtualProcessorUnitTest
   public void basicOperation()
   {
     final String name = randomString();
-    final TestExecutor executor = new TestExecutor();
+    final var executor = new TestExecutor();
     final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
-    final VirtualProcessorUnit vpu = new VirtualProcessorUnit( name, executor );
+    final var vpu = new VirtualProcessorUnit( name, executor );
     assertEquals( vpu.getName(), name );
     assertEquals( vpu.getExecutor(), executor );
     assertEquals( vpu.toString(), name );
@@ -34,7 +34,7 @@ public final class VirtualProcessorUnitTest
   public void noNamesWhenNamesDisabled()
   {
     final String name = randomString();
-    final VirtualProcessorUnit vpu = new VirtualProcessorUnit( name, new TestExecutor() );
+    final var vpu = new VirtualProcessorUnit( name, new TestExecutor() );
     assertDefaultToStringWhenNamesDisabled( vpu );
 
     ZemeckisTestUtil.disableNames();

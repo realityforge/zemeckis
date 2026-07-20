@@ -14,11 +14,11 @@ public final class TemporalSchedulerTest
 {
   @Test
   public void basicOperation_delayedTask()
-    throws Exception
+    throws InterruptedException
   {
     final List<String> errors = new ArrayList<>();
     final int count = 2;
-    final CountDownLatch latch = new CountDownLatch( count );
+    final var latch = new CountDownLatch( count );
     final int start = TemporalScheduler.now();
     TemporalScheduler.delayedTask( randomString(), () -> {
       final int now = TemporalScheduler.now() - start;
@@ -51,11 +51,11 @@ public final class TemporalSchedulerTest
 
   @Test
   public void delayedTask_canceled()
-    throws Exception
+    throws InterruptedException
   {
     final List<String> errors = new ArrayList<>();
     final int count = 1;
-    final CountDownLatch latch = new CountDownLatch( count );
+    final var latch = new CountDownLatch( count );
     final String name = randomString();
     final Cancelable token =
       TemporalScheduler.delayedTask( name, () -> errors.add( "Unexpected task execution" ), 20 );
@@ -71,13 +71,13 @@ public final class TemporalSchedulerTest
 
   @Test
   public void basicOperation_doScheduleAtFixedRate()
-    throws Exception
+    throws InterruptedException
   {
     final List<String> errors = new ArrayList<>();
     final int count = 2;
-    final AtomicInteger current = new AtomicInteger();
+    final var current = new AtomicInteger();
     final AtomicReference<Cancelable> task = new AtomicReference<>();
-    final CountDownLatch latch = new CountDownLatch( count );
+    final var latch = new CountDownLatch( count );
     final String name = randomString();
     final Cancelable schedule =
       TemporalScheduler.periodicTask( name, () -> {

@@ -19,7 +19,7 @@ public class UncaughtErrorHandlerTest
     allowUncaughtExceptions();
     final Throwable throwable = new IllegalStateException();
 
-    final AtomicInteger callCount = new AtomicInteger();
+    final var callCount = new AtomicInteger();
 
     final UncaughtErrorHandler handler = ( throwableArg ) -> {
       callCount.incrementAndGet();
@@ -72,9 +72,9 @@ public class UncaughtErrorHandlerTest
     allowUncaughtExceptions();
     final Throwable throwable = new IllegalStateException();
 
-    final AtomicInteger callCount1 = new AtomicInteger();
-    final AtomicInteger callCount2 = new AtomicInteger();
-    final AtomicInteger callCount3 = new AtomicInteger();
+    final var callCount1 = new AtomicInteger();
+    final var callCount2 = new AtomicInteger();
+    final var callCount3 = new AtomicInteger();
 
     Zemeckis.addUncaughtErrorHandler( e -> callCount1.incrementAndGet() );
     Zemeckis.addUncaughtErrorHandler( e -> callCount2.incrementAndGet() );
@@ -99,10 +99,10 @@ public class UncaughtErrorHandlerTest
     allowUncaughtExceptions();
     final Throwable throwable = new IllegalStateException();
 
-    final AtomicInteger callCount1 = new AtomicInteger();
-    final AtomicInteger callCount3 = new AtomicInteger();
+    final var callCount1 = new AtomicInteger();
+    final var callCount3 = new AtomicInteger();
 
-    final RuntimeException exception = new RuntimeException( "X" );
+    final var exception = new RuntimeException( "X" );
 
     final UncaughtErrorHandler handler2 = e -> {
       throw exception;
@@ -139,7 +139,7 @@ public class UncaughtErrorHandlerTest
 
     final Throwable throwable = new IllegalStateException();
 
-    final RuntimeException exception = new RuntimeException( "X" );
+    final var exception = new RuntimeException( "X" );
 
     final UncaughtErrorHandler handler2 = e -> {
       throw exception;

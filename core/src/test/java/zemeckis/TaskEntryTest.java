@@ -11,9 +11,9 @@ public final class TaskEntryTest
   public void basicOperation()
   {
     final String name = randomString();
-    final NoopTask task = new NoopTask();
+    final var task = new NoopTask();
     final Cancelable cancelAction = null;
-    final TaskEntry entry = new TaskEntry( name, task, cancelAction );
+    final var entry = new TaskEntry( name, task, cancelAction );
     assertEquals( entry.getTask(), task );
     assertEquals( entry.getCancelAction(), cancelAction );
     assertEquals( entry.toString(), name );
@@ -54,10 +54,10 @@ public final class TaskEntryTest
   public void cancel()
   {
     final String name = randomString();
-    final NoopTask task = new NoopTask();
-    final AtomicInteger cancelCount = new AtomicInteger();
+    final var task = new NoopTask();
+    final var cancelCount = new AtomicInteger();
     final Cancelable cancelAction = cancelCount::incrementAndGet;
-    final TaskEntry entry = new TaskEntry( name, task, cancelAction );
+    final var entry = new TaskEntry( name, task, cancelAction );
     assertEquals( entry.getTask(), task );
     assertEquals( entry.getCancelAction(), cancelAction );
     assertEquals( entry.toString(), name );

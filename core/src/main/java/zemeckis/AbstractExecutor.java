@@ -36,6 +36,7 @@ abstract class AbstractExecutor
 
   @Override
   @Nonnull
+  @SuppressWarnings( "Varifier" )
   public final synchronized Cancelable queue( @Nullable final String name, @Nonnull final Runnable task )
   {
     final boolean needsActivation = 0 == getQueueSize();

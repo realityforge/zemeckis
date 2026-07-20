@@ -25,9 +25,9 @@ public final class RoundBasedExecutorTest
   {
     final RoundBasedExecutor executor = new TestExecutor( 2 );
 
-    final NoopTask task1 = new NoopTask();
-    final NoopTask task2 = new NoopTask();
-    final NoopTask task3 = new NoopTask();
+    final var task1 = new NoopTask();
+    final var task2 = new NoopTask();
+    final var task3 = new NoopTask();
     executor.queue( randomString(), task1 );
     executor.queue( randomString(), task2 );
     executor.queue( randomString(), task3 );
@@ -121,9 +121,9 @@ public final class RoundBasedExecutorTest
     final RoundBasedExecutor executor = new TestExecutor( 2 );
     executor.init( VirtualProcessorUnit.ActivationFn::invoke );
 
-    final NoopTask task1 = new NoopTask();
-    final NoopTask task2 = new NoopTask();
-    final NoopTask task3 = new NoopTask();
+    final var task1 = new NoopTask();
+    final var task2 = new NoopTask();
+    final var task3 = new NoopTask();
     executor.queue( randomString(), task1 );
     executor.queue( randomString(), task2 );
     executor.queue( randomString(), task3 );
@@ -159,9 +159,9 @@ public final class RoundBasedExecutorTest
   {
     final RoundBasedExecutor executor = new TestExecutor( 2 );
 
-    final NoopTask task1 = new NoopTask();
-    final NoopTask task2 = new NoopTask();
-    final NoopTask task3 = new NoopTask();
+    final var task1 = new NoopTask();
+    final var task2 = new NoopTask();
+    final var task3 = new NoopTask();
     executor.queue( randomString(), task1 );
     executor.queue( randomString(), task2 );
     executor.queue( randomString(), task3 );
@@ -201,7 +201,7 @@ public final class RoundBasedExecutorTest
 
     final RoundBasedExecutor executor = new TestExecutor( 2 );
 
-    final AtomicInteger task1CallCount = new AtomicInteger();
+    final var task1CallCount = new AtomicInteger();
     final AtomicReference<Runnable> taskRef = new AtomicReference<>();
     final String name = randomString();
     final Runnable task = () -> {
@@ -235,7 +235,7 @@ public final class RoundBasedExecutorTest
 
     final RoundBasedExecutor executor = new TestExecutor( 2 );
 
-    final AtomicInteger task1CallCount = new AtomicInteger();
+    final var task1CallCount = new AtomicInteger();
     final AtomicReference<Runnable> taskRef = new AtomicReference<>();
     final Runnable task = () -> {
       task1CallCount.incrementAndGet();

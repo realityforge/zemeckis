@@ -26,11 +26,11 @@ public final class ZemeckisTest
 
   @Test
   public void delayedTask()
-    throws Exception
+    throws InterruptedException
   {
     final List<String> errors = new ArrayList<>();
     final int count = 2;
-    final CountDownLatch latch = new CountDownLatch( count );
+    final var latch = new CountDownLatch( count );
     final int start = Zemeckis.now();
     Zemeckis.delayedTask( () -> {
       final int now = Zemeckis.now() - start;
@@ -67,11 +67,11 @@ public final class ZemeckisTest
 
   @Test
   public void delayedTask_canceled()
-    throws Exception
+    throws InterruptedException
   {
     final List<String> errors = new ArrayList<>();
     final int count = 1;
-    final CountDownLatch latch = new CountDownLatch( count );
+    final var latch = new CountDownLatch( count );
     final Cancelable token =
       Zemeckis.delayedTask( () -> errors.add( "Unexpected task execution" ), 20 );
     token.cancel();
@@ -85,13 +85,13 @@ public final class ZemeckisTest
 
   @Test
   public void periodicTask()
-    throws Exception
+    throws InterruptedException
   {
     final List<String> errors = new ArrayList<>();
     final int count = 2;
-    final AtomicInteger current = new AtomicInteger();
+    final var current = new AtomicInteger();
     final AtomicReference<Cancelable> task = new AtomicReference<>();
-    final CountDownLatch latch = new CountDownLatch( count );
+    final var latch = new CountDownLatch( count );
     final Cancelable schedule =
       Zemeckis.periodicTask( () -> {
         assertTrue( Zemeckis.isVpuActivated() );
@@ -120,7 +120,7 @@ public final class ZemeckisTest
 
   @Test
   public void vpu()
-    throws Exception
+    throws InterruptedException
   {
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );
@@ -134,7 +134,7 @@ public final class ZemeckisTest
     final Lock lock = TemporalScheduler.getTestSchedulerLock();
     lock.lock();
     final int count = 10;
-    final CountDownLatch latch = new CountDownLatch( count );
+    final var latch = new CountDownLatch( count );
     final Cancelable cancelable1 =
       Zemeckis.macroTask( () -> {
         assertTrue( Zemeckis.isVpuActivated() );
@@ -216,13 +216,13 @@ public final class ZemeckisTest
 
   @Test
   public void canceledTaskNoRun()
-    throws Exception
+    throws InterruptedException
   {
     assertFalse( Zemeckis.isVpuActivated() );
     assertNull( Zemeckis.currentVpu() );
 
     final int count = 5;
-    final CountDownLatch latch = new CountDownLatch( count );
+    final var latch = new CountDownLatch( count );
     Zemeckis.macroTask( () -> {
       assertTrue( Zemeckis.isVpuActivated() );
       assertEquals( Zemeckis.currentVpu(), Zemeckis.macroTaskVpu() );
@@ -274,6 +274,7 @@ public final class ZemeckisTest
     }
     catch ( final InterruptedException ignored )
     {
+      Thread.currentThread().interrupt();
     }
   }
 

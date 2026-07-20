@@ -32,7 +32,7 @@ public final class ZemeckisUtilTest
   @Test
   public void throwableToString_with_NestedThrowable()
   {
-    final RuntimeException exception =
+    final var exception =
       new RuntimeException( "X", new IOException( "Y" ) );
     final String text = ZemeckisUtil.throwableToString( exception );
     assertTrue( text.startsWith( "java.lang.RuntimeException: X\n" ) );

@@ -11,11 +11,11 @@ public final class DeadlineBasedExecutorTest
   @Test
   public void basicOperation()
   {
-    final TestDeadlineBasedExecutor executor = new TestDeadlineBasedExecutor();
+    final var executor = new TestDeadlineBasedExecutor();
     executor.init( VirtualProcessorUnit.ActivationFn::invoke );
-    final NoopTask task1 = new NoopTask();
-    final NoopTask task2 = new NoopTask();
-    final NoopTask task3 = new NoopTask();
+    final var task1 = new NoopTask();
+    final var task2 = new NoopTask();
+    final var task3 = new NoopTask();
     executor.queue( randomString(), task1 );
     executor.queue( randomString(), task2 );
     executor.queue( randomString(), task3 );

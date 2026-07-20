@@ -13,7 +13,7 @@ public final class ZemeckisLoggerTest
     final String message1 = "ABCDEFG";
     final String message2 = "1234567";
     ZemeckisLogger.log( message1, null );
-    final Throwable throwable = new Throwable();
+    final var throwable = new Throwable();
     ZemeckisLogger.log( message2, throwable );
 
     final ArrayList<TestLogger.LogEntry> entries = getTestLogger().getEntries();

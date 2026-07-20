@@ -1,6 +1,7 @@
 package zemeckis;
 
 import akasha.MessageChannel;
+import javax.annotation.Nullable;
 
 /**
  * Run tasks in next MacroTask.
@@ -8,6 +9,7 @@ import akasha.MessageChannel;
 final class MacroTaskExecutor
   extends RoundBasedExecutor
 {
+  @Nullable
   private final MessageChannel _channel = Zemeckis.useMessageChannelToScheduleTasks() ? new MessageChannel() : null;
 
   MacroTaskExecutor()

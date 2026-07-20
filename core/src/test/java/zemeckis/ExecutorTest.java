@@ -11,7 +11,7 @@ public final class ExecutorTest
   @Test
   public void basicSetup()
   {
-    final TestExecutor executor = new TestExecutor();
+    final var executor = new TestExecutor();
 
     assertFalse( executor.areTasksExecuting() );
     assertEquals( executor.getScheduleCount(), 0 );
@@ -32,7 +32,7 @@ public final class ExecutorTest
   @Test
   public void queue()
   {
-    final TestExecutor executor = new TestExecutor();
+    final var executor = new TestExecutor();
     final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
 
     final String name1 = randomString();
@@ -65,7 +65,7 @@ public final class ExecutorTest
   @Test
   public void queue_whenAlreadyPresent()
   {
-    final TestExecutor executor = new TestExecutor();
+    final var executor = new TestExecutor();
     final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
 
     final Runnable task = new NoopTask();
@@ -84,12 +84,12 @@ public final class ExecutorTest
   @Test
   public void executeNextTask()
   {
-    final TestExecutor executor = new TestExecutor();
+    final var executor = new TestExecutor();
     final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
-    final NoopTask task1 = new NoopTask();
-    final NoopTask task2 = new NoopTask();
-    final NoopTask task3 = new NoopTask();
-    final NoopTask task4 = new NoopTask();
+    final var task1 = new NoopTask();
+    final var task2 = new NoopTask();
+    final var task3 = new NoopTask();
+    final var task4 = new NoopTask();
 
     assertEquals( executor.getQueueSize(), 0 );
     executor.queue( randomString(), task1 );
@@ -150,10 +150,10 @@ public final class ExecutorTest
   {
     allowUncaughtExceptions();
 
-    final TestExecutor executor = new TestExecutor();
+    final var executor = new TestExecutor();
     final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
-    final AtomicInteger runCount = new AtomicInteger();
-    final AtomicInteger errorCount = new AtomicInteger();
+    final var runCount = new AtomicInteger();
+    final var errorCount = new AtomicInteger();
     final String errorMessage = randomString();
     final Runnable task1 = () -> {
       runCount.incrementAndGet();

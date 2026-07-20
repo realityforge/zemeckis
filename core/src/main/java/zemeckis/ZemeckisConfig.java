@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 /**
  * Location of all compile time configuration settings for framework.
  */
-@SuppressWarnings( "FieldMayBeFinal" )
+@SuppressWarnings( { "ConstantField", "FieldCanBeFinal" } )
 @OmitType
 final class ZemeckisConfig
 {
@@ -124,6 +124,7 @@ final class ZemeckisConfig
       return "true".equals( System.getProperty( "zemeckis.use_worker_to_schedule_delayed_tasks", "true" ) );
     }
 
+    @Override
     boolean shouldLogWorkerInteractions()
     {
       return "true".equals( System.getProperty( "zemeckis.log_worker_interactions", "false" ) );

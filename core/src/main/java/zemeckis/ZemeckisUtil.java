@@ -49,6 +49,7 @@ final class ZemeckisUtil
    * @return the stack trace.
    */
   @Nonnull
+  @SuppressWarnings( "Varifier" )
   static String throwableToString( @Nonnull final Throwable throwable )
   {
     final StringBuilder sb = new StringBuilder();

@@ -115,7 +115,7 @@ final class TemporalScheduler
           _lock.unlock();
         }
       };
-      final Thread thread = new Thread( action, "Scheduler" );
+      final var thread = new Thread( action, "Scheduler" );
       thread.setDaemon( true );
       thread.setUncaughtExceptionHandler( ( t, e ) -> Zemeckis.reportUncaughtError( e ) );
       return thread;
@@ -127,6 +127,7 @@ final class TemporalScheduler
     };
 
     @GwtIncompatible
+    @Override
     void shutdown()
     {
       _executorService.shutdown();
@@ -157,7 +158,7 @@ final class TemporalScheduler
     private static final boolean ENABLE_WORKERS = Zemeckis.useWorkerToScheduleDelayedTasks();
     private static final boolean LOG = Zemeckis.shouldLogWorkerInteractions();
     @Nonnull
-    private final String SRC =
+    private static final String SRC =
       "var timers = {};\n" +
       "\n" +
       "function cancelTimer(id) {\n" +
@@ -221,11 +222,13 @@ final class TemporalScheduler
       "};";
     private final long _schedulerStart = System.currentTimeMillis();
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
+    @Nullable
     private final Worker _worker =
       ENABLE_WORKERS ?
       new Worker( URL.createObjectURL( new Blob( new BlobPart[]{ BlobPart.of( SRC ) } ) ), createWorkerOptions() ) :
       null;
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
+    @Nullable
     private final Map<Double, Runnable> _workerTasks = ENABLE_WORKERS ? new HashMap<>() : null;
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
     private double _nextTimerId = 1;
@@ -369,6 +372,7 @@ final class TemporalScheduler
 
     @OmitSymbol( unless = "zemeckis.use_worker_to_schedule_delayed_tasks" )
     @Nonnull
+    @SuppressWarnings( "Varifier" )
     private JsPropertyMap<Object> msg( @Nullable String name,
                                        @Nonnull final String action,
                                        @Nonnull final String type,

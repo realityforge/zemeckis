@@ -15,7 +15,7 @@ final class UncaughtErrorHandlerSupport
   implements UncaughtErrorHandler
 {
   @Nonnull
-  private static UncaughtErrorHandlerSupport INSTANCE = new UncaughtErrorHandlerSupport();
+  private static UncaughtErrorHandlerSupport c_instance = new UncaughtErrorHandlerSupport();
   /**
    * The list of error handlers to call when an error is received.
    */
@@ -30,13 +30,13 @@ final class UncaughtErrorHandlerSupport
       invariant( Zemeckis::areUncaughtErrorHandlersEnabled,
                  () -> "Zemeckis-0011: UncaughtErrorHandlerSupport.get() invoked when Zemeckis.areUncaughtErrorHandlersEnabled() returns false." );
     }
-    return INSTANCE;
+    return c_instance;
   }
 
   @TestOnly
   static void reset()
   {
-    INSTANCE = new UncaughtErrorHandlerSupport();
+    c_instance = new UncaughtErrorHandlerSupport();
   }
 
   private UncaughtErrorHandlerSupport()
