@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T08
+current_focus: T09
 
 tasks:
   - id: T01
@@ -207,10 +207,13 @@ tasks:
         result: pass; no non-Java implementation files changed before task-board update
       - command: tools/check.sh
         result: pass; all 49 Bazel targets and all 3 tests passed
+    commit:
+      hash: 0a9c6d8
+      message: "style(java): apply Palantir Java Format"
 
   - id: T08
     title: Add Java-format tooling
-    status: in_progress
+    status: completed
     priority: medium
     depends_on: [T07]
     acceptance_criteria:
@@ -224,10 +227,15 @@ tasks:
     validation:
       - tools/java_format.sh check
       - tools/check.sh
+    evidence:
+      - command: tools/java_format.sh check
+        result: pass with isolated Palantir Java Format 2.93.0 dependencies
+      - command: tools/check.sh
+        result: pass; generated dependencies, Buildifier, formatting, all 66 targets, and all 3 tests passed
 
   - id: T09
     title: Add Bazel IntelliJ and diagnostic update tooling
-    status: pending
+    status: in_progress
     priority: medium
     depends_on: [T08]
     acceptance_criteria:
@@ -377,3 +385,7 @@ history:
     task: T06
     commit: ea44a78
     note: Replaced javax nullness annotations with JSpecify and enforced NullAway.
+  - timestamp: "2026-07-20"
+    task: T07
+    commit: 0a9c6d8
+    note: Applied Braincheck's pinned Palantir Java Format output to all Java sources.

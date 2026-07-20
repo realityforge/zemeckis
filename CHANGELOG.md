@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Add Palantir Java Format to the Bazel validation gate.
 * Replace `javax.annotation` nullness annotations with JSpecify and enforce NullAway checks.
 * Enable strict Error Prone checks in the Bazel build.
 * Update the `org.realityforge.braincheck` artifacts to version `1.35.0`.
