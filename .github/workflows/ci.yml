@@ -13,6 +13,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  plans-empty:
+    name: Plans directory is empty
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Check plans directory
+        run: test ! -d plans || test -z "$(find plans -type f -print -quit)"
+
   check:
     name: Check
     runs-on: ubuntu-24.04
@@ -46,3 +57,14 @@ jobs:
 
       - name: Verify generated files are current
         run: git diff --exit-code
+
+  ci-success:
+    name: CI success
+    runs-on: ubuntu-latest
+    needs:
+      - plans-empty
+      - check
+
+    steps:
+      - name: Confirm CI succeeded
+        run: echo "All CI checks passed"
