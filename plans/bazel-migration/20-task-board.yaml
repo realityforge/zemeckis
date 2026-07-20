@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T13
+current_focus: T14
 
 tasks:
   - id: T01
@@ -370,10 +370,13 @@ tasks:
         result: pass; dependency generation, formatting, all 147 targets, J2CL, all five GWT outputs, and all 7 tests passed
       - command: bundle exec buildr test
         result: pass; both retained Buildr GWT module compiles and all 51 tests passed
+    commit:
+      hash: 28135f7
+      message: "test(gwt): add compiler smoke builds"
 
   - id: T13
     title: Add GitHub Actions validation
-    status: pending
+    status: completed
     priority: high
     depends_on: [T12]
     acceptance_criteria:
@@ -388,6 +391,17 @@ tasks:
     validation:
       - action workflow syntax and content inspection
       - tools/check.sh
+    evidence:
+      - command: cmp -s .github/workflows/ci.yml /Users/peter/Code/realityforge/braincheck/.github/workflows/ci.yml
+        result: pass; workflow is byte-identical to the Braincheck reference
+      - command: parse .github/workflows/ci.yml as YAML and inspect required settings
+        result: pass; push, pull request, dispatch, Ubuntu 24.04, Temurin 17, Bazel caches, tools/check.sh, and generated-file verification are present
+      - command: inspect workflow for release, publication, deployment, upload, secrets, or credentials
+        result: pass; none are present
+      - command: test -f .travis.yml buildfile Gemfile
+        result: pass; Travis and Buildr remain present for the final removal step
+      - command: tools/check.sh
+        result: pass; the complete command used by GitHub Actions builds 147 targets, J2CL, five GWT outputs, and all 7 tests
 
   - id: T14
     title: Remove legacy infrastructure and complete migration
@@ -460,3 +474,7 @@ history:
     task: T11
     commit: 5e75925
     note: Pinned current J2CL and jsinterop-base revisions and added an optimized Akasha-backed link smoke.
+  - timestamp: "2026-07-20"
+    task: T12
+    commit: 28135f7
+    note: Added real GWT 2.13.1 compiler outputs for both core modes and all three examples.
