@@ -1,9 +1,5 @@
 # Directories Bazel should not scan as source packages in the main repository.
 ignore_directories([
     ".git",
-    "core/generated",
-    "generated",
-    "reports",
-    "target",
     "tmp",
 ])
