@@ -5,6 +5,7 @@
 /_buildr.rb
 /reports
 /target
+/dist
 /tmp
 /generated
 /*/generated

@@ -10,6 +10,18 @@ to unify the API and often a more consistent mechanism for managing such tasks. 
 about the project, please see the [Website](https://realityforge.github.io/zemeckis). For
 the source code and project support, please visit the [GitHub project](https://github.com/realityforge/zemeckis).
 
+## Maven
+
+Add Zemeckis to a Maven build with:
+
+```xml
+<dependency>
+  <groupId>org.realityforge.zemeckis</groupId>
+  <artifactId>zemeckis-core</artifactId>
+  <version>0.14</version>
+</dependency>
+```
+
 # Contributing
 
 Zemeckis was released as open source so others could benefit from the project. We are thankful for any

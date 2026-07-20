@@ -1,0 +1,123 @@
+load("//third_party/java:rules.bzl", "java_binary", "java_test")
+
+package(default_visibility = ["//visibility:public"])
+
+MAVEN_ARTIFACT_ARGS = [
+    "$(rootpath //tools/release:release_version)",
+    "$(rootpath //tools/release:zemeckis_core_jar)",
+    "$(rootpath //tools/release:zemeckis_core_sources_jar)",
+    "$(rootpath //tools/release:zemeckis_core_javadoc_jar)",
+    "$(rootpath //tools/release:zemeckis_core_pom)",
+]
+
+MAVEN_ARTIFACT_DATA = [
+    "//tools/release:release_version",
+    "//tools/release:zemeckis_core_jar",
+    "//tools/release:zemeckis_core_javadoc_jar",
+    "//tools/release:zemeckis_core_pom",
+    "//tools/release:zemeckis_core_sources_jar",
+]
+
+DIST_ARTIFACT_ARGS = [
+    "$(rootpath :test-version.txt)",
+] + MAVEN_ARTIFACT_ARGS[1:]
+
+java_binary(
+    name = "jar_builder",
+    srcs = [
+        "JarBuilder.java",
+        "package-info.java",
+    ],
+    main_class = "org.realityforge.zemeckis.release.JarBuilder",
+)
+
+java_binary(
+    name = "javadoc_jar_builder",
+    srcs = [
+        "JavadocJarBuilder.java",
+        "package-info.java",
+    ],
+    main_class = "org.realityforge.zemeckis.release.JavadocJarBuilder",
+)
+
+java_binary(
+    name = "dist",
+    srcs = [
+        "DistBuilder.java",
+        "package-info.java",
+    ],
+    args = [
+        "--version-file",
+        "$(rootpath //tools/release:release_version)",
+        "--artifact",
+        "zemeckis-core:jar=$(rootpath //tools/release:zemeckis_core_jar)",
+        "--artifact",
+        "zemeckis-core:sources=$(rootpath //tools/release:zemeckis_core_sources_jar)",
+        "--artifact",
+        "zemeckis-core:javadoc=$(rootpath //tools/release:zemeckis_core_javadoc_jar)",
+        "--artifact",
+        "zemeckis-core:pom=$(rootpath //tools/release:zemeckis_core_pom)",
+    ],
+    data = MAVEN_ARTIFACT_DATA,
+    main_class = "org.realityforge.zemeckis.release.DistBuilder",
+)
+
+java_binary(
+    name = "release_lifecycle",
+    srcs = [
+        "ReleaseLifecycleTool.java",
+        "package-info.java",
+    ],
+    main_class = "org.realityforge.zemeckis.release.ReleaseLifecycleTool",
+)
+
+java_test(
+    name = "release_artifacts_integration_test",
+    size = "small",
+    srcs = [
+        "ReleaseArtifactsIntegrationTest.java",
+        "package-info.java",
+    ],
+    args = MAVEN_ARTIFACT_ARGS,
+    data = MAVEN_ARTIFACT_DATA,
+    main_class = "org.realityforge.zemeckis.release.ReleaseArtifactsIntegrationTest",
+    use_testrunner = False,
+)
+
+java_test(
+    name = "dist_builder_test",
+    size = "small",
+    srcs = [
+        "DistBuilder.java",
+        "DistBuilderTest.java",
+        "package-info.java",
+    ],
+    args = DIST_ARTIFACT_ARGS,
+    data = MAVEN_ARTIFACT_DATA + [":test-version.txt"],
+    main_class = "org.realityforge.zemeckis.release.DistBuilderTest",
+    use_testrunner = False,
+)
+
+java_test(
+    name = "jar_builder_test",
+    size = "small",
+    srcs = [
+        "JarBuilder.java",
+        "JarBuilderTest.java",
+        "package-info.java",
+    ],
+    main_class = "org.realityforge.zemeckis.release.JarBuilderTest",
+    use_testrunner = False,
+)
+
+java_test(
+    name = "release_lifecycle_tool_test",
+    size = "small",
+    srcs = [
+        "ReleaseLifecycleTool.java",
+        "ReleaseLifecycleToolTest.java",
+        "package-info.java",
+    ],
+    main_class = "org.realityforge.zemeckis.release.ReleaseLifecycleToolTest",
+    use_testrunner = False,
+)

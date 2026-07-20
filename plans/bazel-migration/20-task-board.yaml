@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T10
+current_focus: T11
 
 tasks:
   - id: T01
@@ -261,10 +261,13 @@ tasks:
         result: pass; no legacy IntelliJ project files are tracked; existing ignored local IDE state was left untouched
       - command: inspect Braincheck commit 290c87b
         result: pass; the reference migration uses a managed Bazel project view and does not add a .bazelbsp tree
+    commit:
+      hash: 0bcc600
+      message: "chore(build): add Bazel development tooling"
 
   - id: T10
     title: Add Maven Central release infrastructure
-    status: pending
+    status: completed
     priority: high
     depends_on: [T09]
     acceptance_criteria:
@@ -285,6 +288,19 @@ tasks:
       - tools/release/next_version.sh returns 0.15
       - tools/release/prepare_release.sh 0.15 --dry-run
       - tools/check.sh
+    evidence:
+      - command: bazel build //tools/release:maven_artifacts --release_version=0.15
+        result: pass; main, sources, Javadoc, and POM artifacts built
+      - command: bazel test //tools/release:all_tests --release_version=0.15
+        result: pass; all 4 release tests verified archive entries, Java 17 bytecode, the exact POM, lifecycle behavior, and the signed 24-file distribution
+      - command: tools/release/next_version.sh
+        result: pass; returned 0.15 from the latest 0.14 changelog heading
+      - command: tools/release/prepare_release.sh 0.15 --dry-run
+        result: pass; changed only temporary changelog and README copies and printed the expected release diff
+      - command: tools/check.sh
+        result: pass; all 86 targets and all 7 tests passed with release version 0.0
+      - command: rg for TODO, site publishing, and Javadoc cleanup stages under tools/release
+        result: pass; none of the excluded release stages are present
 
   - id: T11
     title: Add latest J2CL compile and link validation
@@ -401,3 +417,7 @@ history:
     task: T08
     commit: 5eb2474
     note: Added isolated Palantir Java Format tooling and enforced it in the validation gate.
+  - timestamp: "2026-07-20"
+    task: T09
+    commit: 0bcc600
+    note: Added the shared IntelliJ Bazel project view and complete diagnostic fixture updater.
