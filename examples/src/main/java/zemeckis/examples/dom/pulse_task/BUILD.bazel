@@ -1,0 +1,18 @@
+load("//third_party/java:rules.bzl", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+java_library(
+    name = "pulse_task",
+    srcs = ["Example.java"],
+    resources = [
+        "Example.gwt.xml",
+        "public/index.html",
+    ],
+    deps = [
+        "//core/src/main/java/zemeckis:core",
+        "//third_party/java:akasha_gwt",
+        "//third_party/java:gwt_user",
+        "//third_party/java:javax_annotation",
+    ],
+)

@@ -1,0 +1,48 @@
+load("//third_party/java:rules.bzl", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+java_library(
+    name = "core",
+    srcs = [
+        "AbstractExecutor.java",
+        "AfterFrameExecutor.java",
+        "AnimationFrameExecutor.java",
+        "Cancelable.java",
+        "CircularBuffer.java",
+        "DeadlineBasedExecutor.java",
+        "GwtIncompatible.java",
+        "MacroTaskExecutor.java",
+        "MicroTaskExecutor.java",
+        "OnIdleExecutor.java",
+        "RoundBasedExecutor.java",
+        "TaskEntry.java",
+        "TemporalScheduler.java",
+        "UncaughtErrorHandler.java",
+        "UncaughtErrorHandlerSupport.java",
+        "VirtualProcessorUnit.java",
+        "VirtualProcessorUnitsHolder.java",
+        "Zemeckis.java",
+        "ZemeckisConfig.java",
+        "ZemeckisLogger.java",
+        "ZemeckisTestUtil.java",
+        "ZemeckisUtil.java",
+        "package-info.java",
+    ],
+    resources = [
+        "Zemeckis.gwt.xml",
+        "ZemeckisConfig.native.js",
+        "ZemeckisDev.gwt.xml",
+        "zemeckis.js",
+    ],
+    deps = [
+        "//third_party/java:akasha_gwt",
+        "//third_party/java:base",
+        "//third_party/java:braincheck_core",
+        "//third_party/java:grim_annotations",
+        "//third_party/java:grim_processor",
+        "//third_party/java:javax_annotation",
+        "//third_party/java:jsinterop_annotations",
+        "//third_party/java:org_jetbrains_annotations",
+    ],
+)

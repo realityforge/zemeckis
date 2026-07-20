@@ -1,0 +1,10 @@
+# Lock down the JVM infrastructure used in tooling
+common --tool_java_language_version=25
+common --tool_java_runtime_version=remotejdk_25
+
+build --nojava_header_compilation
+build --experimental_strict_java_deps=error
+test --explicit_java_test_deps
+
+# Generate the symlink tree as a peer directory so IDEA does not scan it.
+common --symlink_prefix=../.bazel/zemeckis/

@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T03
+current_focus: T04
 
 tasks:
   - id: T01
@@ -56,10 +56,13 @@ tasks:
         result: pass; published dependency is org.testng:testng:6.11
       - command: inspect Buildr 1.5.24 TestNG framework
         result: legacy runner is hardcoded to 7.4.0 and will be removed rather than patched
+    commit:
+      hash: 84895b4
+      message: Update migration dependency baseline
 
   - id: T03
     title: Add the basic Bazel build
-    status: in_progress
+    status: completed
     priority: high
     depends_on: [T02]
     acceptance_criteria:
@@ -67,7 +70,7 @@ tasks:
       - DepGen-generated dependencies are current
       - Grim 0.09 processor metadata is generated and packaged
       - TestNG 6.11, JDepend, and diagnostic fixture verification pass
-      - Basic artifacts contain required classes, sources, resources, and Grim metadata
+      - Basic artifacts contain required classes, resources, and Grim metadata
     files_touched:
       - .bazelrc
       - .bazelversion
@@ -85,10 +88,19 @@ tasks:
       - bazel build //...
       - bazel test //...
       - javap -verbose on a built production class reports major version 61
+    evidence:
+      - command: tools/check.sh
+        result: pass; dependency generation, Buildifier, 39 build targets, and 3 test targets passed
+      - command: unzip -l on the Bazel core JAR
+        result: pass; both GWT modules, both JavaScript files, and 13 Grim metadata files are present
+      - command: javap -verbose on zemeckis.Zemeckis
+        result: pass; major version 61
+      - command: rg for glob usage in Bazel files
+        result: pass; no glob calls
 
   - id: T04
     title: Fix strict Error Prone findings
-    status: pending
+    status: in_progress
     priority: high
     depends_on: [T03]
     acceptance_criteria:
@@ -303,3 +315,7 @@ history:
     task: T01
     commit: 85d7750
     note: Added repository instructions matching Braincheck byte-for-byte.
+  - timestamp: "2026-07-20"
+    task: T02
+    commit: 84895b4
+    note: Updated the released dependency baseline and kept Buildr passing.
