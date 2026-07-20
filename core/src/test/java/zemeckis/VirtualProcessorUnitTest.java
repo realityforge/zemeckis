@@ -1,48 +1,47 @@
 package zemeckis;
 
-import java.util.Objects;
-import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public final class VirtualProcessorUnitTest
-  extends AbstractTest
-{
-  @Test
-  public void basicOperation()
-  {
-    final String name = randomString();
-    final var executor = new TestExecutor();
-    final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
-    final var vpu = new VirtualProcessorUnit( name, executor );
-    assertEquals( vpu.getName(), name );
-    assertEquals( vpu.getExecutor(), executor );
-    assertEquals( vpu.toString(), name );
+import java.util.Objects;
+import org.testng.annotations.Test;
 
-    final Runnable task = new NoopTask();
-    assertEquals( taskQueue.size(), 0 );
-    assertEquals( executor.getScheduleCount(), 0 );
-    final String taskName = randomString();
-    vpu.queue( taskName, task );
-    assertEquals( taskQueue.size(), 1 );
-    assertEquals( executor.getScheduleCount(), 1 );
-    final TaskEntry entry = Objects.requireNonNull( taskQueue.peek() );
-    assertEquals( entry.toString(), taskName );
-    assertEquals( entry.getTask(), task );
-  }
+public final class VirtualProcessorUnitTest extends AbstractTest {
+    @Test
+    public void basicOperation() {
+        final String name = randomString();
+        final var executor = new TestExecutor();
+        final CircularBuffer<TaskEntry> taskQueue = executor.getTaskQueue();
+        final var vpu = new VirtualProcessorUnit(name, executor);
+        assertEquals(vpu.getName(), name);
+        assertEquals(vpu.getExecutor(), executor);
+        assertEquals(vpu.toString(), name);
 
-  @Test
-  public void noNamesWhenNamesDisabled()
-  {
-    final String name = randomString();
-    final var vpu = new VirtualProcessorUnit( name, new TestExecutor() );
-    assertDefaultToStringWhenNamesDisabled( vpu );
+        final Runnable task = new NoopTask();
+        assertEquals(taskQueue.size(), 0);
+        assertEquals(executor.getScheduleCount(), 0);
+        final String taskName = randomString();
+        vpu.queue(taskName, task);
+        assertEquals(taskQueue.size(), 1);
+        assertEquals(executor.getScheduleCount(), 1);
+        final TaskEntry entry = Objects.requireNonNull(taskQueue.peek());
+        assertEquals(entry.toString(), taskName);
+        assertEquals(entry.getTask(), task);
+    }
 
-    ZemeckisTestUtil.disableNames();
-    assertInvariantFailure( vpu::getName,
-                            "Zemeckis-0003: VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false" );
+    @Test
+    public void noNamesWhenNamesDisabled() {
+        final String name = randomString();
+        final var vpu = new VirtualProcessorUnit(name, new TestExecutor());
+        assertDefaultToStringWhenNamesDisabled(vpu);
 
-    assertInvariantFailure( () -> new VirtualProcessorUnit( name, new TestExecutor() ),
-                            "Zemeckis-0002: VirtualProcessorUnit passed a name '" + name +
-                            "' but Zemeckis.areNamesEnabled() is false" );
-  }
+        ZemeckisTestUtil.disableNames();
+        assertInvariantFailure(
+                vpu::getName,
+                "Zemeckis-0003: VirtualProcessorUnit.getName() invoked when Zemeckis.areNamesEnabled() is false");
+
+        assertInvariantFailure(
+                () -> new VirtualProcessorUnit(name, new TestExecutor()),
+                "Zemeckis-0002: VirtualProcessorUnit passed a name '" + name
+                        + "' but Zemeckis.areNamesEnabled() is false");
+    }
 }

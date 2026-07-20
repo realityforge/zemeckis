@@ -1,81 +1,74 @@
 package zemeckis;
 
+import static org.realityforge.braincheck.Guards.*;
+
 import grim.annotations.OmitSymbol;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
-import static org.realityforge.braincheck.Guards.*;
 
-final class TaskEntry
-  implements Cancelable
-{
-  /**
-   * A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns
-   * true and <tt>null</tt> otherwise.
-   */
-  @OmitSymbol( unless = "zemeckis.enable_names" )
-  @Nullable
-  private final String _name;
-  @Nullable
-  private Runnable _task;
-  @Nullable
-  private Cancelable _cancelAction;
+final class TaskEntry implements Cancelable {
+    /**
+     * A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns
+     * true and <tt>null</tt> otherwise.
+     */
+    @OmitSymbol(unless = "zemeckis.enable_names")
+    @Nullable
+    private final String _name;
 
-  /**
-   * Create a task entry.
-   *
-   * @param name         A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
-   * @param task         the task.
-   * @param cancelAction the code to call to cancel pending task side-effects.
-   */
-  TaskEntry( @Nullable final String name, final Runnable task, @Nullable final Cancelable cancelAction )
-  {
-    if ( Zemeckis.shouldCheckApiInvariants() )
-    {
-      apiInvariant( () -> Zemeckis.areNamesEnabled() || null == name,
-                    () -> "Zemeckis-0013: Task passed a name '" + name + "' but Zemeckis.areNamesEnabled() is false" );
+    @Nullable
+    private Runnable _task;
+
+    @Nullable
+    private Cancelable _cancelAction;
+
+    /**
+     * Create a task entry.
+     *
+     * @param name         A human consumable name for the task. It should be non-null if {@link Zemeckis#areNamesEnabled()} returns true and <tt>null</tt> otherwise.
+     * @param task         the task.
+     * @param cancelAction the code to call to cancel pending task side-effects.
+     */
+    TaskEntry(@Nullable final String name, final Runnable task, @Nullable final Cancelable cancelAction) {
+        if (Zemeckis.shouldCheckApiInvariants()) {
+            apiInvariant(
+                    () -> Zemeckis.areNamesEnabled() || null == name,
+                    () -> "Zemeckis-0013: Task passed a name '" + name + "' but Zemeckis.areNamesEnabled() is false");
+        }
+        _name = Zemeckis.areNamesEnabled() ? Objects.requireNonNull(name) : null;
+        _task = Objects.requireNonNull(task);
+        _cancelAction = cancelAction;
     }
-    _name = Zemeckis.areNamesEnabled() ? Objects.requireNonNull( name ) : null;
-    _task = Objects.requireNonNull( task );
-    _cancelAction = cancelAction;
-  }
 
-  @Nullable
-  Runnable getTask()
-  {
-    return _task;
-  }
-
-  @Nullable
-  Cancelable getCancelAction()
-  {
-    return _cancelAction;
-  }
-
-  void execute()
-  {
-    if ( null != _task )
-    {
-      _task.run();
-      _task = null;
-      _cancelAction = null;
+    @Nullable
+    Runnable getTask() {
+        return _task;
     }
-  }
 
-  @Override
-  public void cancel()
-  {
-    if ( null != _cancelAction )
-    {
-      _cancelAction.cancel();
-      _cancelAction = null;
+    @Nullable
+    Cancelable getCancelAction() {
+        return _cancelAction;
     }
-    _task = null;
-  }
 
-  @OmitSymbol( unless = "zemeckis.enable_names" )
-  @Override
-  public String toString()
-  {
-    return Zemeckis.areNamesEnabled() ? Objects.requireNonNull( _name ) : super.toString();
-  }
+    void execute() {
+        if (null != _task) {
+            _task.run();
+            _task = null;
+            _cancelAction = null;
+        }
+    }
+
+    @Override
+    public void cancel() {
+        if (null != _cancelAction) {
+            _cancelAction.cancel();
+            _cancelAction = null;
+        }
+        _task = null;
+    }
+
+    @OmitSymbol(unless = "zemeckis.enable_names")
+    @Override
+    public String toString() {
+        return Zemeckis.areNamesEnabled() ? Objects.requireNonNull(_name) : super.toString();
+    }
 }

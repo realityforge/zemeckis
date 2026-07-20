@@ -1,82 +1,78 @@
 package zemeckis;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public final class TaskEntryTest
-  extends AbstractTest
-{
-  @Test
-  public void basicOperation()
-  {
-    final String name = randomString();
-    final var task = new NoopTask();
-    final Cancelable cancelAction = null;
-    final var entry = new TaskEntry( name, task, cancelAction );
-    assertEquals( entry.getTask(), task );
-    assertEquals( entry.getCancelAction(), cancelAction );
-    assertEquals( entry.toString(), name );
+import java.util.concurrent.atomic.AtomicInteger;
+import org.testng.annotations.Test;
 
-    assertEquals( task.getRunCount(), 0 );
-    entry.execute();
-    assertEquals( task.getRunCount(), 1 );
+public final class TaskEntryTest extends AbstractTest {
+    @Test
+    public void basicOperation() {
+        final String name = randomString();
+        final var task = new NoopTask();
+        final Cancelable cancelAction = null;
+        final var entry = new TaskEntry(name, task, cancelAction);
+        assertEquals(entry.getTask(), task);
+        assertEquals(entry.getCancelAction(), cancelAction);
+        assertEquals(entry.toString(), name);
 
-    assertNull( entry.getTask() );
-    assertNull( entry.getCancelAction() );
+        assertEquals(task.getRunCount(), 0);
+        entry.execute();
+        assertEquals(task.getRunCount(), 1);
 
-    // No matter how many executes it is a one and done deal
-    entry.execute();
-    entry.execute();
-    entry.execute();
-    entry.execute();
-    entry.execute();
+        assertNull(entry.getTask());
+        assertNull(entry.getCancelAction());
 
-    assertEquals( task.getRunCount(), 1 );
+        // No matter how many executes it is a one and done deal
+        entry.execute();
+        entry.execute();
+        entry.execute();
+        entry.execute();
+        entry.execute();
 
-    assertNull( entry.getTask() );
-    assertNull( entry.getCancelAction() );
+        assertEquals(task.getRunCount(), 1);
 
-    assertDefaultToStringWhenNamesDisabled( entry );
-  }
+        assertNull(entry.getTask());
+        assertNull(entry.getCancelAction());
 
-  @Test
-  public void constructWithNameWhenNamesDisabled()
-  {
-    ZemeckisTestUtil.disableNames();
-    final String name = randomString();
-    assertInvariantFailure( () -> new TaskEntry( name, new NoopTask(), null ),
-                            "Zemeckis-0013: Task passed a name '" + name +
-                            "' but Zemeckis.areNamesEnabled() is false" );
-  }
+        assertDefaultToStringWhenNamesDisabled(entry);
+    }
 
-  @Test
-  public void cancel()
-  {
-    final String name = randomString();
-    final var task = new NoopTask();
-    final var cancelCount = new AtomicInteger();
-    final Cancelable cancelAction = cancelCount::incrementAndGet;
-    final var entry = new TaskEntry( name, task, cancelAction );
-    assertEquals( entry.getTask(), task );
-    assertEquals( entry.getCancelAction(), cancelAction );
-    assertEquals( entry.toString(), name );
+    @Test
+    public void constructWithNameWhenNamesDisabled() {
+        ZemeckisTestUtil.disableNames();
+        final String name = randomString();
+        assertInvariantFailure(
+                () -> new TaskEntry(name, new NoopTask(), null),
+                "Zemeckis-0013: Task passed a name '" + name + "' but Zemeckis.areNamesEnabled() is false");
+    }
 
-    entry.cancel();
+    @Test
+    public void cancel() {
+        final String name = randomString();
+        final var task = new NoopTask();
+        final var cancelCount = new AtomicInteger();
+        final Cancelable cancelAction = cancelCount::incrementAndGet;
+        final var entry = new TaskEntry(name, task, cancelAction);
+        assertEquals(entry.getTask(), task);
+        assertEquals(entry.getCancelAction(), cancelAction);
+        assertEquals(entry.toString(), name);
 
-    assertNull( entry.getTask() );
-    assertNull( entry.getCancelAction() );
-    assertEquals( cancelCount.get(), 1 );
+        entry.cancel();
 
-    // Second cancel is ignored
-    entry.cancel();
+        assertNull(entry.getTask());
+        assertNull(entry.getCancelAction());
+        assertEquals(cancelCount.get(), 1);
 
-    assertNull( entry.getTask() );
-    assertNull( entry.getCancelAction() );
-    assertEquals( cancelCount.get(), 1 );
+        // Second cancel is ignored
+        entry.cancel();
 
-    // execute ignored after cancel
-    entry.execute();
-    assertEquals( task.getRunCount(), 0 );
-  }
+        assertNull(entry.getTask());
+        assertNull(entry.getCancelAction());
+        assertEquals(cancelCount.get(), 1);
+
+        // execute ignored after cancel
+        entry.execute();
+        assertEquals(task.getRunCount(), 0);
+    }
 }

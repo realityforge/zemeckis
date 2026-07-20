@@ -10,19 +10,15 @@ import akasha.MessageChannel;
  * and <a href="https://mobile.twitter.com/_developit/status/1081681351122829325">tweeted</a> about by
  * developit.
  */
-final class AfterFrameExecutor
-  extends RoundBasedExecutor
-{
-  private final MessageChannel _channel = new MessageChannel();
+final class AfterFrameExecutor extends RoundBasedExecutor {
+    private final MessageChannel _channel = new MessageChannel();
 
-  AfterFrameExecutor()
-  {
-    _channel.port1().onmessage = m -> activate();
-  }
+    AfterFrameExecutor() {
+        _channel.port1().onmessage = m -> activate();
+    }
 
-  @Override
-  void scheduleForActivation()
-  {
-    Zemeckis.animationFrame( () -> _channel.port2().postMessage( null ) );
-  }
+    @Override
+    void scheduleForActivation() {
+        Zemeckis.animationFrame(() -> _channel.port2().postMessage(null));
+    }
 }

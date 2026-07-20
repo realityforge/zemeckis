@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T07
+current_focus: T08
 
 tasks:
   - id: T01
@@ -182,10 +182,13 @@ tasks:
         result: pass; no source usage remains
       - command: inspect retained Buildr compiler path
         result: released Akasha 0.34 and Grim 0.09 require a private javax.annotation compiler input; it is not published and is removed with Buildr in T14
+    commit:
+      hash: ea44a78
+      message: "chore(build): enforce NullAway with JSpecify annotations"
 
   - id: T07
     title: Apply Java formatting
-    status: in_progress
+    status: completed
     priority: medium
     depends_on: [T06]
     acceptance_criteria:
@@ -197,10 +200,17 @@ tasks:
     validation:
       - pinned Palantir Java Format dry run reports no changes after formatting
       - tools/check.sh
+    evidence:
+      - command: Braincheck's pinned Palantir Java Format 2.93.0 with --dry-run --set-exit-if-changed
+        result: pass; no changes required after formatting
+      - command: git diff --name-only filtered for non-Java paths
+        result: pass; no non-Java implementation files changed before task-board update
+      - command: tools/check.sh
+        result: pass; all 49 Bazel targets and all 3 tests passed
 
   - id: T08
     title: Add Java-format tooling
-    status: pending
+    status: in_progress
     priority: medium
     depends_on: [T07]
     acceptance_criteria:
@@ -363,3 +373,7 @@ history:
     task: T05
     commit: d73adc5
     note: Enabled Braincheck's strict pre-NullAway Error Prone policy.
+  - timestamp: "2026-07-20"
+    task: T06
+    commit: ea44a78
+    note: Replaced javax nullness annotations with JSpecify and enforced NullAway.
