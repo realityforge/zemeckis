@@ -1,0 +1,19 @@
+load("//third_party/java:rules.bzl", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+java_library(
+    name = "smoke",
+    srcs = [
+        "SmokeEntryPoint.java",
+        "package-info.java",
+    ],
+    resources = [
+        "ZemeckisDevSmoke.gwt.xml",
+        "ZemeckisSmoke.gwt.xml",
+    ],
+    deps = [
+        "//core/src/main/java/zemeckis:core",
+        "//third_party/java:gwt_user",
+    ],
+)

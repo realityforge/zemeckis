@@ -1,0 +1,45 @@
+load("//third_party/java:rules.bzl", "java_testng_test")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "updater_sources",
+    srcs = [
+        "JDependTest.java",
+        "UncaughtErrorHandlerTest.java",
+        "ZemeckisTestUtilTest.java",
+        "package-info.java",
+    ],
+)
+
+java_testng_test(
+    name = "all_tests",
+    size = "small",
+    srcs = [
+        "JDependTest.java",
+        "UncaughtErrorHandlerTest.java",
+        "ZemeckisTestUtilTest.java",
+        "package-info.java",
+    ],
+    data = [
+        "//core/src/main/java/zemeckis:core",
+        "//core/src/test/java/zemeckis:diagnostic_messages.json",
+    ],
+    jvm_flags = [
+        "-Dbraincheck.environment=development",
+        "-Dzemeckis.core.compile_target=$(rootpath //core/src/main/java/zemeckis:core)",
+        "-Dzemeckis.diagnostic_messages_file=$(rootpath //core/src/test/java/zemeckis:diagnostic_messages.json)",
+        "-Dzemeckis.environment=development",
+    ],
+    test_classes = [
+        "zemeckis.test.JDependTest",
+        "zemeckis.test.UncaughtErrorHandlerTest",
+        "zemeckis.test.ZemeckisTestUtilTest",
+    ],
+    deps = [
+        "//core/src/main/java/zemeckis:core",
+        "//core/src/test/java/zemeckis:test_support",
+        "//third_party/java:jdepend",
+        "//third_party/java:testng",
+    ],
+)

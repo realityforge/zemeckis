@@ -2,7 +2,18 @@
 
 ### Unreleased
 
-* Update the `org.realityforge.braincheck` artifacts to version `1.32.0`.
+* Remove the legacy Buildr, Ruby, Rake, Travis, API-diff, and site-publishing infrastructure.
+* Add a GitHub Actions CI gate for the Bazel build.
+* Validate core and example modules with the GWT 2.13.1 compiler.
+* Validate Zemeckis with the latest J2CL compiler and linker.
+* Add Bazel-based Maven Central release packaging and lifecycle tooling.
+* Add a shared Bazel project view and a Bazel-backed diagnostic fixture updater.
+* Add Palantir Java Format to the Bazel validation gate.
+* Replace `javax.annotation` nullness annotations with JSpecify and enforce NullAway checks.
+* Enable strict Error Prone checks in the Bazel build.
+* Update the `org.realityforge.braincheck` artifacts to version `1.35.0`.
+* Update the `org.realityforge.akasha` artifact to version `0.34`.
+* Update GWT to version `2.13.1`.
 * Update the `org.realityforge.javax.annotation` artifact to version `1.1.1`.
 
 ### [v0.14](https://github.com/realityforge/zemeckis/tree/v0.14) (2022-04-27) · [Full Changelog](https://github.com/spritz/spritz/compare/v0.13...v0.14)

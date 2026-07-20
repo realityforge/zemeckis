@@ -1,0 +1,125 @@
+load(
+    ":release.bzl",
+    "release_jar",
+    "release_javadoc_jar",
+    "release_pom",
+    "release_source_jar",
+    "release_version",
+    "release_version_file",
+)
+
+package(default_visibility = ["//visibility:public"])
+
+CORE = "//core/src/main/java/zemeckis:core"
+
+release_version(
+    name = "version",
+    build_setting_default = "0.0-SNAPSHOT",
+)
+
+alias(
+    name = "jar_builder",
+    actual = "//tools/release/org/realityforge/zemeckis/release:jar_builder",
+)
+
+alias(
+    name = "javadoc_jar_builder",
+    actual = "//tools/release/org/realityforge/zemeckis/release:javadoc_jar_builder",
+)
+
+alias(
+    name = "dist",
+    actual = "//tools/release/org/realityforge/zemeckis/release:dist",
+)
+
+alias(
+    name = "release_lifecycle",
+    actual = "//tools/release/org/realityforge/zemeckis/release:release_lifecycle",
+)
+
+release_jar(
+    name = "zemeckis_core_jar",
+    out = "zemeckis-core.jar",
+    include_sources = True,
+    java_targets = [CORE],
+    resource_entries = ["META-INF/LICENSE"],
+    resource_files = ["//:LICENSE"],
+)
+
+release_source_jar(
+    name = "zemeckis_core_sources_jar",
+    out = "zemeckis-core-sources.jar",
+    java_targets = [CORE],
+    resource_entries = [
+        "zemeckis/Zemeckis.gwt.xml",
+        "zemeckis/ZemeckisConfig.native.js",
+        "zemeckis/ZemeckisDev.gwt.xml",
+        "zemeckis/zemeckis.js",
+    ],
+    resource_files = [
+        "//core/src/main/java/zemeckis:Zemeckis.gwt.xml",
+        "//core/src/main/java/zemeckis:ZemeckisConfig.native.js",
+        "//core/src/main/java/zemeckis:ZemeckisDev.gwt.xml",
+        "//core/src/main/java/zemeckis:zemeckis.js",
+    ],
+)
+
+release_javadoc_jar(
+    name = "zemeckis_core_javadoc_jar",
+    out = "zemeckis-core-javadoc.jar",
+    classpath = [
+        "@akasha_gwt//file",
+        "@base//file",
+        "@braincheck_core//file",
+        "@grim_annotations//file",
+        "@gwt_user//file",
+        "@javaemul_internal_annotations//file",
+        "@javax_annotation//file",
+        "@jsinterop_annotations//file",
+        "@jspecify//file",
+        "@org_jetbrains_annotations//file",
+    ],
+    java_targets = [CORE],
+)
+
+release_pom(
+    name = "zemeckis_core_pom",
+    out = "zemeckis-core.pom",
+    artifact_id = "zemeckis-core",
+    dependencies = [
+        "org.jspecify:jspecify:1.0.0",
+        "com.google.jsinterop:jsinterop-annotations:2.0.0",
+        "com.google.jsinterop:base:1.0.0",
+        "org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:1.7.0",
+        "org.realityforge.akasha:akasha-gwt:0.34",
+        "org.realityforge.braincheck:braincheck-core:1.35.0",
+        "org.realityforge.grim:grim-annotations:0.09",
+    ],
+    description = "Zemeckis Core Library",
+    display_name = "Zemeckis Core Library",
+)
+
+release_version_file(
+    name = "release_version",
+    out = "release-version.txt",
+)
+
+filegroup(
+    name = "maven_artifacts",
+    srcs = [
+        ":zemeckis_core_jar",
+        ":zemeckis_core_javadoc_jar",
+        ":zemeckis_core_pom",
+        ":zemeckis_core_sources_jar",
+    ],
+)
+
+test_suite(
+    name = "all_tests",
+    tests = [
+        "//tools/release/org/realityforge/zemeckis/release:dist_builder_test",
+        "//tools/release/org/realityforge/zemeckis/release:jar_builder_test",
+        "//tools/release/org/realityforge/zemeckis/release:release_artifacts_integration_test",
+        "//tools/release/org/realityforge/zemeckis/release:release_lifecycle_tool_test",
+    ],
+)

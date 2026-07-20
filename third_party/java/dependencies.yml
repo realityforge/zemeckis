@@ -1,0 +1,171 @@
+# DO NOT EDIT GENERATED BUILD CONTENT: run tools/update_java_deps.sh after editing this file.
+
+repositories:
+  - name: central
+    url: https://repo.maven.apache.org/maven2
+options:
+  workspaceDirectory: ../..
+  nameStrategy: ArtifactId
+  repositoryNameStrategy: ArtifactId
+  repositoryRuleGenerationStrategy: module
+  targetGenerationStrategy: build
+  failOnMissingPom: false
+  includeSource: false
+
+artifacts:
+  - coord: colt:colt:1.2.0
+    excludes:
+      - '*:*'
+  - coord: com.google.code.gson:gson:2.11.0
+    excludes:
+      - '*:*'
+  - coord: com.ibm.icu:icu4j:71.1
+    excludes:
+      - '*:*'
+  - coord: com.google.code.findbugs:jsr305:3.0.2
+    excludes:
+      - '*:*'
+  - coord: com.uber.nullaway:nullaway:0.13.7
+  - coord: com.google.jsinterop:base:1.0.0
+  - coord: com.google.jsinterop:jsinterop-annotations:2.0.0
+  - coord: commons-collections:commons-collections:3.2.2
+    excludes:
+      - '*:*'
+  - coord: commons-io:commons-io:2.4
+    excludes:
+      - '*:*'
+  - coord: guru.nidi:jdepend:2.9.5
+  - coord: javax.annotation:javax.annotation-api:1.2
+    excludes:
+      - '*:*'
+  - coord: javax.servlet:javax.servlet-api:3.1.0
+    excludes:
+      - '*:*'
+  - coord: javax.validation:validation-api:1.0.0.GA
+    excludes:
+      - '*:*'
+  - coord: org.apache.ant:ant:1.9.7
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jdt:ecj:3.33.0
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jdt:org.eclipse.jdt.core:3.33.0
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-annotations:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-continuation:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-http:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-io:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-jndi:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-plus:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-security:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-server:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-servlet:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-servlets:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-util:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-webapp:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.eclipse.jetty:jetty-xml:9.4.58.v20250814
+    excludes:
+      - '*:*'
+  - coord: org.gwtproject:gwt-dev:2.13.1
+    includeSource: true
+    excludes:
+      - '*:*'
+  - coord: org.gwtproject:gwt-user:2.13.1
+    includeSource: true
+    excludes:
+      - '*:*'
+  - coord: org.jspecify:jspecify:1.0.0
+    excludes:
+      - '*:*'
+  - coord: org.ow2.asm:asm:9.7.1
+    excludes:
+      - '*:*'
+  - coord: org.ow2.asm:asm-analysis:9.7.1
+    excludes:
+      - '*:*'
+  - coord: org.ow2.asm:asm-commons:9.7.1
+    excludes:
+      - '*:*'
+  - coord: org.ow2.asm:asm-tree:9.7.1
+    excludes:
+      - '*:*'
+  - coord: org.ow2.asm:asm-util:9.7.1
+    excludes:
+      - '*:*'
+  - coord: org.realityforge.akasha:akasha-j2cl:0.34
+    includeSource: true
+    natures: [J2cl]
+    j2cl:
+      mode: Library
+      suppress: [accessControls, checkTypes, duplicate]
+  - coord: org.realityforge.akasha:akasha-gwt:0.34
+  - coord: org.realityforge.braincheck:braincheck-core:1.35.0
+    includeSource: true
+    natures: [Java, J2cl]
+    j2cl:
+      mode: Library
+      jspecifyMode: Enable
+  - coord: org.realityforge.braincheck:braincheck-testng:1.35.0
+  - coord: org.realityforge.grim:grim-annotations:0.09
+  - coord: org.realityforge.grim:grim-processor:0.09
+  - coord: org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:1.7.0
+  - coord: org.glassfish:javax.json:1.1
+  - coord: org.testng:testng:6.11
+  - coord: org.w3c.css:sac:1.3
+    excludes:
+      - '*:*'
+  - coord: tapestry:tapestry:4.0.2
+    excludes:
+      - '*:*'
+
+replacements:
+  - coord: com.google.jsinterop:base
+    targets:
+      - target: "@jsinterop_base//:jsinterop-base-j2cl"
+        nature: J2cl
+  - coord: com.google.jsinterop:jsinterop-annotations
+    targets:
+      - target: ":jsinterop_annotations-j2cl"
+        nature: J2cl
+  - coord: org.jspecify:jspecify
+    targets:
+      - target: ":jspecify-j2cl"
+        nature: J2cl
+  - coord: org.realityforge.javaemul.internal.annotations:javaemul.internal.annotations
+    targets:
+      - target: ":javaemul_internal_annotations-j2cl"
+        nature: J2cl
+  - coord: org.realityforge.javax.annotation:javax.annotation
+    targets:
+      - target: ":javax_annotation-j2cl"
+        nature: J2cl
+  - coord: org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations
+    targets:
+      - target: ":org_jetbrains_annotations-j2cl"
+        nature: J2cl

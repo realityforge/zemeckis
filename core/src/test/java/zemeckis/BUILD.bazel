@@ -1,0 +1,119 @@
+load("//third_party/java:rules.bzl", "java_library", "java_testng_test")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(["diagnostic_messages.json"])
+
+java_library(
+    name = "test_support",
+    testonly = True,
+    srcs = [
+        "AbstractTest.java",
+        "MessageCollector.java",
+        "NoopTask.java",
+        "TestExecutor.java",
+        "TestLogger.java",
+        "package-info.java",
+    ],
+    deps = [
+        "//core/src/main/java/zemeckis:core",
+        "//third_party/java:braincheck_core",
+        "//third_party/java:braincheck_testng",
+        "//third_party/java:testng",
+    ],
+)
+
+java_testng_test(
+    name = "all_tests",
+    size = "small",
+    srcs = [
+        "CircularBufferTest.java",
+        "DeadlineBasedExecutorTest.java",
+        "ExecutorTest.java",
+        "RoundBasedExecutorTest.java",
+        "TaskEntryTest.java",
+        "TemporalSchedulerTest.java",
+        "VirtualProcessorUnitTest.java",
+        "VirtualProcessorUnitsHolderTest.java",
+        "ZemeckisLoggerTest.java",
+        "ZemeckisTest.java",
+        "ZemeckisUtilTest.java",
+        "package-info.java",
+    ],
+    data = ["diagnostic_messages.json"],
+    jvm_flags = [
+        "-Dbraincheck.environment=development",
+        "-Dzemeckis.diagnostic_messages_file=$(rootpath :diagnostic_messages.json)",
+        "-Dzemeckis.environment=development",
+    ],
+    test_classes = [
+        "zemeckis.CircularBufferTest",
+        "zemeckis.DeadlineBasedExecutorTest",
+        "zemeckis.ExecutorTest",
+        "zemeckis.RoundBasedExecutorTest",
+        "zemeckis.TaskEntryTest",
+        "zemeckis.TemporalSchedulerTest",
+        "zemeckis.VirtualProcessorUnitTest",
+        "zemeckis.VirtualProcessorUnitsHolderTest",
+        "zemeckis.ZemeckisLoggerTest",
+        "zemeckis.ZemeckisTest",
+        "zemeckis.ZemeckisUtilTest",
+    ],
+    deps = [
+        ":test_support",
+        "//core/src/main/java/zemeckis:core",
+        "//third_party/java:braincheck_core",
+        "//third_party/java:testng",
+    ],
+)
+
+java_testng_test(
+    name = "update_diagnostic_messages",
+    size = "small",
+    srcs = [
+        "CircularBufferTest.java",
+        "DeadlineBasedExecutorTest.java",
+        "ExecutorTest.java",
+        "RoundBasedExecutorTest.java",
+        "TaskEntryTest.java",
+        "TemporalSchedulerTest.java",
+        "VirtualProcessorUnitTest.java",
+        "VirtualProcessorUnitsHolderTest.java",
+        "ZemeckisLoggerTest.java",
+        "ZemeckisTest.java",
+        "ZemeckisUtilTest.java",
+        "package-info.java",
+        "//core/src/test/java/zemeckis/test:updater_sources",
+    ],
+    data = ["//core/src/main/java/zemeckis:core"],
+    jvm_flags = [
+        "-Dbraincheck.environment=development",
+        "-Dzemeckis.core.compile_target=$(rootpath //core/src/main/java/zemeckis:core)",
+        "-Dzemeckis.environment=development",
+        "-Dzemeckis.output_fixture_data=true",
+    ],
+    tags = ["manual"],
+    test_classes = [
+        "zemeckis.CircularBufferTest",
+        "zemeckis.DeadlineBasedExecutorTest",
+        "zemeckis.ExecutorTest",
+        "zemeckis.RoundBasedExecutorTest",
+        "zemeckis.TaskEntryTest",
+        "zemeckis.TemporalSchedulerTest",
+        "zemeckis.VirtualProcessorUnitTest",
+        "zemeckis.VirtualProcessorUnitsHolderTest",
+        "zemeckis.ZemeckisLoggerTest",
+        "zemeckis.ZemeckisTest",
+        "zemeckis.ZemeckisUtilTest",
+        "zemeckis.test.JDependTest",
+        "zemeckis.test.UncaughtErrorHandlerTest",
+        "zemeckis.test.ZemeckisTestUtilTest",
+    ],
+    deps = [
+        ":test_support",
+        "//core/src/main/java/zemeckis:core",
+        "//third_party/java:braincheck_core",
+        "//third_party/java:jdepend",
+        "//third_party/java:testng",
+    ],
+)

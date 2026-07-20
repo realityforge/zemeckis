@@ -1,226 +1,220 @@
 package zemeckis;
 
-import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public final class CircularBufferTest
-  extends AbstractTest
-{
-  @Test
-  public void basicOperation()
-  {
-    final CircularBuffer<String> buffer = new CircularBuffer<>( 3 );
-    assertEquals( buffer.size(), 0 );
-    assertEquals( buffer.getCapacity(), 3 );
+import org.testng.annotations.Test;
 
-    assertNull( buffer.get( 0 ) );
-    assertNull( buffer.get( 1 ) );
-    assertNull( buffer.get( 2 ) );
-    // The following gets exceed the buffers capacity but should be gracefully handled
-    assertNull( buffer.get( 3 ) );
-    assertNull( buffer.get( 4 ) );
+public final class CircularBufferTest extends AbstractTest {
+    @Test
+    public void basicOperation() {
+        final CircularBuffer<String> buffer = new CircularBuffer<>(3);
+        assertEquals(buffer.size(), 0);
+        assertEquals(buffer.getCapacity(), 3);
 
-    buffer.add( "A" );
-    assertEquals( buffer.size(), 1 );
-    assertEquals( buffer.getCapacity(), 3 );
-    assertEquals( buffer.get( 0 ), "A" );
-    assertNull( buffer.get( 1 ) );
-    assertNull( buffer.get( 2 ) );
-    assertNull( buffer.get( 3 ) );
-    assertNull( buffer.get( 4 ) );
+        assertNull(buffer.get(0));
+        assertNull(buffer.get(1));
+        assertNull(buffer.get(2));
+        // The following gets exceed the buffers capacity but should be gracefully handled
+        assertNull(buffer.get(3));
+        assertNull(buffer.get(4));
 
-    buffer.add( "B" );
-    assertEquals( buffer.size(), 2 );
-    assertEquals( buffer.getCapacity(), 3 );
-    assertEquals( buffer.get( 0 ), "A" );
-    assertEquals( buffer.get( 1 ), "B" );
-    assertNull( buffer.get( 2 ) );
-    assertNull( buffer.get( 3 ) );
-    assertNull( buffer.get( 4 ) );
+        buffer.add("A");
+        assertEquals(buffer.size(), 1);
+        assertEquals(buffer.getCapacity(), 3);
+        assertEquals(buffer.get(0), "A");
+        assertNull(buffer.get(1));
+        assertNull(buffer.get(2));
+        assertNull(buffer.get(3));
+        assertNull(buffer.get(4));
 
-    buffer.add( "C" );
-    assertEquals( buffer.size(), 3 );
-    assertEquals( buffer.getCapacity(), 3 );
-    assertEquals( buffer.get( 0 ), "A" );
-    assertEquals( buffer.get( 1 ), "B" );
-    assertEquals( buffer.get( 2 ), "C" );
-    assertNull( buffer.get( 3 ) );
-    assertNull( buffer.get( 4 ) );
+        buffer.add("B");
+        assertEquals(buffer.size(), 2);
+        assertEquals(buffer.getCapacity(), 3);
+        assertEquals(buffer.get(0), "A");
+        assertEquals(buffer.get(1), "B");
+        assertNull(buffer.get(2));
+        assertNull(buffer.get(3));
+        assertNull(buffer.get(4));
 
-    assertEquals( buffer.peek(), "A" );
-    assertEquals( buffer.pop(), "A" );
+        buffer.add("C");
+        assertEquals(buffer.size(), 3);
+        assertEquals(buffer.getCapacity(), 3);
+        assertEquals(buffer.get(0), "A");
+        assertEquals(buffer.get(1), "B");
+        assertEquals(buffer.get(2), "C");
+        assertNull(buffer.get(3));
+        assertNull(buffer.get(4));
 
-    assertEquals( buffer.size(), 2 );
-    assertEquals( buffer.getCapacity(), 3 );
-    assertEquals( buffer.get( 0 ), "B" );
-    assertEquals( buffer.get( 1 ), "C" );
-    assertNull( buffer.get( 2 ) );
-    assertNull( buffer.get( 3 ) );
-    assertNull( buffer.get( 4 ) );
+        assertEquals(buffer.peek(), "A");
+        assertEquals(buffer.pop(), "A");
 
-    buffer.add( "D" );
-    assertEquals( buffer.size(), 3 );
-    assertEquals( buffer.getCapacity(), 3 );
-    assertEquals( buffer.get( 0 ), "B" );
-    assertEquals( buffer.get( 1 ), "C" );
-    assertEquals( buffer.get( 2 ), "D" );
-    assertNull( buffer.get( 3 ) );
-    assertNull( buffer.get( 4 ) );
+        assertEquals(buffer.size(), 2);
+        assertEquals(buffer.getCapacity(), 3);
+        assertEquals(buffer.get(0), "B");
+        assertEquals(buffer.get(1), "C");
+        assertNull(buffer.get(2));
+        assertNull(buffer.get(3));
+        assertNull(buffer.get(4));
 
-    buffer.add( "E" );
-    buffer.add( "F" );
-    buffer.add( "G" );
-    assertEquals( buffer.size(), 6 );
-    assertEquals( buffer.getCapacity(), 9 );
-    assertEquals( buffer.get( 0 ), "B" );
-    assertEquals( buffer.get( 1 ), "C" );
-    assertEquals( buffer.get( 2 ), "D" );
-    assertEquals( buffer.get( 3 ), "E" );
-    assertEquals( buffer.get( 4 ), "F" );
-    assertEquals( buffer.get( 5 ), "G" );
+        buffer.add("D");
+        assertEquals(buffer.size(), 3);
+        assertEquals(buffer.getCapacity(), 3);
+        assertEquals(buffer.get(0), "B");
+        assertEquals(buffer.get(1), "C");
+        assertEquals(buffer.get(2), "D");
+        assertNull(buffer.get(3));
+        assertNull(buffer.get(4));
 
-    assertEquals( buffer.peek(), "B" );
-    assertEquals( buffer.pop(), "B" );
-    assertEquals( buffer.peek(), "C" );
-    assertEquals( buffer.pop(), "C" );
-    assertEquals( buffer.peek(), "D" );
-    assertEquals( buffer.pop(), "D" );
-    assertEquals( buffer.peek(), "E" );
-    assertEquals( buffer.pop(), "E" );
-    assertEquals( buffer.peek(), "F" );
-    assertEquals( buffer.pop(), "F" );
-    assertEquals( buffer.peek(), "G" );
-    assertEquals( buffer.pop(), "G" );
-    assertNull( buffer.peek() );
-    assertNull( buffer.pop() );
-    assertNull( buffer.peek() );
-  }
+        buffer.add("E");
+        buffer.add("F");
+        buffer.add("G");
+        assertEquals(buffer.size(), 6);
+        assertEquals(buffer.getCapacity(), 9);
+        assertEquals(buffer.get(0), "B");
+        assertEquals(buffer.get(1), "C");
+        assertEquals(buffer.get(2), "D");
+        assertEquals(buffer.get(3), "E");
+        assertEquals(buffer.get(4), "F");
+        assertEquals(buffer.get(5), "G");
 
-  @Test
-  public void popAfterWrapping()
-  {
-    final CircularBuffer<String> buffer = new CircularBuffer<>( 3 );
-    assertEquals( buffer.size(), 0 );
+        assertEquals(buffer.peek(), "B");
+        assertEquals(buffer.pop(), "B");
+        assertEquals(buffer.peek(), "C");
+        assertEquals(buffer.pop(), "C");
+        assertEquals(buffer.peek(), "D");
+        assertEquals(buffer.pop(), "D");
+        assertEquals(buffer.peek(), "E");
+        assertEquals(buffer.pop(), "E");
+        assertEquals(buffer.peek(), "F");
+        assertEquals(buffer.pop(), "F");
+        assertEquals(buffer.peek(), "G");
+        assertEquals(buffer.pop(), "G");
+        assertNull(buffer.peek());
+        assertNull(buffer.pop());
+        assertNull(buffer.peek());
+    }
 
-    buffer.add( "A" );
-    assertEquals( buffer.size(), 1 );
-    assertEquals( buffer.get( 0 ), "A" );
+    @Test
+    public void popAfterWrapping() {
+        final CircularBuffer<String> buffer = new CircularBuffer<>(3);
+        assertEquals(buffer.size(), 0);
 
-    buffer.add( "B" );
-    assertEquals( buffer.size(), 2 );
-    assertEquals( buffer.get( 0 ), "A" );
-    assertEquals( buffer.get( 1 ), "B" );
+        buffer.add("A");
+        assertEquals(buffer.size(), 1);
+        assertEquals(buffer.get(0), "A");
 
-    buffer.add( "C" );
-    assertEquals( buffer.size(), 3 );
-    assertEquals( buffer.get( 0 ), "A" );
-    assertEquals( buffer.get( 1 ), "B" );
-    assertEquals( buffer.get( 2 ), "C" );
+        buffer.add("B");
+        assertEquals(buffer.size(), 2);
+        assertEquals(buffer.get(0), "A");
+        assertEquals(buffer.get(1), "B");
 
-    assertEquals( buffer.peek(), "A" );
-    assertEquals( buffer.pop(), "A" );
-    assertEquals( buffer.peek(), "B" );
-    assertEquals( buffer.pop(), "B" );
+        buffer.add("C");
+        assertEquals(buffer.size(), 3);
+        assertEquals(buffer.get(0), "A");
+        assertEquals(buffer.get(1), "B");
+        assertEquals(buffer.get(2), "C");
 
-    assertEquals( buffer.size(), 1 );
-    assertEquals( buffer.get( 0 ), "C" );
+        assertEquals(buffer.peek(), "A");
+        assertEquals(buffer.pop(), "A");
+        assertEquals(buffer.peek(), "B");
+        assertEquals(buffer.pop(), "B");
 
-    buffer.add( "D" );
-    assertEquals( buffer.size(), 2 );
-    assertEquals( buffer.get( 0 ), "C" );
-    assertEquals( buffer.get( 1 ), "D" );
+        assertEquals(buffer.size(), 1);
+        assertEquals(buffer.get(0), "C");
 
-    buffer.add( "E" );
+        buffer.add("D");
+        assertEquals(buffer.size(), 2);
+        assertEquals(buffer.get(0), "C");
+        assertEquals(buffer.get(1), "D");
 
-    assertEquals( buffer.peek(), "C" );
-    assertEquals( buffer.pop(), "C" );
-    assertEquals( buffer.peek(), "D" );
-    assertEquals( buffer.pop(), "D" );
-    assertEquals( buffer.peek(), "E" );
-    assertEquals( buffer.pop(), "E" );
-  }
+        buffer.add("E");
 
-  @Test
-  public void truncateAfterWrapping()
-  {
-    final CircularBuffer<String> buffer = new CircularBuffer<>( 3 );
-    assertEquals( buffer.size(), 0 );
+        assertEquals(buffer.peek(), "C");
+        assertEquals(buffer.pop(), "C");
+        assertEquals(buffer.peek(), "D");
+        assertEquals(buffer.pop(), "D");
+        assertEquals(buffer.peek(), "E");
+        assertEquals(buffer.pop(), "E");
+    }
 
-    buffer.add( "A" );
-    buffer.add( "B" );
-    buffer.add( "C" );
+    @Test
+    public void truncateAfterWrapping() {
+        final CircularBuffer<String> buffer = new CircularBuffer<>(3);
+        assertEquals(buffer.size(), 0);
 
-    assertEquals( buffer.peek(), "A" );
-    assertEquals( buffer.pop(), "A" );
-    assertEquals( buffer.peek(), "B" );
-    assertEquals( buffer.pop(), "B" );
+        buffer.add("A");
+        buffer.add("B");
+        buffer.add("C");
 
-    assertEquals( buffer.size(), 1 );
+        assertEquals(buffer.peek(), "A");
+        assertEquals(buffer.pop(), "A");
+        assertEquals(buffer.peek(), "B");
+        assertEquals(buffer.pop(), "B");
 
-    buffer.add( "D" );
-    buffer.add( "E" );
+        assertEquals(buffer.size(), 1);
 
-    buffer.truncate( 2 );
+        buffer.add("D");
+        buffer.add("E");
 
-    assertEquals( buffer.peek(), "C" );
-    assertEquals( buffer.pop(), "C" );
-    assertEquals( buffer.peek(), "D" );
-    assertEquals( buffer.pop(), "D" );
-    assertNull( buffer.peek() );
-    assertNull( buffer.pop() );
-  }
+        buffer.truncate(2);
 
-  @Test
-  public void addFirst()
-  {
-    final CircularBuffer<String> buffer = new CircularBuffer<>( 3 );
-    assertEquals( buffer.size(), 0 );
+        assertEquals(buffer.peek(), "C");
+        assertEquals(buffer.pop(), "C");
+        assertEquals(buffer.peek(), "D");
+        assertEquals(buffer.pop(), "D");
+        assertNull(buffer.peek());
+        assertNull(buffer.pop());
+    }
 
-    buffer.add( "A" );
-    buffer.add( "B" );
-    buffer.add( "C" );
-    // This triggers both a grow and a wrap
-    buffer.addFirst( "D" );
+    @Test
+    public void addFirst() {
+        final CircularBuffer<String> buffer = new CircularBuffer<>(3);
+        assertEquals(buffer.size(), 0);
 
-    assertEquals( buffer.size(), 4 );
+        buffer.add("A");
+        buffer.add("B");
+        buffer.add("C");
+        // This triggers both a grow and a wrap
+        buffer.addFirst("D");
 
-    assertEquals( buffer.peek(), "D" );
-    assertEquals( buffer.pop(), "D" );
-    assertEquals( buffer.peek(), "A" );
-    assertEquals( buffer.pop(), "A" );
-    assertEquals( buffer.peek(), "B" );
-    assertEquals( buffer.pop(), "B" );
-    assertEquals( buffer.peek(), "C" );
-    assertEquals( buffer.pop(), "C" );
+        assertEquals(buffer.size(), 4);
 
-    buffer.addFirst( "E" );
-    buffer.addFirst( "F" );
-    buffer.add( "G" );
+        assertEquals(buffer.peek(), "D");
+        assertEquals(buffer.pop(), "D");
+        assertEquals(buffer.peek(), "A");
+        assertEquals(buffer.pop(), "A");
+        assertEquals(buffer.peek(), "B");
+        assertEquals(buffer.pop(), "B");
+        assertEquals(buffer.peek(), "C");
+        assertEquals(buffer.pop(), "C");
 
-    assertEquals( buffer.peek(), "F" );
-    assertEquals( buffer.pop(), "F" );
-    assertEquals( buffer.peek(), "E" );
-    assertEquals( buffer.pop(), "E" );
-    assertEquals( buffer.peek(), "G" );
-    assertEquals( buffer.pop(), "G" );
-  }
+        buffer.addFirst("E");
+        buffer.addFirst("F");
+        buffer.add("G");
 
-  @Test
-  public void startSmall()
-  {
-    final CircularBuffer<String> buffer = new CircularBuffer<>( 1 );
+        assertEquals(buffer.peek(), "F");
+        assertEquals(buffer.pop(), "F");
+        assertEquals(buffer.peek(), "E");
+        assertEquals(buffer.pop(), "E");
+        assertEquals(buffer.peek(), "G");
+        assertEquals(buffer.pop(), "G");
+    }
 
-    buffer.add( "A" );
-    assertEquals( buffer.getCapacity(), 1 );
-    buffer.add( "B" );
-    assertEquals( buffer.getCapacity(), 3 );
-    buffer.add( "C" );
-    assertEquals( buffer.getCapacity(), 3 );
-    buffer.add( "D" );
-    assertEquals( buffer.getCapacity(), 5 );
-    buffer.add( "E" );
-    assertEquals( buffer.getCapacity(), 5 );
-    buffer.add( "F" );
-    assertEquals( buffer.getCapacity(), 9 );
-  }
+    @Test
+    public void startSmall() {
+        final CircularBuffer<String> buffer = new CircularBuffer<>(1);
+
+        buffer.add("A");
+        assertEquals(buffer.getCapacity(), 1);
+        buffer.add("B");
+        assertEquals(buffer.getCapacity(), 3);
+        buffer.add("C");
+        assertEquals(buffer.getCapacity(), 3);
+        buffer.add("D");
+        assertEquals(buffer.getCapacity(), 5);
+        buffer.add("E");
+        assertEquals(buffer.getCapacity(), 5);
+        buffer.add("F");
+        assertEquals(buffer.getCapacity(), 9);
+    }
 }

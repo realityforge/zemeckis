@@ -1,0 +1,5 @@
+<module>
+  <inherits name='zemeckis.Zemeckis'/>
+  <source path='' includes='SmokeEntryPoint.java'/>
+  <entry-point class='zemeckis.gwt.SmokeEntryPoint'/>
+</module>

@@ -1,200 +1,162 @@
 package zemeckis;
 
 import grim.annotations.OmitType;
-import javax.annotation.Nonnull;
 
 /**
  * Location of all compile time configuration settings for framework.
  */
-@SuppressWarnings( "FieldMayBeFinal" )
+@SuppressWarnings({"ConstantField", "FieldCanBeFinal"})
 @OmitType
-final class ZemeckisConfig
-{
-  @Nonnull
-  private static final ConfigProvider PROVIDER = new ConfigProvider();
-  private static final boolean PRODUCTION_MODE = PROVIDER.isProductionMode();
-  private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
-  private static boolean PURGE_ON_RUNAWAY = PROVIDER.purgeTasksWhenRunawayDetected();
-  private static boolean UNCAUGHT_ERROR_HANDLERS = PROVIDER.areUncaughtErrorHandlersEnabled();
-  private static boolean USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS = PROVIDER.useMessageChannelToScheduleTasks();
-  private static boolean USE_WORKER_TO_SCHEDULE_DELAYED_TASKS = PROVIDER.useWorkerToScheduleDelayedTasks();
-  private static final boolean LOG_WORKER_INTERACTIONS = PROVIDER.shouldLogWorkerInteractions();
-  @Nonnull
-  private static final String LOGGER_TYPE = PROVIDER.loggerType();
-  private static final boolean JVM = PROVIDER.isJvm();
+final class ZemeckisConfig {
+    private static final ConfigProvider PROVIDER = new ConfigProvider();
+    private static final boolean PRODUCTION_MODE = PROVIDER.isProductionMode();
+    private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
+    private static boolean PURGE_ON_RUNAWAY = PROVIDER.purgeTasksWhenRunawayDetected();
+    private static boolean UNCAUGHT_ERROR_HANDLERS = PROVIDER.areUncaughtErrorHandlersEnabled();
+    private static boolean USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS = PROVIDER.useMessageChannelToScheduleTasks();
+    private static boolean USE_WORKER_TO_SCHEDULE_DELAYED_TASKS = PROVIDER.useWorkerToScheduleDelayedTasks();
+    private static final boolean LOG_WORKER_INTERACTIONS = PROVIDER.shouldLogWorkerInteractions();
+    private static final String LOGGER_TYPE = PROVIDER.loggerType();
+    private static final boolean JVM = PROVIDER.isJvm();
 
-  private ZemeckisConfig()
-  {
-  }
+    private ZemeckisConfig() {}
 
-  static boolean isDevelopmentMode()
-  {
-    return !isProductionMode();
-  }
-
-  static boolean isProductionMode()
-  {
-    return PRODUCTION_MODE;
-  }
-
-  static boolean isJvm()
-  {
-    return JVM;
-  }
-
-  static boolean purgeTasksWhenRunawayDetected()
-  {
-    return PURGE_ON_RUNAWAY;
-  }
-
-  static boolean areNamesEnabled()
-  {
-    return ENABLE_NAMES;
-  }
-
-  static boolean areUncaughtErrorHandlersEnabled()
-  {
-    return UNCAUGHT_ERROR_HANDLERS;
-  }
-
-  static boolean useMessageChannelToScheduleTasks()
-  {
-    return USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS;
-  }
-
-  static boolean useWorkerToScheduleDelayedTasks()
-  {
-    return USE_WORKER_TO_SCHEDULE_DELAYED_TASKS;
-  }
-
-  static boolean shouldLogWorkerInteractions()
-  {
-    return LOG_WORKER_INTERACTIONS;
-  }
-
-  @Nonnull
-  static String loggerType()
-  {
-    return LOGGER_TYPE;
-  }
-
-  private static final class ConfigProvider
-    extends AbstractConfigProvider
-  {
-    @GwtIncompatible
-    @Override
-    boolean isProductionMode()
-    {
-      return "production".equals( System.getProperty( "zemeckis.environment", "production" ) );
+    static boolean isDevelopmentMode() {
+        return !isProductionMode();
     }
 
-    @GwtIncompatible
-    @Override
-    boolean areNamesEnabled()
-    {
-      return "true".equals( System.getProperty( "zemeckis.enable_names", isProductionMode() ? "false" : "true" ) );
+    static boolean isProductionMode() {
+        return PRODUCTION_MODE;
     }
 
-    @GwtIncompatible
-    @Override
-    boolean purgeTasksWhenRunawayDetected()
-    {
-      return "true".equals( System.getProperty( "zemeckis.purge_tasks_when_runaway_detected", "true" ) );
+    static boolean isJvm() {
+        return JVM;
     }
 
-    @GwtIncompatible
-    @Override
-    boolean areUncaughtErrorHandlersEnabled()
-    {
-      return "true".equals( System.getProperty( "zemeckis.enable_uncaught_error_handlers",
-                                                PRODUCTION_MODE ? "false" : "true" ) );
+    static boolean purgeTasksWhenRunawayDetected() {
+        return PURGE_ON_RUNAWAY;
     }
 
-    @GwtIncompatible
-    @Override
-    boolean useMessageChannelToScheduleTasks()
-    {
-      return "true".equals( System.getProperty( "zemeckis.use_message_channel_to_schedule_tasks", "true" ) );
+    static boolean areNamesEnabled() {
+        return ENABLE_NAMES;
     }
 
-    @GwtIncompatible
-    @Override
-    boolean useWorkerToScheduleDelayedTasks()
-    {
-      return "true".equals( System.getProperty( "zemeckis.use_worker_to_schedule_delayed_tasks", "true" ) );
+    static boolean areUncaughtErrorHandlersEnabled() {
+        return UNCAUGHT_ERROR_HANDLERS;
     }
 
-    boolean shouldLogWorkerInteractions()
-    {
-      return "true".equals( System.getProperty( "zemeckis.log_worker_interactions", "false" ) );
+    static boolean useMessageChannelToScheduleTasks() {
+        return USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS;
     }
 
-    @GwtIncompatible
-    @Nonnull
-    @Override
-    String loggerType()
-    {
-      return System.getProperty( "zemeckis.logger", PRODUCTION_MODE ? "basic" : "proxy" );
+    static boolean useWorkerToScheduleDelayedTasks() {
+        return USE_WORKER_TO_SCHEDULE_DELAYED_TASKS;
     }
 
-    @GwtIncompatible
-    @Override
-    boolean isJvm()
-    {
-      return true;
-    }
-  }
-
-  @SuppressWarnings( { "unused", "StringEquality" } )
-  private static abstract class AbstractConfigProvider
-  {
-    boolean isProductionMode()
-    {
-      return "production" == System.getProperty( "zemeckis.environment" );
+    static boolean shouldLogWorkerInteractions() {
+        return LOG_WORKER_INTERACTIONS;
     }
 
-    boolean areNamesEnabled()
-    {
-      return "true" == System.getProperty( "zemeckis.enable_names" );
+    static String loggerType() {
+        return LOGGER_TYPE;
     }
 
-    boolean purgeTasksWhenRunawayDetected()
-    {
-      return "true" == System.getProperty( "zemeckis.purge_tasks_when_runaway_detected" );
+    private static final class ConfigProvider extends AbstractConfigProvider {
+        @GwtIncompatible
+        @Override
+        boolean isProductionMode() {
+            return "production".equals(System.getProperty("zemeckis.environment", "production"));
+        }
+
+        @GwtIncompatible
+        @Override
+        boolean areNamesEnabled() {
+            return "true".equals(System.getProperty("zemeckis.enable_names", isProductionMode() ? "false" : "true"));
+        }
+
+        @GwtIncompatible
+        @Override
+        boolean purgeTasksWhenRunawayDetected() {
+            return "true".equals(System.getProperty("zemeckis.purge_tasks_when_runaway_detected", "true"));
+        }
+
+        @GwtIncompatible
+        @Override
+        boolean areUncaughtErrorHandlersEnabled() {
+            return "true"
+                    .equals(System.getProperty(
+                            "zemeckis.enable_uncaught_error_handlers", PRODUCTION_MODE ? "false" : "true"));
+        }
+
+        @GwtIncompatible
+        @Override
+        boolean useMessageChannelToScheduleTasks() {
+            return "true".equals(System.getProperty("zemeckis.use_message_channel_to_schedule_tasks", "true"));
+        }
+
+        @GwtIncompatible
+        @Override
+        boolean useWorkerToScheduleDelayedTasks() {
+            return "true".equals(System.getProperty("zemeckis.use_worker_to_schedule_delayed_tasks", "true"));
+        }
+
+        @Override
+        boolean shouldLogWorkerInteractions() {
+            return "true".equals(System.getProperty("zemeckis.log_worker_interactions", "false"));
+        }
+
+        @GwtIncompatible
+        @Override
+        String loggerType() {
+            return System.getProperty("zemeckis.logger", PRODUCTION_MODE ? "basic" : "proxy");
+        }
+
+        @GwtIncompatible
+        @Override
+        boolean isJvm() {
+            return true;
+        }
     }
 
-    boolean areUncaughtErrorHandlersEnabled()
-    {
-      return "true" == System.getProperty( "zemeckis.enable_uncaught_error_handlers" );
-    }
+    @SuppressWarnings({"unused", "StringEquality"})
+    private abstract static class AbstractConfigProvider {
+        boolean isProductionMode() {
+            return "production" == System.getProperty("zemeckis.environment");
+        }
 
-    boolean useMessageChannelToScheduleTasks()
-    {
-      return "true" == System.getProperty( "zemeckis.use_message_channel_to_schedule_tasks" );
-    }
+        boolean areNamesEnabled() {
+            return "true" == System.getProperty("zemeckis.enable_names");
+        }
 
-    boolean useWorkerToScheduleDelayedTasks()
-    {
-      return "true" == System.getProperty( "zemeckis.use_worker_to_schedule_delayed_tasks" );
-    }
+        boolean purgeTasksWhenRunawayDetected() {
+            return "true" == System.getProperty("zemeckis.purge_tasks_when_runaway_detected");
+        }
 
-    boolean shouldLogWorkerInteractions()
-    {
-      return "true" == System.getProperty( "zemeckis.log_worker_interactions" );
-    }
+        boolean areUncaughtErrorHandlersEnabled() {
+            return "true" == System.getProperty("zemeckis.enable_uncaught_error_handlers");
+        }
 
-    @Nonnull
-    String loggerType()
-    {
-      /*
-       * Valid values are: "none", "console" and "proxy" (for testing)
-       */
-      return System.getProperty( "zemeckis.logger" );
-    }
+        boolean useMessageChannelToScheduleTasks() {
+            return "true" == System.getProperty("zemeckis.use_message_channel_to_schedule_tasks");
+        }
 
-    boolean isJvm()
-    {
-      return false;
+        boolean useWorkerToScheduleDelayedTasks() {
+            return "true" == System.getProperty("zemeckis.use_worker_to_schedule_delayed_tasks");
+        }
+
+        boolean shouldLogWorkerInteractions() {
+            return "true" == System.getProperty("zemeckis.log_worker_interactions");
+        }
+
+        String loggerType() {
+            /*
+             * Valid values are: "none", "console" and "proxy" (for testing)
+             */
+            return System.getProperty("zemeckis.logger");
+        }
+
+        boolean isJvm() {
+            return false;
+        }
     }
-  }
 }
