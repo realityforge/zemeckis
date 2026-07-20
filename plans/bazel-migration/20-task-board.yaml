@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T09
+current_focus: T10
 
 tasks:
   - id: T01
@@ -232,27 +232,35 @@ tasks:
         result: pass with isolated Palantir Java Format 2.93.0 dependencies
       - command: tools/check.sh
         result: pass; generated dependencies, Buildifier, formatting, all 66 targets, and all 3 tests passed
+    commit:
+      hash: 5eb2474
+      message: "style(build): add Palantir formatter check"
 
   - id: T09
     title: Add Bazel IntelliJ and diagnostic update tooling
-    status: in_progress
+    status: completed
     priority: medium
     depends_on: [T08]
     acceptance_criteria:
-      - Bazel BSP and managed project configuration match Braincheck conventions
-      - Legacy ipr, iml, and iws files are removed
+      - Managed Bazel project configuration matches Braincheck conventions
+      - No legacy ipr, iml, or iws files are tracked
       - An explicit command regenerates diagnostic_messages.json
       - Normal tests verify fixtures without modifying source files
     files_touched:
-      - .bazelbsp/**
       - tools/intellij/**
       - tools/update_diagnostic_messages.sh
-      - "**/*.ipr"
-      - "**/*.iml"
-      - "**/*.iws"
     validation:
       - tools/update_diagnostic_messages.sh produces no diff for current fixtures
       - tools/check.sh
+    evidence:
+      - command: tools/update_diagnostic_messages.sh
+        result: pass; one manual TestNG suite ran all 51 tests and regenerated the tracked fixture without a diff
+      - command: tools/check.sh
+        result: pass; generated dependencies, Buildifier, formatting, all 67 wildcard targets, and all 3 normal tests passed
+      - command: git ls-files '*.iml' '*.ipr' '*.iws'
+        result: pass; no legacy IntelliJ project files are tracked; existing ignored local IDE state was left untouched
+      - command: inspect Braincheck commit 290c87b
+        result: pass; the reference migration uses a managed Bazel project view and does not add a .bazelbsp tree
 
   - id: T10
     title: Add Maven Central release infrastructure
@@ -389,3 +397,7 @@ history:
     task: T07
     commit: 0a9c6d8
     note: Applied Braincheck's pinned Palantir Java Format output to all Java sources.
+  - timestamp: "2026-07-20"
+    task: T08
+    commit: 5eb2474
+    note: Added isolated Palantir Java Format tooling and enforced it in the validation gate.

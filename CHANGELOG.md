@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Add a shared Bazel project view and a Bazel-backed diagnostic fixture updater.
 * Add Palantir Java Format to the Bazel validation gate.
 * Replace `javax.annotation` nullness annotations with JSpecify and enforce NullAway checks.
 * Enable strict Error Prone checks in the Bazel build.

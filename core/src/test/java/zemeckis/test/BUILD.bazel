@@ -2,6 +2,16 @@ load("//third_party/java:rules.bzl", "java_testng_test")
 
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+    name = "updater_sources",
+    srcs = [
+        "JDependTest.java",
+        "UncaughtErrorHandlerTest.java",
+        "ZemeckisTestUtilTest.java",
+        "package-info.java",
+    ],
+)
+
 java_testng_test(
     name = "all_tests",
     size = "small",
