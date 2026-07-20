@@ -1,0 +1,305 @@
+meta:
+  project: zemeckis-bazel-migration
+  status: approved
+  approved_on: "2026-07-20"
+  last_updated: "2026-07-20"
+  required_full_gates:
+    - tools/check.sh
+  statuses:
+    - pending
+    - in_progress
+    - completed
+    - cancelled
+
+current_focus: T03
+
+tasks:
+  - id: T01
+    title: Copy repository instructions
+    status: completed
+    priority: high
+    depends_on: []
+    acceptance_criteria:
+      - AGENTS.md matches braincheck/AGENTS.md byte-for-byte
+    files_touched:
+      - AGENTS.md
+    validation:
+      - cmp -s AGENTS.md /Users/peter/Code/realityforge/braincheck/AGENTS.md
+    evidence:
+      - command: cmp -s AGENTS.md /Users/peter/Code/realityforge/braincheck/AGENTS.md
+        result: pass
+    commit:
+      hash: 85d7750
+      message: Initialize AGENTS.md
+
+  - id: T02
+    title: Update the legacy dependency baseline
+    status: completed
+    priority: high
+    depends_on: [T01]
+    acceptance_criteria:
+      - Braincheck is 1.35.0 and Akasha is 0.34
+      - Braincheck TestNG's published contract uses TestNG 6.11 while Grim remains 0.09 and JDepend remains 2.9.5
+      - The Buildr build and tests pass before Bazel infrastructure is added
+    files_touched:
+      - build.yaml
+      - buildfile
+      - CHANGELOG.md
+      - core/src/test/java/zemeckis/RoundBasedExecutorTest.java
+      - plans/bazel-migration/**
+    validation:
+      - bundle exec buildr clean test package
+    evidence:
+      - command: bundle exec buildr clean test package
+        result: pass; both core GWT modules compiled and 51 tests passed
+      - command: inspect braincheck-testng-1.35.0.pom
+        result: pass; published dependency is org.testng:testng:6.11
+      - command: inspect Buildr 1.5.24 TestNG framework
+        result: legacy runner is hardcoded to 7.4.0 and will be removed rather than patched
+
+  - id: T03
+    title: Add the basic Bazel build
+    status: in_progress
+    priority: high
+    depends_on: [T02]
+    acceptance_criteria:
+      - Bazel 9.2.0 builds core and example Java targets at Java 17
+      - DepGen-generated dependencies are current
+      - Grim 0.09 processor metadata is generated and packaged
+      - TestNG 6.11, JDepend, and diagnostic fixture verification pass
+      - Basic artifacts contain required classes, sources, resources, and Grim metadata
+    files_touched:
+      - .bazelrc
+      - .bazelversion
+      - BUILD.bazel
+      - MODULE.bazel
+      - MODULE.bazel.lock
+      - REPO.bazel
+      - core/**/BUILD.bazel
+      - examples/**/BUILD.bazel
+      - third_party/java/**
+      - tools/check.sh
+      - tools/update_java_deps.sh
+    validation:
+      - tools/check.sh
+      - bazel build //...
+      - bazel test //...
+      - javap -verbose on a built production class reports major version 61
+
+  - id: T04
+    title: Fix strict Error Prone findings
+    status: pending
+    priority: high
+    depends_on: [T03]
+    acceptance_criteria:
+      - Source changes resolve strict Error Prone findings excluding NullAway and JSpecify-specific checks
+      - Both Bazel and Buildr tests pass
+    files_touched:
+      - core/src/**/*.java
+      - examples/src/**/*.java
+    validation:
+      - tools/check.sh with the strict Error Prone policy applied temporarily
+      - bundle exec buildr test
+
+  - id: T05
+    title: Enable strict Error Prone tooling
+    status: pending
+    priority: high
+    depends_on: [T04]
+    acceptance_criteria:
+      - Braincheck's strict Error Prone checks are errors
+      - NullAway and JSpecify-specific checks remain disabled
+      - All Bazel targets and tests pass
+    files_touched:
+      - third_party/java/rules.bzl
+      - tools/check.sh
+      - CHANGELOG.md
+    validation:
+      - tools/check.sh
+
+  - id: T06
+    title: Migrate to JSpecify and NullAway
+    status: pending
+    priority: high
+    depends_on: [T05]
+    acceptance_criteria:
+      - javax.annotation nullness annotations are absent from source and published dependencies
+      - Packages use JSpecify null marking and nullable type-use annotations
+      - NullAway and explicit null-marking checks pass
+      - Buildr remains operational with the migrated sources
+    files_touched:
+      - core/src/**/*.java
+      - examples/src/**/*.java
+      - build.yaml
+      - buildfile
+      - third_party/java/**
+      - CHANGELOG.md
+    validation:
+      - tools/check.sh
+      - bundle exec buildr clean test package
+      - rg verifies removed javax.annotation nullness usage
+
+  - id: T07
+    title: Apply Java formatting
+    status: pending
+    priority: medium
+    depends_on: [T06]
+    acceptance_criteria:
+      - Java source matches Braincheck's pinned Palantir Java Format output
+      - The implementation commit contains formatter-only Java changes plus task evidence
+    files_touched:
+      - core/src/**/*.java
+      - examples/src/**/*.java
+    validation:
+      - pinned Palantir Java Format dry run reports no changes after formatting
+      - tools/check.sh
+
+  - id: T08
+    title: Add Java-format tooling
+    status: pending
+    priority: medium
+    depends_on: [T07]
+    acceptance_criteria:
+      - Formatter dependencies are isolated under tools/java-format
+      - tools/check.sh verifies formatting without modifying files
+    files_touched:
+      - tools/java-format/**
+      - tools/java_format.sh
+      - tools/check.sh
+      - MODULE.bazel
+    validation:
+      - tools/java_format.sh check
+      - tools/check.sh
+
+  - id: T09
+    title: Add Bazel IntelliJ and diagnostic update tooling
+    status: pending
+    priority: medium
+    depends_on: [T08]
+    acceptance_criteria:
+      - Bazel BSP and managed project configuration match Braincheck conventions
+      - Legacy ipr, iml, and iws files are removed
+      - An explicit command regenerates diagnostic_messages.json
+      - Normal tests verify fixtures without modifying source files
+    files_touched:
+      - .bazelbsp/**
+      - tools/intellij/**
+      - tools/update_diagnostic_messages.sh
+      - "**/*.ipr"
+      - "**/*.iml"
+      - "**/*.iws"
+    validation:
+      - tools/update_diagnostic_messages.sh produces no diff for current fixtures
+      - tools/check.sh
+
+  - id: T10
+    title: Add Maven Central release infrastructure
+    status: pending
+    priority: high
+    depends_on: [T09]
+    acceptance_criteria:
+      - Main, sources, Javadoc, and POM artifacts build
+      - Archive entries and normalized POM satisfy 30-output-contract.md
+      - The signed 24-file release ZIP layout satisfies 30-output-contract.md
+      - Release scripts omit TODO, API-diff, Javadoc-cleanup, and site-publishing stages
+      - Two-component versions are derived and prepared correctly
+    files_touched:
+      - tools/release/**
+      - tools/package_maven_central.sh
+      - CONTRIBUTING.md
+      - .bazelrc
+      - CHANGELOG.md
+    validation:
+      - bazel build //tools/release:maven_artifacts --release_version=0.15
+      - bazel test //tools/release:all_tests --release_version=0.15
+      - tools/release/next_version.sh returns 0.15
+      - tools/release/prepare_release.sh 0.15 --dry-run
+      - tools/check.sh
+
+  - id: T11
+    title: Add latest J2CL compile and link validation
+    status: pending
+    priority: high
+    depends_on: [T10]
+    acceptance_criteria:
+      - J2CL is pinned to the latest master commit observed when implemented
+      - A test compiles and links Zemeckis through J2CL with akasha-j2cl
+      - Validation runs under Bazel 9.2.0
+    files_touched:
+      - MODULE.bazel
+      - MODULE.bazel.lock
+      - third_party/bazel/**
+      - core/**/BUILD.bazel
+      - tools/check.sh
+    validation:
+      - bazel build //core/src/test/j2cl:zemeckis_j2cl_smoke
+      - tools/check.sh
+
+  - id: T12
+    title: Add GWT compiler validation
+    status: pending
+    priority: high
+    depends_on: [T11]
+    acceptance_criteria:
+      - Zemeckis and ZemeckisDev compiler smoke builds produce assets
+      - Basic, pulse-task, and repeating-task examples compile with the real GWT compiler
+      - tools/check.sh builds all five outputs
+    files_touched:
+      - tools/gwt/**
+      - core/**/BUILD.bazel
+      - examples/**/BUILD.bazel
+      - third_party/java/**
+      - tools/check.sh
+    validation:
+      - bazel build all core and example GWT asset targets
+      - tools/check.sh
+
+  - id: T13
+    title: Add GitHub Actions validation
+    status: pending
+    priority: high
+    depends_on: [T12]
+    acceptance_criteria:
+      - GitHub Actions runs tools/check.sh on push, pull request, and workflow dispatch
+      - CI uses Ubuntu 24.04, Temurin 17, and Bazel caching
+      - CI verifies generated files are current
+      - No publication credentials or release actions are added
+      - Buildr and Travis remain present in this commit
+    files_touched:
+      - .github/workflows/ci.yml
+      - CHANGELOG.md
+    validation:
+      - action workflow syntax and content inspection
+      - tools/check.sh
+
+  - id: T14
+    title: Remove legacy infrastructure and complete migration
+    status: pending
+    priority: high
+    depends_on: [T13]
+    acceptance_criteria:
+      - Implementation alignment review has no actionable findings
+      - Buildr, Ruby, Travis, superseded Rake tasks, API-difference reports, site publishing, and legacy README references are absent
+      - The completed plan tree is removed in this final accepted cleanup commit
+      - tools/check.sh passes and the worktree is clean after commit
+    files_touched:
+      - .ruby-version
+      - .travis.yml
+      - Gemfile
+      - build.yaml
+      - buildfile
+      - tasks/**
+      - api-test/**
+      - README.md
+      - plans/bazel-migration/**
+    validation:
+      - tools/check.sh
+      - rg confirms legacy infrastructure is absent
+      - git diff --check
+      - git status --short
+
+history:
+  - timestamp: "2026-07-20"
+    task: T01
+    commit: 85d7750
+    note: Added repository instructions matching Braincheck byte-for-byte.

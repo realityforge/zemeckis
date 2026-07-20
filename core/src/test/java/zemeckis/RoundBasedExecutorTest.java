@@ -231,7 +231,7 @@ public final class RoundBasedExecutorTest
   public void executeTasks_invoking_onRunawayReactionsDetected_noInvariantsEnabled()
   {
     ZemeckisTestUtil.purgeTasksWhenRunawayDetected();
-    BrainCheckTestUtil.setCheckInvariants( false );
+    BrainCheckTestUtil.resetConfig( true );
 
     final RoundBasedExecutor executor = new TestExecutor( 2 );
 

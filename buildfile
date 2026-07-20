@@ -33,6 +33,7 @@ define 'zemeckis' do
   desc 'Zemeckis Core Library'
   define 'core' do
     deps = artifacts(:javax_annotation,
+                     :jspecify,
                      :jsinterop_annotations,
                      :jsinterop_base,
                      :jetbrains_annotations,
