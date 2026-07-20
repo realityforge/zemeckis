@@ -1,6 +1,8 @@
 # Change Log
 
-### Unreleased
+### [v0.15](https://github.com/realityforge/zemeckis/tree/v0.15) (2026-07-20) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.14...v0.15)
+
+Changes in this release:
 
 * Remove the legacy Buildr, Ruby, Rake, Travis, API-diff, and site-publishing infrastructure.
 * Add a GitHub Actions CI gate for the Bazel build.
