@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Remove the legacy Buildr, Ruby, Rake, Travis, API-diff, and site-publishing infrastructure.
 * Add a GitHub Actions CI gate for the Bazel build.
 * Validate core and example modules with the GWT 2.13.1 compiler.
 * Validate Zemeckis with the latest J2CL compiler and linker.

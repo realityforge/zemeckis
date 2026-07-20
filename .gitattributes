@@ -5,14 +5,10 @@
 *.js text
 *.json text
 *.md text
-*.rake text
-*.rb text
 *.xml text
 *.yaml text
 *.yml text
+.bazelversion text
 .gitattributes text
 .gitignore text
-.ruby-version text
-Gemfile text
 LICENSE text
-buildfile text
