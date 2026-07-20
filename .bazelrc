@@ -2,6 +2,9 @@
 common --tool_java_language_version=25
 common --tool_java_runtime_version=remotejdk_25
 
+# Avoid compiling protoc from source during cold builds.
+common --@protobuf//bazel/toolchains:prefer_prebuilt_protoc=true
+
 build --nojava_header_compilation
 build --experimental_strict_java_deps=error
 test --explicit_java_test_deps
