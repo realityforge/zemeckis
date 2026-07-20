@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Validate core and example modules with the GWT 2.13.1 compiler.
 * Validate Zemeckis with the latest J2CL compiler and linker.
 * Add Bazel-based Maven Central release packaging and lifecycle tooling.
 * Add a shared Bazel project view and a Bazel-backed diagnostic fixture updater.

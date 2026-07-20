@@ -54,6 +54,13 @@ use_repo(j2cl_maven, "maven")
 _http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 _http_file(
+    name = "colt",
+    downloaded_file_path = "colt/colt/1.2.0/colt-1.2.0.jar",
+    sha256 = "e1fcbfbdd0d0caedadfb59febace5a62812db3b9425f3a03ef4c4cbba3ed0ee3",
+    urls = ["https://repo.maven.apache.org/maven2/colt/colt/1.2.0/colt-1.2.0.jar"],
+)
+
+_http_file(
     name = "jcommander",
     downloaded_file_path = "com/beust/jcommander/1.64/jcommander-1.64.jar",
     sha256 = "156be736199c990321d9ff77090b199629cfc9865e2d6c13f7cd291bb1641817",
@@ -65,6 +72,13 @@ _http_file(
     downloaded_file_path = "com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
     sha256 = "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
     urls = ["https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"],
+)
+
+_http_file(
+    name = "gson",
+    downloaded_file_path = "com/google/code/gson/gson/2.11.0/gson-2.11.0.jar",
+    sha256 = "57928d6e5a6edeb2abd3770a8f95ba44dce45f3b23b7a9dc2b309c581552a78b",
+    urls = ["https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.11.0/gson-2.11.0.jar"],
 )
 
 _http_file(
@@ -117,6 +131,13 @@ _http_file(
 )
 
 _http_file(
+    name = "icu4j",
+    downloaded_file_path = "com/ibm/icu/icu4j/71.1/icu4j-71.1.jar",
+    sha256 = "91c4f8ebf0ceb489547098fe9d5c09a65eb419caea6ed714867f5280800bcf1a",
+    urls = ["https://repo.maven.apache.org/maven2/com/ibm/icu/icu4j/71.1/icu4j-71.1.jar"],
+)
+
+_http_file(
     name = "nullaway",
     downloaded_file_path = "com/uber/nullaway/nullaway/0.13.7/nullaway-0.13.7.jar",
     sha256 = "6bcb696ddcfa0f7cc12b90face8e7af041063f278cd9f3f07de2c53262e24d68",
@@ -124,10 +145,31 @@ _http_file(
 )
 
 _http_file(
+    name = "commons_collections",
+    downloaded_file_path = "commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar",
+    sha256 = "eeeae917917144a68a741d4c0dff66aa5c5c5fd85593ff217bced3fc8ca783b8",
+    urls = ["https://repo.maven.apache.org/maven2/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar"],
+)
+
+_http_file(
+    name = "commons_io",
+    downloaded_file_path = "commons-io/commons-io/2.4/commons-io-2.4.jar",
+    sha256 = "cc6a41dc3eaacc9e440a6bd0d2890b20d36b4ee408fe2d67122f328bb6e01581",
+    urls = ["https://repo.maven.apache.org/maven2/commons-io/commons-io/2.4/commons-io-2.4.jar"],
+)
+
+_http_file(
     name = "jdepend",
     downloaded_file_path = "guru/nidi/jdepend/2.9.5/jdepend-2.9.5.jar",
     sha256 = "d84be387b62501eb9505cf2517500d76c20cf76f11feace1f3ef109773c6707a",
     urls = ["https://repo.maven.apache.org/maven2/guru/nidi/jdepend/2.9.5/jdepend-2.9.5.jar"],
+)
+
+_http_file(
+    name = "javax_annotation_api",
+    downloaded_file_path = "javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar",
+    sha256 = "5909b396ca3a2be10d0eea32c74ef78d816e1b4ead21de1d78de1f890d033e04",
+    urls = ["https://repo.maven.apache.org/maven2/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar"],
 )
 
 _http_file(
@@ -187,6 +229,111 @@ _http_file(
 )
 
 _http_file(
+    name = "ecj",
+    downloaded_file_path = "org/eclipse/jdt/ecj/3.33.0/ecj-3.33.0.jar",
+    sha256 = "f7686c4960cf70c2ebc5c500a73a8cfc04541b730c18f1c5c21329889b137f45",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jdt/ecj/3.33.0/ecj-3.33.0.jar"],
+)
+
+_http_file(
+    name = "org_eclipse_jdt_core",
+    downloaded_file_path = "org/eclipse/jdt/org.eclipse.jdt.core/3.33.0/org.eclipse.jdt.core-3.33.0.jar",
+    sha256 = "c03cbbf5ab447d954efb8268a58dd9f2fe70f9e5d9be0a8371f79d785357eba3",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jdt/org.eclipse.jdt.core/3.33.0/org.eclipse.jdt.core-3.33.0.jar"],
+)
+
+_http_file(
+    name = "jetty_annotations",
+    downloaded_file_path = "org/eclipse/jetty/jetty-annotations/9.4.58.v20250814/jetty-annotations-9.4.58.v20250814.jar",
+    sha256 = "3fb094784c6ac6305ada43977f11c547c47fa5c4d8e321908d60ca645c0d6943",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-annotations/9.4.58.v20250814/jetty-annotations-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_continuation",
+    downloaded_file_path = "org/eclipse/jetty/jetty-continuation/9.4.58.v20250814/jetty-continuation-9.4.58.v20250814.jar",
+    sha256 = "9583e70d6a8ea8773589da6bed1a069ca16a4834289afcbb8a4199358262a083",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-continuation/9.4.58.v20250814/jetty-continuation-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_http",
+    downloaded_file_path = "org/eclipse/jetty/jetty-http/9.4.58.v20250814/jetty-http-9.4.58.v20250814.jar",
+    sha256 = "8f49b8583fc8dbbfe3a0ba80a04c97df64ebabca2981b56ee403c989aba9d4da",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-http/9.4.58.v20250814/jetty-http-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_io",
+    downloaded_file_path = "org/eclipse/jetty/jetty-io/9.4.58.v20250814/jetty-io-9.4.58.v20250814.jar",
+    sha256 = "f55b2cc7c05244fd7b1773e99979b740002b0186e45b8a688243d89c7006fe21",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-io/9.4.58.v20250814/jetty-io-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_jndi",
+    downloaded_file_path = "org/eclipse/jetty/jetty-jndi/9.4.58.v20250814/jetty-jndi-9.4.58.v20250814.jar",
+    sha256 = "78b9ad4290841ade1d9f98ca46ce72ea1a0f4062f6bb8825989021c4bc56f91c",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-jndi/9.4.58.v20250814/jetty-jndi-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_plus",
+    downloaded_file_path = "org/eclipse/jetty/jetty-plus/9.4.58.v20250814/jetty-plus-9.4.58.v20250814.jar",
+    sha256 = "726fcc1d0591545f55390df270537f87a7e0445beec094c207385b7edbd0a46d",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-plus/9.4.58.v20250814/jetty-plus-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_security",
+    downloaded_file_path = "org/eclipse/jetty/jetty-security/9.4.58.v20250814/jetty-security-9.4.58.v20250814.jar",
+    sha256 = "301548ebf008551a3a4312b04df0ea0468acc2780f863b83cc9cf0d668e62252",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-security/9.4.58.v20250814/jetty-security-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_server",
+    downloaded_file_path = "org/eclipse/jetty/jetty-server/9.4.58.v20250814/jetty-server-9.4.58.v20250814.jar",
+    sha256 = "608dbd3e1c4184374f02c70704e5d1c9daaded45e6a31d07824f40dac6083ba9",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-server/9.4.58.v20250814/jetty-server-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_servlet",
+    downloaded_file_path = "org/eclipse/jetty/jetty-servlet/9.4.58.v20250814/jetty-servlet-9.4.58.v20250814.jar",
+    sha256 = "1c6bb17326147e642c8a41e4657b32bca5057c8958db4da770d09c0904aefcff",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-servlet/9.4.58.v20250814/jetty-servlet-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_servlets",
+    downloaded_file_path = "org/eclipse/jetty/jetty-servlets/9.4.58.v20250814/jetty-servlets-9.4.58.v20250814.jar",
+    sha256 = "263a678be14b56765bcf6722d63cf2eb93eb6a8b10a7e44b00e669f2ce9dedcb",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-servlets/9.4.58.v20250814/jetty-servlets-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_util",
+    downloaded_file_path = "org/eclipse/jetty/jetty-util/9.4.58.v20250814/jetty-util-9.4.58.v20250814.jar",
+    sha256 = "8d591679d318d20c8fb2b1e83900562b3c4571ff7a189696be700293e0204146",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-util/9.4.58.v20250814/jetty-util-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_webapp",
+    downloaded_file_path = "org/eclipse/jetty/jetty-webapp/9.4.58.v20250814/jetty-webapp-9.4.58.v20250814.jar",
+    sha256 = "3f58ac238deb2218140ffa446661c1d1323752bc4b4ae01653d9500c3fca38aa",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-webapp/9.4.58.v20250814/jetty-webapp-9.4.58.v20250814.jar"],
+)
+
+_http_file(
+    name = "jetty_xml",
+    downloaded_file_path = "org/eclipse/jetty/jetty-xml/9.4.58.v20250814/jetty-xml-9.4.58.v20250814.jar",
+    sha256 = "2fc7f7364ec009fe2bbae574554994cef16c4230de170bd6be51ecd6f6bb95d3",
+    urls = ["https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-xml/9.4.58.v20250814/jetty-xml-9.4.58.v20250814.jar"],
+)
+
+_http_file(
     name = "javax_json",
     downloaded_file_path = "org/glassfish/javax.json/1.1/javax.json-1.1.jar",
     sha256 = "4b1f21bc50b728aaae5f44ff550383182b58b67647362959e31004e4522ee24f",
@@ -194,10 +341,31 @@ _http_file(
 )
 
 _http_file(
+    name = "gwt_dev",
+    downloaded_file_path = "org/gwtproject/gwt-dev/2.13.1/gwt-dev-2.13.1.jar",
+    sha256 = "dff73e57bdaa9b43fa7306cb967c903754db8920c2fcc3a7cae4c9987ab495e0",
+    urls = ["https://repo.maven.apache.org/maven2/org/gwtproject/gwt-dev/2.13.1/gwt-dev-2.13.1.jar"],
+)
+
+_http_file(
+    name = "gwt_dev__sources",
+    downloaded_file_path = "org/gwtproject/gwt-dev/2.13.1/gwt-dev-2.13.1-sources.jar",
+    sha256 = "32bc664c88363383844bf17dab8edd7f12ef51d6b51c64590d86dde07c8936a0",
+    urls = ["https://repo.maven.apache.org/maven2/org/gwtproject/gwt-dev/2.13.1/gwt-dev-2.13.1-sources.jar"],
+)
+
+_http_file(
     name = "gwt_user",
     downloaded_file_path = "org/gwtproject/gwt-user/2.13.1/gwt-user-2.13.1.jar",
     sha256 = "35109b8c4eb2a72809b45c496e6b508c5d0e7229e8737ae7211b2097470cead4",
     urls = ["https://repo.maven.apache.org/maven2/org/gwtproject/gwt-user/2.13.1/gwt-user-2.13.1.jar"],
+)
+
+_http_file(
+    name = "gwt_user__sources",
+    downloaded_file_path = "org/gwtproject/gwt-user/2.13.1/gwt-user-2.13.1-sources.jar",
+    sha256 = "17ef447fcd2fa4a7659246a2474e47e5584c77524c8ee8f13698c83fb0c7e453",
+    urls = ["https://repo.maven.apache.org/maven2/org/gwtproject/gwt-user/2.13.1/gwt-user-2.13.1-sources.jar"],
 )
 
 _http_file(
@@ -212,6 +380,41 @@ _http_file(
     downloaded_file_path = "org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar",
     sha256 = "1fad6e6be7557781e4d33729d49ae1cdc8fdda6fe477bb0cc68ce351eafdfbab",
     urls = ["https://repo.maven.apache.org/maven2/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar"],
+)
+
+_http_file(
+    name = "asm",
+    downloaded_file_path = "org/ow2/asm/asm/9.7.1/asm-9.7.1.jar",
+    sha256 = "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281",
+    urls = ["https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar"],
+)
+
+_http_file(
+    name = "asm_analysis",
+    downloaded_file_path = "org/ow2/asm/asm-analysis/9.7.1/asm-analysis-9.7.1.jar",
+    sha256 = "85b29371884ba31bb76edf22323c2c24e172c3267a67152eba3d1ccc2e041ef2",
+    urls = ["https://repo.maven.apache.org/maven2/org/ow2/asm/asm-analysis/9.7.1/asm-analysis-9.7.1.jar"],
+)
+
+_http_file(
+    name = "asm_commons",
+    downloaded_file_path = "org/ow2/asm/asm-commons/9.7.1/asm-commons-9.7.1.jar",
+    sha256 = "9a579b54d292ad9be171d4313fd4739c635592c2b5ac3a459bbd1049cddec6a0",
+    urls = ["https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.7.1/asm-commons-9.7.1.jar"],
+)
+
+_http_file(
+    name = "asm_tree",
+    downloaded_file_path = "org/ow2/asm/asm-tree/9.7.1/asm-tree-9.7.1.jar",
+    sha256 = "9929881f59eb6b840e86d54570c77b59ce721d104e6dfd7a40978991c2d3b41f",
+    urls = ["https://repo.maven.apache.org/maven2/org/ow2/asm/asm-tree/9.7.1/asm-tree-9.7.1.jar"],
+)
+
+_http_file(
+    name = "asm_util",
+    downloaded_file_path = "org/ow2/asm/asm-util/9.7.1/asm-util-9.7.1.jar",
+    sha256 = "f885be71b5c90556f5f1ad1c4f9276b29b96057c497d46666fe4ddbec3cb43c6",
+    urls = ["https://repo.maven.apache.org/maven2/org/ow2/asm/asm-util/9.7.1/asm-util-9.7.1.jar"],
 )
 
 _http_file(
@@ -310,6 +513,13 @@ _http_file(
     downloaded_file_path = "org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar",
     sha256 = "5666b36f9db46f06dd5a19d73bbff3b588d5969c0f4b8848fde0f5ec849430a5",
     urls = ["https://repo.maven.apache.org/maven2/org/yaml/snakeyaml/1.17/snakeyaml-1.17.jar"],
+)
+
+_http_file(
+    name = "tapestry",
+    downloaded_file_path = "tapestry/tapestry/4.0.2/tapestry-4.0.2.jar",
+    sha256 = "16dfc5b6b322bb0734b80e89d77fbeb987c809002fe59d52d9707a035949b107",
+    urls = ["https://repo.maven.apache.org/maven2/tapestry/tapestry/4.0.2/tapestry-4.0.2.jar"],
 )
 
 # --- depgen-generated repository rules end ---

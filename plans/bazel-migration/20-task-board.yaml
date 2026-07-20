@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T12
+current_focus: T13
 
 tasks:
   - id: T01
@@ -337,10 +337,13 @@ tasks:
         result: pass; dependency generation, formatting, all 113 targets, the J2CL link, and all 7 tests passed
       - command: bundle exec buildr test
         result: pass; both retained GWT module compiles and all 51 tests passed after modernizing zemeckis.js
+    commit:
+      hash: 5e75925
+      message: "test(j2cl): validate latest J2CL link"
 
   - id: T12
     title: Add GWT compiler validation
-    status: pending
+    status: completed
     priority: high
     depends_on: [T11]
     acceptance_criteria:
@@ -348,14 +351,25 @@ tasks:
       - Basic, pulse-task, and repeating-task examples compile with the real GWT compiler
       - tools/check.sh builds all five outputs
     files_touched:
+      - CHANGELOG.md
+      - MODULE.bazel
       - tools/gwt/**
-      - core/**/BUILD.bazel
-      - examples/**/BUILD.bazel
+      - core/src/test/gwt/BUILD.bazel
+      - core/src/test/java/zemeckis/gwt/**
       - third_party/java/**
       - tools/check.sh
     validation:
       - bazel build all core and example GWT asset targets
       - tools/check.sh
+    evidence:
+      - command: bazel build all five core and example GWT asset targets
+        result: pass; GWT 2.13.1 compiled Zemeckis, ZemeckisDev, basic, pulse-task, and repeating-task modules
+      - command: unzip -l on all five GWT output archives
+        result: pass; every archive contains cache, nocache, devmode, and symbol-map assets; example archives also contain index.html
+      - command: tools/check.sh
+        result: pass; dependency generation, formatting, all 147 targets, J2CL, all five GWT outputs, and all 7 tests passed
+      - command: bundle exec buildr test
+        result: pass; both retained Buildr GWT module compiles and all 51 tests passed
 
   - id: T13
     title: Add GitHub Actions validation
@@ -442,3 +456,7 @@ history:
     task: T10
     commit: cf066e2
     note: Added verified Maven Central artifacts, signed bundle construction, and local release lifecycle tooling.
+  - timestamp: "2026-07-20"
+    task: T11
+    commit: 5e75925
+    note: Pinned current J2CL and jsinterop-base revisions and added an optimized Akasha-backed link smoke.

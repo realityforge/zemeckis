@@ -13,11 +13,15 @@ _java_plugin(
 # DO NOT EDIT: Content is auto-generated from //third_party/java:dependencies.yml by https://github.com/realityforge/bazel-depgen version 0.29
 
 # SHA256 of the configuration content that generated this content
-_CONFIG_SHA256 = "4D965B86494DED884C411713B2733DD2FA18079DB487F12A8F1E88CA3A22F64A"
+_CONFIG_SHA256 = "9D876966A708F55C3A155D830F9BA086AA13A2A56BBFF20D3400FB37DEE1CDF4"
 
 exports_files(["dependencies.yml"])
 
 # Dependency Graph Generated from the input data
+# +- colt:colt:jar:1.2.0 [compile]
+# +- com.google.code.gson:gson:jar:2.11.0 [compile]
+# +- com.ibm.icu:icu4j:jar:71.1 [compile]
+# +- com.google.code.findbugs:jsr305:jar:3.0.2 [compile]
 # +- com.uber.nullaway:nullaway:jar:0.13.7 [compile]
 # |  +- org.jspecify:jspecify:jar:1.0.0 [compile] TARGET OVERRIDES :jspecify-j2cl (J2cl)
 # |  +- org.checkerframework:dataflow-nullaway:jar:4.0.0 [runtime]
@@ -32,15 +36,37 @@ exports_files(["dependencies.yml"])
 # +- com.google.jsinterop:base:jar:1.0.0 [compile] TARGET OVERRIDES @jsinterop_base//:jsinterop-base-j2cl (J2cl)
 # |  \- com.google.jsinterop:jsinterop-annotations:jar:1.0.2 [compile] (conflicts with 2.0.0) TARGET OVERRIDES :jsinterop_annotations-j2cl (J2cl)
 # +- com.google.jsinterop:jsinterop-annotations:jar:2.0.0 [compile] TARGET OVERRIDES :jsinterop_annotations-j2cl (J2cl)
+# +- commons-collections:commons-collections:jar:3.2.2 [compile]
+# +- commons-io:commons-io:jar:2.4 [compile]
 # +- guru.nidi:jdepend:jar:2.9.5 [compile]
 # |  \- org.hamcrest:hamcrest-core:jar:1.3 [compile, optional]
+# +- javax.annotation:javax.annotation-api:jar:1.2 [compile]
+# +- javax.servlet:javax.servlet-api:jar:3.1.0 [compile]
+# +- javax.validation:validation-api:jar:1.0.0.GA [compile]
+# +- org.apache.ant:ant:jar:1.9.7 [compile]
+# +- org.eclipse.jdt:ecj:jar:3.33.0 [compile]
+# +- org.eclipse.jdt:org.eclipse.jdt.core:jar:3.33.0 [compile]
+# +- org.eclipse.jetty:jetty-annotations:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-continuation:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-http:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-io:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-jndi:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-plus:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-security:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-server:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-servlet:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-servlets:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-util:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-webapp:jar:9.4.58.v20250814 [compile]
+# +- org.eclipse.jetty:jetty-xml:jar:9.4.58.v20250814 [compile]
+# +- org.gwtproject:gwt-dev:jar:2.13.1 [compile]
 # +- org.gwtproject:gwt-user:jar:2.13.1 [compile]
-# |  +- com.google.jsinterop:jsinterop-annotations:jar:2.0.0 [compile] TARGET OVERRIDES :jsinterop_annotations-j2cl (J2cl)
-# |  +- javax.validation:validation-api:jar:1.0.0.GA [compile]
-# |  +- javax.validation:validation-api:jar:sources:1.0.0.GA [compile]
-# |  +- javax.servlet:javax.servlet-api:jar:3.1.0 [compile]
-# |  \- org.w3c.css:sac:jar:1.3 [compile]
 # +- org.jspecify:jspecify:jar:1.0.0 [compile] TARGET OVERRIDES :jspecify-j2cl (J2cl)
+# +- org.ow2.asm:asm:jar:9.7.1 [compile]
+# +- org.ow2.asm:asm-analysis:jar:9.7.1 [compile]
+# +- org.ow2.asm:asm-commons:jar:9.7.1 [compile]
+# +- org.ow2.asm:asm-tree:jar:9.7.1 [compile]
+# +- org.ow2.asm:asm-util:jar:9.7.1 [compile]
 # +- org.realityforge.akasha:akasha-j2cl:jar:0.34 [compile]
 # |  +- org.realityforge.javax.annotation:javax.annotation:jar:1.1.1 [compile] TARGET OVERRIDES :javax_annotation-j2cl (J2cl)
 # |  +- org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:jar:1.7.0 [compile] TARGET OVERRIDES :org_jetbrains_annotations-j2cl (J2cl)
@@ -69,12 +95,14 @@ exports_files(["dependencies.yml"])
 # +- org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:jar:1.7.0 [compile] TARGET OVERRIDES :org_jetbrains_annotations-j2cl (J2cl)
 # +- org.glassfish:javax.json:jar:1.1 [compile]
 # |  \- javax.json:javax.json-api:jar:1.1 [compile, optional]
-# \- org.testng:testng:jar:6.11 [compile]
-#    +- com.beust:jcommander:jar:1.64 [compile]
-#    +- org.yaml:snakeyaml:jar:1.17 [compile]
-#    +- junit:junit:jar:4.12 [compile, optional]
-#    +- org.apache.ant:ant:jar:1.9.7 [compile, optional]
-#    \- org.apache-extras.beanshell:bsh:jar:2.0b6 [compile, optional]
+# +- org.testng:testng:jar:6.11 [compile]
+# |  +- com.beust:jcommander:jar:1.64 [compile]
+# |  +- org.yaml:snakeyaml:jar:1.17 [compile]
+# |  +- junit:junit:jar:4.12 [compile, optional]
+# |  +- org.apache.ant:ant:jar:1.9.7 [compile, optional]
+# |  \- org.apache-extras.beanshell:bsh:jar:2.0b6 [compile, optional]
+# +- org.w3c.css:sac:jar:1.3 [compile]
+# \- tapestry:tapestry:jar:4.0.2 [compile]
 
 _java_test(
     name = "verify_config_sha256",
@@ -116,6 +144,12 @@ _java_binary(
 )
 
 _java_import(
+    name = "colt",
+    jars = ["@colt//file"],
+    tags = ["maven_coordinates=colt:colt:1.2.0"],
+)
+
+_java_import(
     name = "jcommander",
     jars = ["@jcommander//file"],
     tags = ["maven_coordinates=com.beust:jcommander:1.64"],
@@ -126,7 +160,12 @@ _java_import(
     name = "jsr305",
     jars = ["@jsr305//file"],
     tags = ["maven_coordinates=com.google.code.findbugs:jsr305:3.0.2"],
-    visibility = ["//visibility:private"],
+)
+
+_java_import(
+    name = "gson",
+    jars = ["@gson//file"],
+    tags = ["maven_coordinates=com.google.code.gson:gson:2.11.0"],
 )
 
 _java_import(
@@ -186,6 +225,12 @@ _java_import(
 )
 
 _java_import(
+    name = "icu4j",
+    jars = ["@icu4j//file"],
+    tags = ["maven_coordinates=com.ibm.icu:icu4j:71.1"],
+)
+
+_java_import(
     name = "nullaway",
     jars = ["@nullaway//file"],
     tags = ["maven_coordinates=com.uber.nullaway:nullaway:0.13.7"],
@@ -197,9 +242,27 @@ _java_import(
 )
 
 _java_import(
+    name = "commons_collections",
+    jars = ["@commons_collections//file"],
+    tags = ["maven_coordinates=commons-collections:commons-collections:3.2.2"],
+)
+
+_java_import(
+    name = "commons_io",
+    jars = ["@commons_io//file"],
+    tags = ["maven_coordinates=commons-io:commons-io:2.4"],
+)
+
+_java_import(
     name = "jdepend",
     jars = ["@jdepend//file"],
     tags = ["maven_coordinates=guru.nidi:jdepend:2.9.5"],
+)
+
+_java_import(
+    name = "javax_annotation_api",
+    jars = ["@javax_annotation_api//file"],
+    tags = ["maven_coordinates=javax.annotation:javax.annotation-api:1.2"],
 )
 
 _java_import(
@@ -213,14 +276,12 @@ _java_import(
     name = "javax_servlet_api",
     jars = ["@javax_servlet_api//file"],
     tags = ["maven_coordinates=javax.servlet:javax.servlet-api:3.1.0"],
-    visibility = ["//visibility:private"],
 )
 
 _java_import(
     name = "validation_api",
     jars = ["@validation_api//file"],
     tags = ["maven_coordinates=javax.validation:validation-api:1.0.0.GA"],
-    visibility = ["//visibility:private"],
 )
 
 _java_import(
@@ -241,7 +302,6 @@ _java_import(
     name = "ant",
     jars = ["@ant//file"],
     tags = ["maven_coordinates=org.apache.ant:ant:1.9.7"],
-    visibility = ["//visibility:private"],
 )
 
 _java_import(
@@ -260,21 +320,113 @@ _java_import(
 )
 
 _java_import(
+    name = "ecj",
+    jars = ["@ecj//file"],
+    tags = ["maven_coordinates=org.eclipse.jdt:ecj:3.33.0"],
+)
+
+_java_import(
+    name = "org_eclipse_jdt_core",
+    jars = ["@org_eclipse_jdt_core//file"],
+    tags = ["maven_coordinates=org.eclipse.jdt:org.eclipse.jdt.core:3.33.0"],
+)
+
+_java_import(
+    name = "jetty_annotations",
+    jars = ["@jetty_annotations//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-annotations:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_continuation",
+    jars = ["@jetty_continuation//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-continuation:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_http",
+    jars = ["@jetty_http//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-http:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_io",
+    jars = ["@jetty_io//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-io:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_jndi",
+    jars = ["@jetty_jndi//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-jndi:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_plus",
+    jars = ["@jetty_plus//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-plus:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_security",
+    jars = ["@jetty_security//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-security:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_server",
+    jars = ["@jetty_server//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-server:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_servlet",
+    jars = ["@jetty_servlet//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-servlet:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_servlets",
+    jars = ["@jetty_servlets//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-servlets:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_util",
+    jars = ["@jetty_util//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-util:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_webapp",
+    jars = ["@jetty_webapp//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-webapp:9.4.58.v20250814"],
+)
+
+_java_import(
+    name = "jetty_xml",
+    jars = ["@jetty_xml//file"],
+    tags = ["maven_coordinates=org.eclipse.jetty:jetty-xml:9.4.58.v20250814"],
+)
+
+_java_import(
     name = "javax_json",
     jars = ["@javax_json//file"],
     tags = ["maven_coordinates=org.glassfish:javax.json:1.1"],
 )
 
 _java_import(
+    name = "gwt_dev",
+    jars = ["@gwt_dev//file"],
+    srcjar = "@gwt_dev__sources//file",
+    tags = ["maven_coordinates=org.gwtproject:gwt-dev:2.13.1"],
+)
+
+_java_import(
     name = "gwt_user",
     jars = ["@gwt_user//file"],
+    srcjar = "@gwt_user__sources//file",
     tags = ["maven_coordinates=org.gwtproject:gwt-user:2.13.1"],
-    deps = [
-        ":javax_servlet_api",
-        ":jsinterop_annotations",
-        ":sac",
-        ":validation_api",
-    ],
 )
 
 _java_import(
@@ -288,6 +440,36 @@ _java_import(
     name = "jspecify",
     jars = ["@jspecify//file"],
     tags = ["maven_coordinates=org.jspecify:jspecify:1.0.0"],
+)
+
+_java_import(
+    name = "asm",
+    jars = ["@asm//file"],
+    tags = ["maven_coordinates=org.ow2.asm:asm:9.7.1"],
+)
+
+_java_import(
+    name = "asm_analysis",
+    jars = ["@asm_analysis//file"],
+    tags = ["maven_coordinates=org.ow2.asm:asm-analysis:9.7.1"],
+)
+
+_java_import(
+    name = "asm_commons",
+    jars = ["@asm_commons//file"],
+    tags = ["maven_coordinates=org.ow2.asm:asm-commons:9.7.1"],
+)
+
+_java_import(
+    name = "asm_tree",
+    jars = ["@asm_tree//file"],
+    tags = ["maven_coordinates=org.ow2.asm:asm-tree:9.7.1"],
+)
+
+_java_import(
+    name = "asm_util",
+    jars = ["@asm_util//file"],
+    tags = ["maven_coordinates=org.ow2.asm:asm-util:9.7.1"],
 )
 
 _java_import(
@@ -423,7 +605,6 @@ _java_import(
     name = "sac",
     jars = ["@sac//file"],
     tags = ["maven_coordinates=org.w3c.css:sac:1.3"],
-    visibility = ["//visibility:private"],
 )
 
 _java_import(
@@ -431,6 +612,12 @@ _java_import(
     jars = ["@snakeyaml//file"],
     tags = ["maven_coordinates=org.yaml:snakeyaml:1.17"],
     visibility = ["//visibility:private"],
+)
+
+_java_import(
+    name = "tapestry",
+    jars = ["@tapestry//file"],
+    tags = ["maven_coordinates=tapestry:tapestry:4.0.2"],
 )
 
 # --- depgen-generated targets end ---
