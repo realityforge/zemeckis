@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Enable strict Error Prone checks in the Bazel build.
 * Update the `org.realityforge.braincheck` artifacts to version `1.35.0`.
 * Update the `org.realityforge.akasha` artifact to version `0.34`.
 * Update GWT to version `2.13.1`.

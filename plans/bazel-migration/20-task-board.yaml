@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T05
+current_focus: T06
 
 tasks:
   - id: T01
@@ -122,10 +122,13 @@ tasks:
         result: pass; both retained GWT module compiles and all 51 tests passed
       - command: bundle exec buildr test before GWT-compatible Varifier suppressions
         result: failed as expected; GWT rejected local-variable var in reachable sources, establishing the need for narrow suppressions
+    commit:
+      hash: 12498a6
+      message: "fix(java): satisfy strict Error Prone checks"
 
   - id: T05
     title: Enable strict Error Prone tooling
-    status: in_progress
+    status: completed
     priority: high
     depends_on: [T04]
     acceptance_criteria:
@@ -138,10 +141,15 @@ tasks:
       - CHANGELOG.md
     validation:
       - tools/check.sh
+    evidence:
+      - command: tools/check.sh
+        result: pass; strict Error Prone compiled 39 Bazel targets and all 3 Bazel tests passed
+      - command: inspect rules.bzl against Braincheck commit 4451a6e
+        result: pass; strict pre-NullAway policy matches Braincheck
 
   - id: T06
     title: Migrate to JSpecify and NullAway
-    status: pending
+    status: in_progress
     priority: high
     depends_on: [T05]
     acceptance_criteria:
@@ -333,3 +341,7 @@ history:
     task: T03
     commit: 98f5ba8
     note: Added the verified base Bazel build while retaining Buildr.
+  - timestamp: "2026-07-20"
+    task: T04
+    commit: 12498a6
+    note: Resolved strict Error Prone findings while preserving GWT compatibility.
