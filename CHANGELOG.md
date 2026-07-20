@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Validate Zemeckis with the latest J2CL compiler and linker.
 * Add Bazel-based Maven Central release packaging and lifecycle tooling.
 * Add a shared Bazel project view and a Bazel-backed diagnostic fixture updater.
 * Add Palantir Java Format to the Bazel validation gate.

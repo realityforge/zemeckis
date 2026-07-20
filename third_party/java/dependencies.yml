@@ -21,11 +21,48 @@ artifacts:
   - coord: org.jspecify:jspecify:1.0.0
     excludes:
       - '*:*'
+  - coord: org.realityforge.akasha:akasha-j2cl:0.34
+    includeSource: true
+    natures: [J2cl]
+    j2cl:
+      mode: Library
+      suppress: [accessControls, checkTypes, duplicate]
   - coord: org.realityforge.akasha:akasha-gwt:0.34
   - coord: org.realityforge.braincheck:braincheck-core:1.35.0
+    includeSource: true
+    natures: [Java, J2cl]
+    j2cl:
+      mode: Library
+      jspecifyMode: Enable
   - coord: org.realityforge.braincheck:braincheck-testng:1.35.0
   - coord: org.realityforge.grim:grim-annotations:0.09
   - coord: org.realityforge.grim:grim-processor:0.09
   - coord: org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:1.7.0
   - coord: org.glassfish:javax.json:1.1
   - coord: org.testng:testng:6.11
+
+replacements:
+  - coord: com.google.jsinterop:base
+    targets:
+      - target: "@jsinterop_base//:jsinterop-base-j2cl"
+        nature: J2cl
+  - coord: com.google.jsinterop:jsinterop-annotations
+    targets:
+      - target: ":jsinterop_annotations-j2cl"
+        nature: J2cl
+  - coord: org.jspecify:jspecify
+    targets:
+      - target: ":jspecify-j2cl"
+        nature: J2cl
+  - coord: org.realityforge.javaemul.internal.annotations:javaemul.internal.annotations
+    targets:
+      - target: ":javaemul_internal_annotations-j2cl"
+        nature: J2cl
+  - coord: org.realityforge.javax.annotation:javax.annotation
+    targets:
+      - target: ":javax_annotation-j2cl"
+        nature: J2cl
+  - coord: org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations
+    targets:
+      - target: ":org_jetbrains_annotations-j2cl"
+        nature: J2cl

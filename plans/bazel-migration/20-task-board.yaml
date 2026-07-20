@@ -11,7 +11,7 @@ meta:
     - completed
     - cancelled
 
-current_focus: T11
+current_focus: T12
 
 tasks:
   - id: T01
@@ -301,10 +301,13 @@ tasks:
         result: pass; all 86 targets and all 7 tests passed with release version 0.0
       - command: rg for TODO, site publishing, and Javadoc cleanup stages under tools/release
         result: pass; none of the excluded release stages are present
+    commit:
+      hash: cf066e2
+      message: "feat(release): add Maven Central packaging"
 
   - id: T11
     title: Add latest J2CL compile and link validation
-    status: pending
+    status: completed
     priority: high
     depends_on: [T10]
     acceptance_criteria:
@@ -315,11 +318,25 @@ tasks:
       - MODULE.bazel
       - MODULE.bazel.lock
       - third_party/bazel/**
+      - third_party/java/**
       - core/**/BUILD.bazel
+      - core/src/main/java/zemeckis/zemeckis.js
       - tools/check.sh
+      - tools/update_java_deps.sh
     validation:
       - bazel build //core/src/test/j2cl:zemeckis_j2cl_smoke
       - tools/check.sh
+    evidence:
+      - command: git ls-remote https://github.com/google/j2cl.git refs/heads/master
+        result: pass; observed and pinned 78d44e6e7c2c2517e654f63405a2bc61e2462c4c
+      - command: git ls-remote https://github.com/google/jsinterop-base.git refs/heads/master
+        result: pass; observed and pinned bbf8103ecdcbc7bb3c07c6c68227bf2bed131bcf
+      - command: bazel build //core/src/test/j2cl:zemeckis_j2cl_smoke
+        result: pass; optimized JavaScript and source map linked through Akasha 0.34
+      - command: tools/check.sh
+        result: pass; dependency generation, formatting, all 113 targets, the J2CL link, and all 7 tests passed
+      - command: bundle exec buildr test
+        result: pass; both retained GWT module compiles and all 51 tests passed after modernizing zemeckis.js
 
   - id: T12
     title: Add GWT compiler validation
@@ -421,3 +438,7 @@ history:
     task: T09
     commit: 0bcc600
     note: Added the shared IntelliJ Bazel project view and complete diagnostic fixture updater.
+  - timestamp: "2026-07-20"
+    task: T10
+    commit: cf066e2
+    note: Added verified Maven Central artifacts, signed bundle construction, and local release lifecycle tooling.
