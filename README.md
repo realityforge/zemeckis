@@ -16,7 +16,7 @@ Add Zemeckis to a Maven build with:
 <dependency>
   <groupId>org.realityforge.zemeckis</groupId>
   <artifactId>zemeckis-core</artifactId>
-  <version>0.16</version>
+  <version>0.17</version>
 </dependency>
 ```
 
