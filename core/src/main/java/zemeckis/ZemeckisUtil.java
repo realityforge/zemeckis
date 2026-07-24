@@ -56,7 +56,7 @@ final class ZemeckisUtil {
     }
 
     private static void addCausedByPrefix(final StringBuilder sb) {
-        if (0 != sb.length()) {
+        if (!sb.isEmpty()) {
             sb.append("\nCaused by: ");
         }
     }
