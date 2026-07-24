@@ -1,0 +1,28 @@
+diff --git a/java/io/bazel/rules/closure/BUILD b/java/io/bazel/rules/closure/BUILD
+--- a/java/io/bazel/rules/closure/BUILD
++++ b/java/io/bazel/rules/closure/BUILD
+@@ -15 +15,2 @@
+-load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_proto_library")
++load("@protobuf//bazel:java_proto_library.bzl", "java_proto_library")
++load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+diff --git a/java/io/bazel/rules/closure/webfiles/BUILD b/java/io/bazel/rules/closure/webfiles/BUILD
+--- a/java/io/bazel/rules/closure/webfiles/BUILD
++++ b/java/io/bazel/rules/closure/webfiles/BUILD
+@@ -15 +15,2 @@
+-load("@rules_java//java:defs.bzl", "java_library", "java_proto_library")
++load("@protobuf//bazel:java_proto_library.bzl", "java_proto_library")
++load("@rules_java//java:defs.bzl", "java_library")
+diff --git a/java/io/bazel/rules/closure/webfiles/server/BUILD b/java/io/bazel/rules/closure/webfiles/server/BUILD
+--- a/java/io/bazel/rules/closure/webfiles/server/BUILD
++++ b/java/io/bazel/rules/closure/webfiles/server/BUILD
+@@ -15 +15,2 @@
+-load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_proto_library")
++load("@protobuf//bazel:java_proto_library.bzl", "java_proto_library")
++load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+diff --git a/java/io/bazel/rules/closure/worker/BUILD b/java/io/bazel/rules/closure/worker/BUILD
+--- a/java/io/bazel/rules/closure/worker/BUILD
++++ b/java/io/bazel/rules/closure/worker/BUILD
+@@ -15 +15,2 @@
+-load("@rules_java//java:defs.bzl", "java_library", "java_proto_library")
++load("@protobuf//bazel:java_proto_library.bzl", "java_proto_library")
++load("@rules_java//java:defs.bzl", "java_library")
