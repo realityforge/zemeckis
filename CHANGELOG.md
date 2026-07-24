@@ -1,6 +1,8 @@
 # Change Log
 
-### Unreleased
+### [v0.16](https://github.com/realityforge/zemeckis/tree/v0.16) (2026-07-24) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.15...v0.16)
+
+Changes in this release:
 
 * Replace the JVM timer thread with a deterministic scheduler controlled through `ZemeckisTestUtil.pumpNext()` and
   `ZemeckisTestUtil.pumpAll()`.
