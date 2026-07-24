@@ -1,33 +1,31 @@
 package zemeckis.test;
 
-import static org.testng.Assert.*;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 import jdepend.framework.DependencyConstraint;
 import jdepend.framework.JDepend;
 import jdepend.framework.JavaPackage;
 import jdepend.framework.PackageFilter;
 import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class JDependTest {
     @Test
     public void dependencyAnalysis() throws Exception {
-        final JDepend jdepend = new JDepend(PackageFilter.all().excluding("java.*", "javax.*"));
+        final var jdepend = new JDepend(PackageFilter.all().excluding("java.*", "javax.*"));
         jdepend.addDirectory(compileTargetDir());
         jdepend.analyze();
 
-        final DependencyConstraint constraint = new DependencyConstraint();
+        final var constraint = new DependencyConstraint();
 
-        final JavaPackage zemeckis = constraint.addPackage("zemeckis");
-        final JavaPackage braincheck = constraint.addPackage("org.realityforge.braincheck");
-        final JavaPackage jsinterop = constraint.addPackage("jsinterop.annotations");
-        final JavaPackage jsinteropBase = constraint.addPackage("jsinterop.base");
-        final JavaPackage jspecify = constraint.addPackage("org.jspecify.annotations");
-        final JavaPackage akasha = constraint.addPackage("akasha");
-        final JavaPackage akashaPromise = constraint.addPackage("akasha.promise");
+        final var zemeckis = constraint.addPackage("zemeckis");
+        final var braincheck = constraint.addPackage("org.realityforge.braincheck");
+        final var jsinterop = constraint.addPackage("jsinterop.annotations");
+        final var jsinteropBase = constraint.addPackage("jsinterop.base");
+        final var jspecify = constraint.addPackage("org.jspecify.annotations");
+        final var akasha = constraint.addPackage("akasha");
+        final var akashaPromise = constraint.addPackage("akasha.promise");
 
         zemeckis.dependsUpon(jsinterop);
         zemeckis.dependsUpon(jsinteropBase);
@@ -36,23 +34,23 @@ public class JDependTest {
         zemeckis.dependsUpon(akasha);
         zemeckis.dependsUpon(akashaPromise);
 
-        final DependencyConstraint.MatchResult result = jdepend.analyzeDependencies(constraint);
+        final var result = jdepend.analyzeDependencies(constraint);
 
-        final List<JavaPackage> undefinedPackages = result.getUndefinedPackages();
+        final var undefinedPackages = result.getUndefinedPackages();
         if (!undefinedPackages.isEmpty()) {
             fail("Undefined Packages: "
                     + undefinedPackages.stream().map(Object::toString).collect(Collectors.joining(", ")));
         }
 
-        final List<JavaPackage[]> nonMatchingPackages = result.getNonMatchingPackages();
+        final var nonMatchingPackages = result.getNonMatchingPackages();
         if (!nonMatchingPackages.isEmpty()) {
-            final StringBuilder sb = new StringBuilder();
+            final var sb = new StringBuilder();
             sb.append("Discovered packages where relationships do not align.\n");
             for (final JavaPackage[] packages : nonMatchingPackages) {
-                final JavaPackage expected = packages[0];
-                final JavaPackage actual = packages[1];
+                final var expected = packages[0];
+                final var actual = packages[1];
 
-                final ArrayList<JavaPackage> oldAfferents = new ArrayList<>(expected.getAfferents());
+                final var oldAfferents = new ArrayList<>(expected.getAfferents());
                 oldAfferents.removeAll(actual.getAfferents());
 
                 oldAfferents.forEach(p -> sb.append("Package ")
@@ -61,7 +59,7 @@ public class JDependTest {
                         .append(expected.getName())
                         .append("\n"));
 
-                final ArrayList<JavaPackage> newAfferents = new ArrayList<>(actual.getAfferents());
+                final var newAfferents = new ArrayList<>(actual.getAfferents());
                 newAfferents.removeAll(expected.getAfferents());
 
                 newAfferents.forEach(p -> sb.append("Package ")
@@ -70,7 +68,7 @@ public class JDependTest {
                         .append(expected.getName())
                         .append("\n"));
 
-                final ArrayList<JavaPackage> oldEfferents = new ArrayList<>(expected.getEfferents());
+                final var oldEfferents = new ArrayList<>(expected.getEfferents());
                 oldEfferents.removeAll(actual.getEfferents());
 
                 oldEfferents.forEach(p -> sb.append("Package ")
@@ -79,7 +77,7 @@ public class JDependTest {
                         .append(p.getName())
                         .append("\n"));
 
-                final ArrayList<JavaPackage> newEfferents = new ArrayList<>(actual.getEfferents());
+                final var newEfferents = new ArrayList<>(actual.getEfferents());
                 newEfferents.removeAll(expected.getEfferents());
 
                 newEfferents.forEach(p -> sb.append("Package ")
@@ -93,7 +91,7 @@ public class JDependTest {
     }
 
     private String compileTargetDir() {
-        final String fixtureDir = System.getProperty("zemeckis.core.compile_target");
+        final var fixtureDir = System.getProperty("zemeckis.core.compile_target");
         assertNotNull(
                 fixtureDir, "Expected System.getProperty( \"zemeckis.core.compile_target\" ) to return directory");
         return new File(fixtureDir).getAbsolutePath();

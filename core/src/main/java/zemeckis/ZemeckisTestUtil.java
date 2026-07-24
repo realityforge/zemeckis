@@ -7,6 +7,7 @@ import org.jspecify.annotations.Nullable;
 /**
  * Utility class for interacting with Zemeckis config settings in tests.
  */
+@SuppressWarnings("Varifier")
 @TestOnly
 public final class ZemeckisTestUtil {
     private ZemeckisTestUtil() {}

@@ -29,6 +29,7 @@ import org.jspecify.annotations.Nullable;
  * <code>int</code> value. The value may or may not have a direct relationship to wall-clock
  * time and the unit of the value is defined by the implementation.</p>
  */
+@SuppressWarnings("Varifier")
 final class TemporalScheduler {
     private static AbstractScheduler c_scheduler = createScheduler();
 

@@ -74,7 +74,7 @@ public abstract class AbstractTest {
 
     @SuppressWarnings("SameParameterValue")
     protected final String randomString(final int stringLength) {
-        final StringBuilder sb = new StringBuilder(stringLength);
+        final var sb = new StringBuilder(stringLength);
         for (int i = 0; i < stringLength; i++) {
             sb.append(CHARS.charAt(Math.abs(randomInt() % CHARS.length())));
         }
