@@ -3,6 +3,7 @@
 ### Unreleased
 
 * Ensure `ZemeckisTestUtil.resetConfig(...)` cancels delayed and periodic tasks and waits for in-flight tasks to finish.
+* Make `ZemeckisTestUtil` available to J2CL tests by removing its dependency on reflection.
 
 ### [v0.15](https://github.com/realityforge/zemeckis/tree/v0.15) (2026-07-20) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.14...v0.15)
 

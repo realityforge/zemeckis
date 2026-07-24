@@ -1,13 +1,11 @@
 package zemeckis;
 
-import java.lang.reflect.Field;
 import org.jetbrains.annotations.TestOnly;
 import org.jspecify.annotations.Nullable;
 
 /**
  * Utility class for interacting with Zemeckis config settings in tests.
  */
-@GwtIncompatible
 @TestOnly
 public final class ZemeckisTestUtil {
     private ZemeckisTestUtil() {}
@@ -84,85 +82,41 @@ public final class ZemeckisTestUtil {
      * Set `zemeckis.enable_names` setting to true.
      */
     public static void enableNames() {
-        setEnableNames(true);
+        ZemeckisConfig.setEnableNames(true);
     }
 
     /**
      * Set `zemeckis.enable_names` setting to false.
      */
     public static void disableNames() {
-        setEnableNames(false);
-    }
-
-    /**
-     * Configure the `zemeckis.enable_names` setting.
-     *
-     * @param value the setting.
-     */
-    private static void setEnableNames(final boolean value) {
-        setConstant("ENABLE_NAMES", value);
+        ZemeckisConfig.setEnableNames(false);
     }
 
     /**
      * Set `zemeckis.purge_tasks_when_runaway_detected` setting to true.
      */
     public static void purgeTasksWhenRunawayDetected() {
-        setPurgeTasksWhenRunawayDetected(true);
+        ZemeckisConfig.setPurgeOnRunaway(true);
     }
 
     /**
      * Set `zemeckis.purge_tasks_when_runaway_detected` setting to false.
      */
     public static void noPurgeTasksWhenRunawayDetected() {
-        setPurgeTasksWhenRunawayDetected(false);
-    }
-
-    /**
-     * Configure the `zemeckis.purge_tasks_when_runaway_detected` setting.
-     *
-     * @param value the setting.
-     */
-    private static void setPurgeTasksWhenRunawayDetected(final boolean value) {
-        setConstant("PURGE_ON_RUNAWAY", value);
+        ZemeckisConfig.setPurgeOnRunaway(false);
     }
 
     /**
      * Set `zemeckis.enable_uncaught_error_handlers` setting to true.
      */
     public static void enableUncaughtErrorHandlers() {
-        setEnableUncaughtErrorHandlers(true);
+        ZemeckisConfig.setEnableUncaughtErrorHandlers(true);
     }
 
     /**
      * Set `zemeckis.enable_uncaught_error_handlers` setting to false.
      */
     public static void disableUncaughtErrorHandlers() {
-        setEnableUncaughtErrorHandlers(false);
-    }
-
-    /**
-     * Configure the `zemeckis.enable_uncaught_error_handlers` setting.
-     *
-     * @param value the setting.
-     */
-    private static void setEnableUncaughtErrorHandlers(final boolean value) {
-        setConstant("UNCAUGHT_ERROR_HANDLERS", value);
-    }
-
-    /**
-     * Set the specified field name on ZemeckisConfig.
-     */
-    private static void setConstant(final String fieldName, final boolean value) {
-        if (ZemeckisConfig.isDevelopmentMode()) {
-            try {
-                final Field field = ZemeckisConfig.class.getDeclaredField(fieldName);
-                field.setAccessible(true);
-                field.set(null, value);
-            } catch (final NoSuchFieldException | IllegalAccessException e) {
-                throw new IllegalStateException("Unable to change constant " + fieldName, e);
-            }
-        } else {
-            throw new AssertionError("Unable to change constant " + fieldName + " as Zemeckis is in production mode");
-        }
+        ZemeckisConfig.setEnableUncaughtErrorHandlers(false);
     }
 }

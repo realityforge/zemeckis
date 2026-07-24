@@ -37,12 +37,24 @@ final class ZemeckisConfig {
         return PURGE_ON_RUNAWAY;
     }
 
+    static void setPurgeOnRunaway(final boolean purgeOnRunaway) {
+        PURGE_ON_RUNAWAY = purgeOnRunaway;
+    }
+
     static boolean areNamesEnabled() {
         return ENABLE_NAMES;
     }
 
+    static void setEnableNames(final boolean enableNames) {
+        ENABLE_NAMES = enableNames;
+    }
+
     static boolean areUncaughtErrorHandlersEnabled() {
         return UNCAUGHT_ERROR_HANDLERS;
+    }
+
+    static void setEnableUncaughtErrorHandlers(final boolean enableUncaughtErrorHandlers) {
+        UNCAUGHT_ERROR_HANDLERS = enableUncaughtErrorHandlers;
     }
 
     static boolean useMessageChannelToScheduleTasks() {
