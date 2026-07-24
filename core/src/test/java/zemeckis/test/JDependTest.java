@@ -1,5 +1,7 @@
 package zemeckis.test;
 
+import static org.testng.Assert.*;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -8,7 +10,6 @@ import jdepend.framework.JDepend;
 import jdepend.framework.JavaPackage;
 import jdepend.framework.PackageFilter;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 public class JDependTest {
     @Test
