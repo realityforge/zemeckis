@@ -79,7 +79,7 @@ public final class ReleaseArtifactsIntegrationTest {
                 "RoundBasedExecutor",
                 "TaskEntry",
                 "TemporalScheduler$AbstractScheduler",
-                "TemporalScheduler$SchedulerImpl$1",
+                "TemporalScheduler$ScheduledTask",
                 "TemporalScheduler$SchedulerImpl",
                 "TemporalScheduler",
                 "UncaughtErrorHandler",

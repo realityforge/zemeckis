@@ -14,12 +14,7 @@ import grim.annotations.OmitSymbol;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.PriorityQueue;
 import jsinterop.base.Any;
 import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
@@ -80,62 +75,148 @@ final class TemporalScheduler {
 
     @GwtIncompatible
     @TestOnly
-    static Lock getTestSchedulerLock() {
-        return ((SchedulerImpl) c_scheduler)._lock;
+    static boolean pumpNext() {
+        return ((SchedulerImpl) c_scheduler).pumpNext();
+    }
+
+    @GwtIncompatible
+    @TestOnly
+    static int pumpAll() {
+        return ((SchedulerImpl) c_scheduler).pumpAll();
     }
 
     private static final class SchedulerImpl extends AbstractScheduler {
         @GwtIncompatible
-        private final Lock _lock = new ReentrantLock();
+        private static final int MAX_PUMPED_TASKS = 10_000;
 
         @GwtIncompatible
-        private final ScheduledExecutorService _executorService =
-                new ScheduledThreadPoolExecutor(1, r -> {
-                    final Runnable action = () -> {
-                        _lock.lock();
-                        try {
-                            r.run();
-                        } finally {
-                            _lock.unlock();
-                        }
-                    };
-                    final var thread = new Thread(action, "Scheduler");
-                    thread.setDaemon(true);
-                    thread.setUncaughtExceptionHandler((t, e) -> Zemeckis.reportUncaughtError(e));
-                    return thread;
-                }) {
-                    {
-                        setMaximumPoolSize(1);
-                    }
-                };
+        private final PriorityQueue<ScheduledTask> _tasks = new PriorityQueue<>();
+
+        @GwtIncompatible
+        private long _now;
+
+        @GwtIncompatible
+        private long _nextSequence;
 
         @GwtIncompatible
         @Override
         void shutdown() {
-            _executorService.shutdownNow();
-            // The scheduler thread holds this lock for its lifetime, so acquiring it waits for any
-            // in-flight task that ignores interruption to finish.
-            _lock.lock();
-            try {
-                super.shutdown();
-            } finally {
-                _lock.unlock();
-            }
+            _tasks.clear();
+            super.shutdown();
+        }
+
+        @GwtIncompatible
+        @Override
+        int now() {
+            return (int) _now;
         }
 
         @GwtIncompatible
         @Override
         Cancelable doDelayedTask(@Nullable final String name, final Runnable task, final int delay) {
-            final ScheduledFuture<?> future = _executorService.schedule(task, delay, TimeUnit.MILLISECONDS);
-            return () -> future.cancel(true);
+            return schedule(task, delay, 0);
         }
 
         @Override
         @GwtIncompatible
         Cancelable doPeriodicTask(@Nullable final String name, final Runnable task, final int period) {
-            final ScheduledFuture<?> future =
-                    _executorService.scheduleAtFixedRate(task, 0, period, TimeUnit.MILLISECONDS);
-            return () -> future.cancel(true);
+            return schedule(task, period, period);
+        }
+
+        @GwtIncompatible
+        private Cancelable schedule(final Runnable task, final int delay, final int period) {
+            final var scheduledTask = new ScheduledTask(task, _now + delay, _nextSequence++, period);
+            _tasks.add(scheduledTask);
+            return scheduledTask;
+        }
+
+        @GwtIncompatible
+        private boolean pumpNext() {
+            final ScheduledTask task = nextTask();
+            if (null == task) {
+                return false;
+            }
+
+            _tasks.remove();
+            _now = task.getDueTime();
+            task.execute();
+            if (task.isPeriodic() && !task.isCanceled()) {
+                task.reschedule(_nextSequence++);
+                _tasks.add(task);
+            }
+            return true;
+        }
+
+        @GwtIncompatible
+        private int pumpAll() {
+            int count = 0;
+            while (count < MAX_PUMPED_TASKS && pumpNext()) {
+                count++;
+            }
+            if (null != nextTask()) {
+                throw new IllegalStateException(
+                        "Unable to pump all tasks as more than " + MAX_PUMPED_TASKS + " tasks were executed");
+            }
+            return count;
+        }
+
+        @GwtIncompatible
+        @Nullable
+        private ScheduledTask nextTask() {
+            ScheduledTask task = _tasks.peek();
+            while (null != task && task.isCanceled()) {
+                _tasks.remove();
+                task = _tasks.peek();
+            }
+            return task;
+        }
+    }
+
+    @GwtIncompatible
+    private static final class ScheduledTask implements Cancelable, Comparable<ScheduledTask> {
+        private final Runnable _task;
+        private final int _period;
+        private long _dueTime;
+        private long _sequence;
+        private boolean _canceled;
+
+        private ScheduledTask(final Runnable task, final long dueTime, final long sequence, final int period) {
+            _task = Objects.requireNonNull(task);
+            _dueTime = dueTime;
+            _sequence = sequence;
+            _period = period;
+        }
+
+        @Override
+        public void cancel() {
+            _canceled = true;
+        }
+
+        @Override
+        public int compareTo(final ScheduledTask other) {
+            final int result = Long.compare(_dueTime, other._dueTime);
+            return 0 != result ? result : Long.compare(_sequence, other._sequence);
+        }
+
+        private long getDueTime() {
+            return _dueTime;
+        }
+
+        private boolean isCanceled() {
+            return _canceled;
+        }
+
+        private boolean isPeriodic() {
+            return 0 != _period;
+        }
+
+        private void execute() {
+            _task.run();
+        }
+
+        private void reschedule(final long sequence) {
+            _dueTime += _period;
+            _sequence = sequence;
         }
     }
 
@@ -239,7 +320,7 @@ final class TemporalScheduler {
             }
         }
 
-        final int now() {
+        int now() {
             return (int) (System.currentTimeMillis() - getSchedulerStart());
         }
 

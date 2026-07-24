@@ -2,11 +2,6 @@ package zemeckis.test;
 
 import static org.testng.Assert.*;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.testng.annotations.Test;
 import zemeckis.AbstractTest;
@@ -39,77 +34,36 @@ public class ZemeckisTestUtilTest extends AbstractTest {
     }
 
     @Test
-    public void resetConfigCancelsDelayedTasks() throws InterruptedException {
-        final var executions = new CountDownLatch(1);
-        Zemeckis.delayedTask(executions::countDown, 200);
-
-        ZemeckisTestUtil.resetConfig(false);
-
-        assertFalse(executions.await(500, TimeUnit.MILLISECONDS));
-    }
-
-    @Test
-    public void resetConfigCancelsPeriodicTasks() throws InterruptedException {
+    public void resetConfigCancelsDelayedTasks() {
         final var executions = new AtomicInteger();
-        final var initialExecution = new CountDownLatch(1);
-        Zemeckis.periodicTask(
-                () -> {
-                    executions.incrementAndGet();
-                    initialExecution.countDown();
-                },
-                20);
-        assertTrue(initialExecution.await(1, TimeUnit.SECONDS));
+        Zemeckis.delayedTask(executions::incrementAndGet, 200);
 
         ZemeckisTestUtil.resetConfig(false);
-        final int executionCount = executions.get();
 
-        Thread.sleep(100);
-        assertEquals(executions.get(), executionCount);
+        assertFalse(ZemeckisTestUtil.pumpNext());
+        assertEquals(executions.get(), 0);
     }
 
     @Test
-    public void resetConfigWaitsForInFlightTasks() throws InterruptedException, ExecutionException {
-        final var taskStarted = new CountDownLatch(1);
-        final var taskInterrupted = new CountDownLatch(1);
-        final var releaseTask = new CountDownLatch(1);
-        final var taskCompleted = new CountDownLatch(1);
-        Zemeckis.delayedTask(
-                () -> {
-                    taskStarted.countDown();
-                    awaitUninterruptibly(releaseTask, taskInterrupted);
-                    taskCompleted.countDown();
-                },
-                0);
-        assertTrue(taskStarted.await(1, TimeUnit.SECONDS));
+    public void resetConfigCancelsPeriodicTasks() {
+        final var executions = new AtomicInteger();
+        Zemeckis.periodicTask(executions::incrementAndGet, 20);
+        assertTrue(ZemeckisTestUtil.pumpNext());
+        assertEquals(executions.get(), 1);
 
-        final ExecutorService executor = Executors.newSingleThreadExecutor();
-        try {
-            final var reset = executor.submit(() -> ZemeckisTestUtil.resetConfig(false));
-            assertTrue(taskInterrupted.await(1, TimeUnit.SECONDS));
-            assertFalse(reset.isDone());
+        ZemeckisTestUtil.resetConfig(false);
 
-            releaseTask.countDown();
-            reset.get();
-        } finally {
-            releaseTask.countDown();
-            executor.shutdownNow();
-        }
-        assertEquals(taskCompleted.getCount(), 0);
+        assertFalse(ZemeckisTestUtil.pumpNext());
+        assertEquals(executions.get(), 1);
     }
 
-    private static void awaitUninterruptibly(final CountDownLatch latch, final CountDownLatch interruptedLatch) {
-        boolean interrupted = false;
-        while (true) {
-            try {
-                latch.await();
-                break;
-            } catch (final InterruptedException ignored) {
-                interrupted = true;
-                interruptedLatch.countDown();
-            }
-        }
-        if (interrupted) {
-            Thread.currentThread().interrupt();
-        }
+    @Test
+    public void pumpAllExecutesScheduledTasks() {
+        final var trace = new StringBuilder();
+        Zemeckis.delayedTask(() -> trace.append("B"), 20);
+        Zemeckis.delayedTask(() -> trace.append("A"), 10);
+
+        assertEquals(ZemeckisTestUtil.pumpAll(), 2);
+        assertEquals(trace.toString(), "AB");
     }
 }

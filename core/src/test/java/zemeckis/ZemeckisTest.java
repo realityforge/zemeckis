@@ -5,11 +5,8 @@ import static org.testng.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.locks.Lock;
 import org.testng.annotations.Test;
 
 public final class ZemeckisTest extends AbstractTest {
@@ -24,72 +21,52 @@ public final class ZemeckisTest extends AbstractTest {
     }
 
     @Test
-    public void delayedTask() throws InterruptedException {
-        final List<String> errors = new ArrayList<>();
-        final int count = 2;
-        final var latch = new CountDownLatch(count);
-        final int start = Zemeckis.now();
+    public void delayedTask() {
+        final var trace = new StringBuilder();
         Zemeckis.delayedTask(
                 () -> {
-                    final int now = Zemeckis.now() - start;
-                    if (now <= 19) {
-                        errors.add("Scheduled task 1 executed before expected");
-                    }
+                    assertEquals(Zemeckis.now(), 20);
                     assertTrue(Zemeckis.isVpuActivated());
                     assertEquals(Zemeckis.currentVpu(), Zemeckis.macroTaskVpu());
-                    latch.countDown();
+                    trace.append("A");
                 },
                 20);
 
         Zemeckis.delayedTask(
                 () -> {
-                    final int now = Zemeckis.now() - start;
-                    if (now <= 39) {
-                        errors.add("Scheduled task 2 executed before expected");
-                    }
+                    assertEquals(Zemeckis.now(), 40);
                     assertTrue(Zemeckis.isVpuActivated());
                     assertEquals(Zemeckis.currentVpu(), Zemeckis.macroTaskVpu());
-                    latch.countDown();
+                    trace.append("B");
                 },
                 40);
         assertInvariantFailure(
-                () -> Zemeckis.delayedTask(() -> errors.add("Scheduled task 4 that has a bad delay."), -1),
+                () -> Zemeckis.delayedTask(() -> trace.append("X"), -1),
                 "Zemeckis-0008: Zemeckis.delayedTask(...) named 'DelayedTask@2' passed a negative delay. Actual value"
                         + " passed is -1");
 
-        assertTrue(latch.await(1, TimeUnit.SECONDS));
-        assertEquals(latch.getCount(), 0);
-        if (!errors.isEmpty()) {
-            fail("Errors detected in other threads:\n" + String.join("\n", errors));
-        }
+        assertEquals(ZemeckisTestUtil.pumpAll(), 2);
+        assertEquals(trace.toString(), "AB");
     }
 
     @Test
-    public void delayedTask_canceled() throws InterruptedException {
-        final List<String> errors = new ArrayList<>();
-        final int count = 1;
-        final var latch = new CountDownLatch(count);
-        final Cancelable token = Zemeckis.delayedTask(() -> errors.add("Unexpected task execution"), 20);
+    public void delayedTask_canceled() {
+        final var trace = new StringBuilder();
+        final Cancelable token = Zemeckis.delayedTask(() -> trace.append("X"), 20);
         token.cancel();
-        assertFalse(latch.await(100, TimeUnit.MILLISECONDS));
-        assertEquals(latch.getCount(), count);
-        if (!errors.isEmpty()) {
-            fail("Errors detected in other threads:\n" + String.join("\n", errors));
-        }
+        assertFalse(ZemeckisTestUtil.pumpNext());
+        assertEquals(trace.toString(), "");
     }
 
     @Test
-    public void periodicTask() throws InterruptedException {
-        final List<String> errors = new ArrayList<>();
+    public void periodicTask() {
         final int count = 2;
         final var current = new AtomicInteger();
         final AtomicReference<Cancelable> task = new AtomicReference<>();
-        final var latch = new CountDownLatch(count);
         final Cancelable schedule = Zemeckis.periodicTask(
                 () -> {
                     assertTrue(Zemeckis.isVpuActivated());
                     assertEquals(Zemeckis.currentVpu(), Zemeckis.macroTaskVpu());
-                    latch.countDown();
                     if (current.incrementAndGet() >= count) {
                         Objects.requireNonNull(task.get()).cancel();
                     }
@@ -99,19 +76,16 @@ public final class ZemeckisTest extends AbstractTest {
         task.set(schedule);
 
         assertInvariantFailure(
-                () -> Zemeckis.periodicTask("P2", () -> errors.add("Scheduled task that has a bad delay."), -1),
+                () -> Zemeckis.periodicTask("P2", () -> fail("Scheduled task with an invalid period executed"), -1),
                 "Zemeckis-0009: Zemeckis.periodicTask(...) named 'P2' passed a non-positive period. Actual value"
                         + " passed is -1");
 
-        assertTrue(latch.await(1, TimeUnit.SECONDS));
-        assertEquals(latch.getCount(), 0);
-        if (!errors.isEmpty()) {
-            fail("Errors detected in other threads:\n" + String.join("\n", errors));
-        }
+        assertEquals(ZemeckisTestUtil.pumpAll(), count);
+        assertEquals(current.get(), count);
     }
 
     @Test
-    public void vpu() throws InterruptedException {
+    public void vpu() {
         assertFalse(Zemeckis.isVpuActivated());
         assertNull(Zemeckis.currentVpu());
 
@@ -121,67 +95,63 @@ public final class ZemeckisTest extends AbstractTest {
         final String name4 = randomString();
         final String name5 = randomString();
 
-        final Lock lock = TemporalScheduler.getTestSchedulerLock();
-        lock.lock();
-        final int count = 10;
-        final var latch = new CountDownLatch(count);
+        final var trace = new StringBuilder();
         final Cancelable cancelable1 = Zemeckis.macroTask(() -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.macroTaskVpu());
-            latch.countDown();
+            trace.append("A");
         });
         final Cancelable cancelable2 = Zemeckis.macroTask(name1, () -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.macroTaskVpu());
-            latch.countDown();
+            trace.append("B");
         });
         final Cancelable cancelable3 = Zemeckis.microTask(() -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.microTaskVpu());
-            latch.countDown();
+            trace.append("C");
         });
         final Cancelable cancelable4 = Zemeckis.microTask(name2, () -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.microTaskVpu());
-            latch.countDown();
+            trace.append("D");
         });
         final Cancelable cancelable5 = Zemeckis.animationFrame(() -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.animationFrameVpu());
-            latch.countDown();
+            trace.append("E");
         });
         final Cancelable cancelable6 = Zemeckis.animationFrame(name3, () -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.animationFrameVpu());
-            latch.countDown();
+            trace.append("F");
         });
         final Cancelable cancelable7 = Zemeckis.afterFrame(() -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.afterFrameVpu());
-            latch.countDown();
+            trace.append("G");
         });
         final Cancelable cancelable8 = Zemeckis.afterFrame(name4, () -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.afterFrameVpu());
-            latch.countDown();
+            trace.append("H");
         });
         final Cancelable cancelable9 = Zemeckis.onIdle(() -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.onIdleVpu());
-            latch.countDown();
+            trace.append("I");
         });
         final Cancelable cancelable10 = Zemeckis.onIdle(name5, () -> {
             assertTrue(Zemeckis.isVpuActivated());
             assertEquals(Zemeckis.currentVpu(), Zemeckis.onIdleVpu());
-            latch.countDown();
+            trace.append("J");
         });
-        lock.unlock();
 
         assertFalse(Zemeckis.isVpuActivated());
         assertNull(Zemeckis.currentVpu());
 
-        assertTrue(latch.await(10, TimeUnit.SECONDS));
-        assertEquals(latch.getCount(), 0);
+        assertEquals(ZemeckisTestUtil.pumpAll(), 5);
+        assertEquals(trace.toString(), "ABCDEFGHIJ");
         assertEquals(cancelable1.toString(), "MacroTask@0");
         assertEquals(cancelable2.toString(), name1);
         assertEquals(cancelable3.toString(), "MicroTask@1");
@@ -195,66 +165,47 @@ public final class ZemeckisTest extends AbstractTest {
     }
 
     @Test
-    public void canceledTaskNoRun() throws InterruptedException {
+    public void canceledTaskNoRun() {
         assertFalse(Zemeckis.isVpuActivated());
         assertNull(Zemeckis.currentVpu());
 
-        final int count = 5;
-        final var latch = new CountDownLatch(count);
+        final var trace = new StringBuilder();
         Zemeckis.macroTask(() -> {
                     assertTrue(Zemeckis.isVpuActivated());
                     assertEquals(Zemeckis.currentVpu(), Zemeckis.macroTaskVpu());
-                    sleep();
-                    latch.countDown();
+                    trace.append("A");
                 })
                 .cancel();
         Zemeckis.microTask(() -> {
                     assertTrue(Zemeckis.isVpuActivated());
                     assertEquals(Zemeckis.currentVpu(), Zemeckis.microTaskVpu());
-                    sleep();
-                    latch.countDown();
+                    trace.append("B");
                 })
                 .cancel();
         Zemeckis.animationFrame(() -> {
                     assertTrue(Zemeckis.isVpuActivated());
                     assertEquals(Zemeckis.currentVpu(), Zemeckis.animationFrameVpu());
-                    sleep();
-                    latch.countDown();
+                    trace.append("C");
                 })
                 .cancel();
         Zemeckis.afterFrame(() -> {
                     assertTrue(Zemeckis.isVpuActivated());
                     assertEquals(Zemeckis.currentVpu(), Zemeckis.afterFrameVpu());
-                    sleep();
-                    latch.countDown();
+                    trace.append("D");
                 })
                 .cancel();
         Zemeckis.onIdle(() -> {
                     assertTrue(Zemeckis.isVpuActivated());
                     assertEquals(Zemeckis.currentVpu(), Zemeckis.onIdleVpu());
-                    sleep();
-                    latch.countDown();
+                    trace.append("E");
                 })
                 .cancel();
 
         assertFalse(Zemeckis.isVpuActivated());
         assertNull(Zemeckis.currentVpu());
 
-        //noinspection ResultOfMethodCallIgnored
-        latch.await(100, TimeUnit.MILLISECONDS);
-        // The latch should be 4 or 5. 4 if the scheduled task runs before the
-        // cancel can be invoked. But the scheduler only has one thread so it
-        // will then sleep for 10ms which will ensure all the other tasks can
-        // be cancelled
-        assertTrue(latch.getCount() >= 4);
-    }
-
-    private void sleep() {
-        try {
-            Thread.sleep(10);
-        } catch (final InterruptedException ignored) {
-            Thread.currentThread().interrupt();
-        }
+        assertEquals(ZemeckisTestUtil.pumpAll(), 5);
+        assertEquals(trace.toString(), "");
     }
 
     @Test

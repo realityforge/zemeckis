@@ -119,4 +119,25 @@ public final class ZemeckisTestUtil {
     public static void disableUncaughtErrorHandlers() {
         ZemeckisConfig.setEnableUncaughtErrorHandlers(false);
     }
+
+    /**
+     * Execute the next scheduled JVM task, advancing the scheduler clock to the task's due time.
+     *
+     * @return true if a task was executed, false if no task was scheduled.
+     */
+    @GwtIncompatible
+    public static boolean pumpNext() {
+        return TemporalScheduler.pumpNext();
+    }
+
+    /**
+     * Execute scheduled JVM tasks until no tasks remain.
+     *
+     * @return the number of tasks executed.
+     * @throws IllegalStateException if the scheduler does not become empty after executing 10,000 tasks.
+     */
+    @GwtIncompatible
+    public static int pumpAll() {
+        return TemporalScheduler.pumpAll();
+    }
 }
