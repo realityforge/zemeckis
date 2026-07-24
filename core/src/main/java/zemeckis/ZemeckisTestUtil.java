@@ -1,5 +1,6 @@
 package zemeckis;
 
+import grim.annotations.OmitSymbol;
 import org.jetbrains.annotations.TestOnly;
 import org.jspecify.annotations.Nullable;
 
@@ -121,11 +122,12 @@ public final class ZemeckisTestUtil {
     }
 
     /**
-     * Execute the next scheduled JVM task, advancing the scheduler clock to the task's due time.
+     * Execute the next task scheduled by the deterministic test scheduler, advancing its clock to the task's due time.
      *
      * @return true if a task was executed, false if no task was scheduled.
+     * @throws IllegalStateException if the deterministic test scheduler is not enabled.
      */
-    @GwtIncompatible
+    @OmitSymbol(unless = "zemeckis.use_test_scheduler")
     public static boolean pumpNext() {
         return TemporalScheduler.pumpNext();
     }
@@ -134,9 +136,10 @@ public final class ZemeckisTestUtil {
      * Execute scheduled JVM tasks until no tasks remain.
      *
      * @return the number of tasks executed.
-     * @throws IllegalStateException if the scheduler does not become empty after executing 10,000 tasks.
+     * @throws IllegalStateException if the deterministic test scheduler is not enabled or does not become empty after
+     *     executing 10,000 tasks.
      */
-    @GwtIncompatible
+    @OmitSymbol(unless = "zemeckis.use_test_scheduler")
     public static int pumpAll() {
         return TemporalScheduler.pumpAll();
     }

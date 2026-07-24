@@ -1,12 +1,30 @@
-load("@j2cl//build_defs:rules.bzl", "j2cl_application")
+load("@j2cl//build_defs:rules.bzl", "j2cl_application", "j2cl_library")
 load("@rules_closure//closure:defs.bzl", "closure_js_library")
 
 package(default_visibility = ["//visibility:public"])
 
+j2cl_library(
+    name = "build_test",
+    srcs = ["BuildTest.java"],
+    deps = [
+        "//core/src/main/java/zemeckis:core-j2cl",
+        "//third_party/java:jsinterop_annotations-j2cl",
+    ],
+)
+
 closure_js_library(
     name = "entry_point",
     srcs = ["entry_point.js"],
-    deps = ["//core/src/main/java/zemeckis:core-j2cl"],
+    deps = [
+        ":build_test",
+        "//core/src/main/java/zemeckis:core-j2cl",
+    ],
+)
+
+closure_js_library(
+    name = "production_entry_point",
+    srcs = ["production_entry_point.js"],
+    deps = [":build_test"],
 )
 
 j2cl_application(
@@ -14,8 +32,16 @@ j2cl_application(
     closure_defines = {
         "zemeckis.environment": "'development'",
         "zemeckis.logger": "'proxy'",
+        "zemeckis.use_test_scheduler": "'true'",
     },
-    entry_points = ["zemeckis.j2cl.BuildTest"],
+    entry_points = ["zemeckis.j2cl.EntryPoint"],
     suppress_on_all_sources_in_transitive_closure = ["checkTypes"],
     deps = [":entry_point"],
+)
+
+j2cl_application(
+    name = "zemeckis_j2cl_production_smoke",
+    entry_points = ["zemeckis.j2cl.ProductionEntryPoint"],
+    suppress_on_all_sources_in_transitive_closure = ["checkTypes"],
+    deps = [":production_entry_point"],
 )

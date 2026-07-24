@@ -22,6 +22,9 @@
   <define-property name='zemeckis.enable_uncaught_error_handlers' values='true,false'/>
   <set-property name='zemeckis.enable_uncaught_error_handlers' value='false'/>
 
+  <define-property name='zemeckis.use_test_scheduler' values='true,false'/>
+  <set-property name='zemeckis.use_test_scheduler' value='false'/>
+
   <!--
     Browsers tend to throttle tasks in background tabs scheduled with setTimeout so we scheduled tasks
     with timeout 0 using message channels by default. For further explanation see the article:

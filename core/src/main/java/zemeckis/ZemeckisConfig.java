@@ -13,11 +13,11 @@ final class ZemeckisConfig {
     private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
     private static boolean PURGE_ON_RUNAWAY = PROVIDER.purgeTasksWhenRunawayDetected();
     private static boolean UNCAUGHT_ERROR_HANDLERS = PROVIDER.areUncaughtErrorHandlersEnabled();
+    private static final boolean USE_TEST_SCHEDULER = PROVIDER.useTestScheduler();
     private static final boolean USE_MESSAGE_CHANNEL_TO_SCHEDULE_TASKS = PROVIDER.useMessageChannelToScheduleTasks();
     private static final boolean USE_WORKER_TO_SCHEDULE_DELAYED_TASKS = PROVIDER.useWorkerToScheduleDelayedTasks();
     private static final boolean LOG_WORKER_INTERACTIONS = PROVIDER.shouldLogWorkerInteractions();
     private static final String LOGGER_TYPE = PROVIDER.loggerType();
-    private static final boolean JVM = PROVIDER.isJvm();
 
     private ZemeckisConfig() {}
 
@@ -29,8 +29,8 @@ final class ZemeckisConfig {
         return PRODUCTION_MODE;
     }
 
-    static boolean isJvm() {
-        return JVM;
+    static boolean useTestScheduler() {
+        return USE_TEST_SCHEDULER;
     }
 
     static boolean purgeTasksWhenRunawayDetected() {
@@ -102,6 +102,12 @@ final class ZemeckisConfig {
 
         @GwtIncompatible
         @Override
+        boolean useTestScheduler() {
+            return true;
+        }
+
+        @GwtIncompatible
+        @Override
         boolean useMessageChannelToScheduleTasks() {
             return "true".equals(System.getProperty("zemeckis.use_message_channel_to_schedule_tasks", "true"));
         }
@@ -121,12 +127,6 @@ final class ZemeckisConfig {
         @Override
         String loggerType() {
             return System.getProperty("zemeckis.logger", PRODUCTION_MODE ? "basic" : "proxy");
-        }
-
-        @GwtIncompatible
-        @Override
-        boolean isJvm() {
-            return true;
         }
     }
 
@@ -148,6 +148,10 @@ final class ZemeckisConfig {
             return "true" == System.getProperty("zemeckis.enable_uncaught_error_handlers");
         }
 
+        boolean useTestScheduler() {
+            return "true" == System.getProperty("zemeckis.use_test_scheduler");
+        }
+
         boolean useMessageChannelToScheduleTasks() {
             return "true" == System.getProperty("zemeckis.use_message_channel_to_schedule_tasks");
         }
@@ -165,10 +169,6 @@ final class ZemeckisConfig {
              * Valid values are: "none", "console" and "proxy" (for testing)
              */
             return System.getProperty("zemeckis.logger");
-        }
-
-        boolean isJvm() {
-            return false;
         }
     }
 }

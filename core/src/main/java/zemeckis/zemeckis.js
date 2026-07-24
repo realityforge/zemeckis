@@ -28,6 +28,12 @@ addSystemPropertyFromGoogDefine(
     'zemeckis.enable_uncaught_error_handlers', enableUncaughtErrorHandlers);
 
 /** @define {string} */
+const useTestScheduler =
+    goog.define('zemeckis.use_test_scheduler', 'false');
+addSystemPropertyFromGoogDefine(
+    'zemeckis.use_test_scheduler', useTestScheduler);
+
+/** @define {string} */
 const useMessageChannelToScheduleTasks =
     goog.define('zemeckis.use_message_channel_to_schedule_tasks', 'true');
 addSystemPropertyFromGoogDefine(
@@ -59,5 +65,6 @@ exports = {
   logger,
   purge_tasks_when_runaway_detected: purgeTasksWhenRunawayDetected,
   use_message_channel_to_schedule_tasks: useMessageChannelToScheduleTasks,
+  use_test_scheduler: useTestScheduler,
   use_worker_to_schedule_delayed_tasks: useWorkerToScheduleDelayedTasks,
 };

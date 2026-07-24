@@ -30,7 +30,7 @@ import org.jspecify.annotations.Nullable;
  * time and the unit of the value is defined by the implementation.</p>
  */
 final class TemporalScheduler {
-    private static AbstractScheduler c_scheduler = new SchedulerImpl();
+    private static AbstractScheduler c_scheduler = createScheduler();
 
     private TemporalScheduler() {}
 
@@ -70,67 +70,68 @@ final class TemporalScheduler {
     @TestOnly
     static void reset() {
         c_scheduler.shutdown();
-        c_scheduler = new SchedulerImpl();
+        c_scheduler = createScheduler();
     }
 
-    @GwtIncompatible
+    @OmitSymbol(unless = "zemeckis.use_test_scheduler")
     @TestOnly
     static boolean pumpNext() {
-        return ((SchedulerImpl) c_scheduler).pumpNext();
+        return testScheduler().pumpNext();
     }
 
-    @GwtIncompatible
+    @OmitSymbol(unless = "zemeckis.use_test_scheduler")
     @TestOnly
     static int pumpAll() {
-        return ((SchedulerImpl) c_scheduler).pumpAll();
+        return testScheduler().pumpAll();
     }
 
-    private static final class SchedulerImpl extends AbstractScheduler {
-        @GwtIncompatible
+    private static AbstractScheduler createScheduler() {
+        return ZemeckisConfig.useTestScheduler() ? new TestSchedulerImpl() : new ProductionSchedulerImpl();
+    }
+
+    @OmitSymbol(unless = "zemeckis.use_test_scheduler")
+    private static TestSchedulerImpl testScheduler() {
+        if (!(c_scheduler instanceof TestSchedulerImpl)) {
+            throw new IllegalStateException("Test scheduler is not enabled");
+        }
+        return (TestSchedulerImpl) c_scheduler;
+    }
+
+    private static final class TestSchedulerImpl extends AbstractScheduler {
         private static final int MAX_PUMPED_TASKS = 10_000;
 
-        @GwtIncompatible
         private final PriorityQueue<ScheduledTask> _tasks = new PriorityQueue<>();
 
-        @GwtIncompatible
         private long _now;
 
-        @GwtIncompatible
         private long _nextSequence;
 
-        @GwtIncompatible
         @Override
         void shutdown() {
             _tasks.clear();
-            super.shutdown();
         }
 
-        @GwtIncompatible
         @Override
         int now() {
             return (int) _now;
         }
 
-        @GwtIncompatible
         @Override
         Cancelable doDelayedTask(@Nullable final String name, final Runnable task, final int delay) {
             return schedule(task, delay, 0);
         }
 
         @Override
-        @GwtIncompatible
         Cancelable doPeriodicTask(@Nullable final String name, final Runnable task, final int period) {
             return schedule(task, period, period);
         }
 
-        @GwtIncompatible
         private Cancelable schedule(final Runnable task, final int delay, final int period) {
             final var scheduledTask = new ScheduledTask(task, _now + delay, _nextSequence++, period);
             _tasks.add(scheduledTask);
             return scheduledTask;
         }
 
-        @GwtIncompatible
         private boolean pumpNext() {
             final ScheduledTask task = nextTask();
             if (null == task) {
@@ -147,7 +148,6 @@ final class TemporalScheduler {
             return true;
         }
 
-        @GwtIncompatible
         private int pumpAll() {
             int count = 0;
             while (count < MAX_PUMPED_TASKS && pumpNext()) {
@@ -160,7 +160,6 @@ final class TemporalScheduler {
             return count;
         }
 
-        @GwtIncompatible
         @Nullable
         private ScheduledTask nextTask() {
             ScheduledTask task = _tasks.peek();
@@ -172,7 +171,6 @@ final class TemporalScheduler {
         }
     }
 
-    @GwtIncompatible
     private static final class ScheduledTask implements Cancelable, Comparable<ScheduledTask> {
         private final Runnable _task;
         private final int _period;
@@ -221,6 +219,37 @@ final class TemporalScheduler {
     }
 
     private abstract static class AbstractScheduler {
+        abstract void shutdown();
+
+        abstract int now();
+
+        final Cancelable delayedTask(@Nullable final String name, final Runnable task, final int delay) {
+            if (Zemeckis.shouldCheckApiInvariants()) {
+                apiInvariant(
+                        () -> delay >= 0,
+                        () -> "Zemeckis-0008: Zemeckis.delayedTask(...) named '" + name
+                                + "' passed a negative delay. Actual value passed is " + delay);
+            }
+            return new TaskEntry(name, task, doDelayedTask(name, task, delay));
+        }
+
+        abstract Cancelable doDelayedTask(@Nullable String name, Runnable task, int delay);
+
+        final Cancelable periodicTask(@Nullable final String name, final Runnable task, final int period) {
+            if (Zemeckis.shouldCheckApiInvariants()) {
+                apiInvariant(
+                        () -> period > 0,
+                        () -> "Zemeckis-0009: Zemeckis.periodicTask(...) named '" + name
+                                + "' passed a non-positive period. Actual value passed is " + period);
+            }
+
+            return new TaskEntry(name, task, doPeriodicTask(name, task, period));
+        }
+
+        abstract Cancelable doPeriodicTask(@Nullable String name, Runnable task, int period);
+    }
+
+    private static final class ProductionSchedulerImpl extends AbstractScheduler {
         private static final boolean ENABLE_WORKERS = Zemeckis.useWorkerToScheduleDelayedTasks();
         private static final boolean LOG = Zemeckis.shouldLogWorkerInteractions();
         private static final String SRC = "var timers = {};\n" + "\n"
@@ -314,26 +343,19 @@ final class TemporalScheduler {
             return _schedulerStart;
         }
 
+        @Override
         void shutdown() {
             if (Zemeckis.useWorkerToScheduleDelayedTasks()) {
                 worker().terminate();
             }
         }
 
+        @Override
         int now() {
             return (int) (System.currentTimeMillis() - getSchedulerStart());
         }
 
-        final Cancelable delayedTask(@Nullable final String name, final Runnable task, final int delay) {
-            if (Zemeckis.shouldCheckApiInvariants()) {
-                apiInvariant(
-                        () -> delay >= 0,
-                        () -> "Zemeckis-0008: Zemeckis.delayedTask(...) named '" + name
-                                + "' passed a negative delay. Actual value passed is " + delay);
-            }
-            return new TaskEntry(name, task, doDelayedTask(name, task, delay));
-        }
-
+        @Override
         Cancelable doDelayedTask(@Nullable final String name, final Runnable task, final int delay) {
             if (Zemeckis.useWorkerToScheduleDelayedTasks()) {
                 final double id = _nextTimerId++;
@@ -357,17 +379,7 @@ final class TemporalScheduler {
             }
         }
 
-        final Cancelable periodicTask(@Nullable final String name, final Runnable task, final int period) {
-            if (Zemeckis.shouldCheckApiInvariants()) {
-                apiInvariant(
-                        () -> period > 0,
-                        () -> "Zemeckis-0009: Zemeckis.periodicTask(...) named '" + name
-                                + "' passed a non-positive period. Actual value passed is " + period);
-            }
-
-            return new TaskEntry(name, task, doPeriodicTask(name, task, period));
-        }
-
+        @Override
         Cancelable doPeriodicTask(@Nullable final String name, final Runnable task, final int period) {
             if (Zemeckis.useWorkerToScheduleDelayedTasks()) {
                 final double id = _nextTimerId++;

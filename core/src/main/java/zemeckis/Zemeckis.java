@@ -57,7 +57,7 @@ public final class Zemeckis {
      * @return true if message channels should be used to schedule tasks over setTimeout, false otherwise.
      */
     public static boolean useMessageChannelToScheduleTasks() {
-        return !ZemeckisConfig.isJvm() && ZemeckisConfig.useMessageChannelToScheduleTasks();
+        return !ZemeckisConfig.useTestScheduler() && ZemeckisConfig.useMessageChannelToScheduleTasks();
     }
 
     /**
@@ -67,7 +67,7 @@ public final class Zemeckis {
      * @return true if delayed tasks should be scheduled in a worker rather than in the main thread, false otherwise.
      */
     public static boolean useWorkerToScheduleDelayedTasks() {
-        return !ZemeckisConfig.isJvm() && ZemeckisConfig.useWorkerToScheduleDelayedTasks();
+        return !ZemeckisConfig.useTestScheduler() && ZemeckisConfig.useWorkerToScheduleDelayedTasks();
     }
 
     /**

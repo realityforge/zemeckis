@@ -50,7 +50,8 @@ public final class ReleaseArtifactsIntegrationTest {
         entries.add("META-INF/LICENSE");
         for (final String grim : List.of(
                 "TaskEntry",
-                "TemporalScheduler$AbstractScheduler",
+                "TemporalScheduler$ProductionSchedulerImpl",
+                "TemporalScheduler",
                 "VirtualProcessorUnit",
                 "Zemeckis$IdContainer",
                 "Zemeckis",
@@ -61,6 +62,7 @@ public final class ReleaseArtifactsIntegrationTest {
                 "ZemeckisLogger$NoopLogger",
                 "ZemeckisLogger$ProxyLogger",
                 "ZemeckisLogger",
+                "ZemeckisTestUtil",
                 "ZemeckisUtil")) {
             entries.add("META-INF/grim/zemeckis/" + grim + ".grim.json");
         }
@@ -79,8 +81,9 @@ public final class ReleaseArtifactsIntegrationTest {
                 "RoundBasedExecutor",
                 "TaskEntry",
                 "TemporalScheduler$AbstractScheduler",
+                "TemporalScheduler$ProductionSchedulerImpl",
                 "TemporalScheduler$ScheduledTask",
-                "TemporalScheduler$SchedulerImpl",
+                "TemporalScheduler$TestSchedulerImpl",
                 "TemporalScheduler",
                 "UncaughtErrorHandler",
                 "UncaughtErrorHandlerSupport",

@@ -95,7 +95,7 @@ final class VirtualProcessorUnitsHolder {
 
         private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
                 Zemeckis.areNamesEnabled() ? "Micro" : null,
-                ZemeckisConfig.isJvm() ? new MacroTaskExecutor() : new MicroTaskExecutor());
+                ZemeckisConfig.useTestScheduler() ? new MacroTaskExecutor() : new MicroTaskExecutor());
     }
 
     private static final class AnimationFrameVPU {
@@ -103,7 +103,7 @@ final class VirtualProcessorUnitsHolder {
 
         private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
                 Zemeckis.areNamesEnabled() ? "AnimationFrame" : null,
-                ZemeckisConfig.isJvm() ? new MacroTaskExecutor() : new AnimationFrameExecutor());
+                ZemeckisConfig.useTestScheduler() ? new MacroTaskExecutor() : new AnimationFrameExecutor());
     }
 
     private static final class AfterFrameVPU {
@@ -111,7 +111,7 @@ final class VirtualProcessorUnitsHolder {
 
         private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
                 Zemeckis.areNamesEnabled() ? "AfterFrame" : null,
-                ZemeckisConfig.isJvm() ? new MacroTaskExecutor() : new AfterFrameExecutor());
+                ZemeckisConfig.useTestScheduler() ? new MacroTaskExecutor() : new AfterFrameExecutor());
     }
 
     private static final class OnIdleVPU {
@@ -119,7 +119,7 @@ final class VirtualProcessorUnitsHolder {
 
         private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
                 Zemeckis.areNamesEnabled() ? "OnIdle" : null,
-                ZemeckisConfig.isJvm() ? new MacroTaskExecutor() : new OnIdleExecutor());
+                ZemeckisConfig.useTestScheduler() ? new MacroTaskExecutor() : new OnIdleExecutor());
     }
 
     /**
