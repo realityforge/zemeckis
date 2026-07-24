@@ -74,7 +74,7 @@ public final class ZemeckisTestUtil {
          */
         assert !ZemeckisConfig.isProductionMode();
         if (ZemeckisConfig.isDevelopmentMode()) {
-            final var proxyLogger = (ZemeckisLogger.ProxyLogger) ZemeckisLogger.getLogger();
+            final ZemeckisLogger.ProxyLogger proxyLogger = (ZemeckisLogger.ProxyLogger) ZemeckisLogger.getLogger();
             proxyLogger.setLogger(null == logger ? null : logger::log);
         }
     }

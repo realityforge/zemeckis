@@ -127,7 +127,7 @@ final class TemporalScheduler {
         }
 
         private Cancelable schedule(final Runnable task, final int delay, final int period) {
-            final var scheduledTask = new ScheduledTask(task, _now + delay, _nextSequence++, period);
+            final ScheduledTask scheduledTask = new ScheduledTask(task, _now + delay, _nextSequence++, period);
             _tasks.add(scheduledTask);
             return scheduledTask;
         }

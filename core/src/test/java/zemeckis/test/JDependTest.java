@@ -15,11 +15,11 @@ import org.testng.annotations.Test;
 public class JDependTest {
     @Test
     public void dependencyAnalysis() throws Exception {
-        final var jdepend = new JDepend(PackageFilter.all().excluding("java.*", "javax.*"));
+        final JDepend jdepend = new JDepend(PackageFilter.all().excluding("java.*", "javax.*"));
         jdepend.addDirectory(compileTargetDir());
         jdepend.analyze();
 
-        final var constraint = new DependencyConstraint();
+        final DependencyConstraint constraint = new DependencyConstraint();
 
         final JavaPackage zemeckis = constraint.addPackage("zemeckis");
         final JavaPackage braincheck = constraint.addPackage("org.realityforge.braincheck");
@@ -46,7 +46,7 @@ public class JDependTest {
 
         final List<JavaPackage[]> nonMatchingPackages = result.getNonMatchingPackages();
         if (!nonMatchingPackages.isEmpty()) {
-            final var sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             sb.append("Discovered packages where relationships do not align.\n");
             for (final JavaPackage[] packages : nonMatchingPackages) {
                 final JavaPackage expected = packages[0];
