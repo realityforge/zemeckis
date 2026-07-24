@@ -6,6 +6,7 @@
   `ZemeckisTestUtil.pumpAll()`.
 * Make `ZemeckisTestUtil` available to J2CL tests by removing its dependency on reflection.
 * Make the deterministic scheduler and its pump controls available to J2CL tests.
+* Apply explicit Java test dependency enforcement consistently across Bazel build commands.
 * Patch `rules_closure` to use Protobuf's supported `java_proto_library` implementation.
 
 ### [v0.15](https://github.com/realityforge/zemeckis/tree/v0.15) (2026-07-20) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.14...v0.15)

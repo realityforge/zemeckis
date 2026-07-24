@@ -7,7 +7,7 @@ common --@protobuf//bazel/toolchains:prefer_prebuilt_protoc=true
 
 build --nojava_header_compilation
 build --experimental_strict_java_deps=error
-test --explicit_java_test_deps
+build --explicit_java_test_deps
 
 # Generate the symlink tree as a peer directory so IDEA does not scan it.
 common --symlink_prefix=../.bazel/zemeckis/
