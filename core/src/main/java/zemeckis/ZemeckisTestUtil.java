@@ -57,9 +57,9 @@ public final class ZemeckisTestUtil {
      * This occasionally needs to be invoked after changing configuration settings in tests.
      */
     private static void resetState() {
+        TemporalScheduler.reset();
         setLogger(null);
         Zemeckis.reset();
-        TemporalScheduler.reset();
         UncaughtErrorHandlerSupport.reset();
         VirtualProcessorUnitsHolder.reset();
     }

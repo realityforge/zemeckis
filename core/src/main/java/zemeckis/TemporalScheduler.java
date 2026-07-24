@@ -112,8 +112,15 @@ final class TemporalScheduler {
         @GwtIncompatible
         @Override
         void shutdown() {
-            _executorService.shutdown();
-            super.shutdown();
+            _executorService.shutdownNow();
+            // The scheduler thread holds this lock for its lifetime, so acquiring it waits for any
+            // in-flight task that ignores interruption to finish.
+            _lock.lock();
+            try {
+                super.shutdown();
+            } finally {
+                _lock.unlock();
+            }
         }
 
         @GwtIncompatible
