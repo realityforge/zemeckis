@@ -65,7 +65,7 @@ final class ZemeckisLogger {
     }
 
     @OmitType(unless = "zemeckis.logger=console")
-    @JsType(isNative = true, name = "window.console", namespace = JsPackage.GLOBAL)
+    @JsType(isNative = true, name = "console", namespace = JsPackage.GLOBAL)
     private static final class NativeJsLoggerUtil {
         @JsMethod
         public static native void log(Object message);
