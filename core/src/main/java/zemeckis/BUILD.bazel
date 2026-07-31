@@ -3,6 +3,36 @@ load("//third_party/java:rules.bzl", "java_library")
 
 package(default_visibility = ["//visibility:public"])
 
+TEST_SCHEDULER_J2CL_SRCS = [
+    "AbstractExecutor.java",
+    "Cancelable.java",
+    "CircularBuffer.java",
+    "DeadlineBasedExecutor.java",
+    "GwtIncompatible.java",
+    "RoundBasedExecutor.java",
+    "TaskEntry.java",
+    "TestTaskExecutor.java",
+    "TestTemporalScheduler.java",
+    "TestVirtualProcessorUnitsHolder.java",
+    "UncaughtErrorHandler.java",
+    "UncaughtErrorHandlerSupport.java",
+    "VirtualProcessorUnit.java",
+    "Zemeckis.java",
+    "ZemeckisConfig.java",
+    "ZemeckisConfig.native.js",
+    "ZemeckisLogger.java",
+    "ZemeckisTestUtil.java",
+    "ZemeckisUtil.java",
+    "package-info.java",
+    "zemeckis.js",
+]
+
+filegroup(
+    name = "test_scheduler_j2cl_srcs",
+    testonly = True,
+    srcs = TEST_SCHEDULER_J2CL_SRCS,
+)
+
 java_library(
     name = "core",
     srcs = [
@@ -91,29 +121,7 @@ j2cl_library(
 j2cl_library(
     name = "test_scheduler-j2cl",
     testonly = True,
-    srcs = [
-        "AbstractExecutor.java",
-        "Cancelable.java",
-        "CircularBuffer.java",
-        "DeadlineBasedExecutor.java",
-        "GwtIncompatible.java",
-        "RoundBasedExecutor.java",
-        "TaskEntry.java",
-        "TestTaskExecutor.java",
-        "TestTemporalScheduler.java",
-        "TestVirtualProcessorUnitsHolder.java",
-        "UncaughtErrorHandler.java",
-        "UncaughtErrorHandlerSupport.java",
-        "VirtualProcessorUnit.java",
-        "Zemeckis.java",
-        "ZemeckisConfig.java",
-        "ZemeckisConfig.native.js",
-        "ZemeckisLogger.java",
-        "ZemeckisTestUtil.java",
-        "ZemeckisUtil.java",
-        "package-info.java",
-        "zemeckis.js",
-    ],
+    srcs = [":test_scheduler_j2cl_srcs"],
     experimental_enable_jspecify_support_do_not_enable_without_jspecify_static_checking_or_you_might_cause_an_outage = True,
     deps = [
         "//third_party/java:braincheck_core-j2cl",
