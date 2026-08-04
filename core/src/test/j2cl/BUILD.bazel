@@ -27,26 +27,6 @@ closure_js_library(
     deps = [":build_test"],
 )
 
-j2cl_library(
-    name = "test_scheduler_build_test",
-    testonly = True,
-    srcs = ["BuildTest.java"],
-    deps = [
-        "//core/src/main/java/zemeckis:test_scheduler-j2cl",
-        "//third_party/java:jsinterop_annotations-j2cl",
-    ],
-)
-
-closure_js_library(
-    name = "test_scheduler_entry_point",
-    testonly = True,
-    srcs = ["entry_point.js"],
-    deps = [
-        ":test_scheduler_build_test",
-        "//core/src/main/java/zemeckis:test_scheduler-j2cl",
-    ],
-)
-
 j2cl_application(
     name = "zemeckis_j2cl_smoke",
     closure_defines = {
@@ -64,17 +44,4 @@ j2cl_application(
     entry_points = ["zemeckis.j2cl.ProductionEntryPoint"],
     suppress_on_all_sources_in_transitive_closure = ["checkTypes"],
     deps = [":production_entry_point"],
-)
-
-j2cl_application(
-    name = "zemeckis_test_scheduler_j2cl_smoke",
-    testonly = True,
-    closure_defines = {
-        "zemeckis.environment": "'development'",
-        "zemeckis.logger": "'proxy'",
-        "zemeckis.use_test_scheduler": "'true'",
-    },
-    entry_points = ["zemeckis.j2cl.EntryPoint"],
-    suppress_on_all_sources_in_transitive_closure = ["checkTypes"],
-    deps = [":test_scheduler_entry_point"],
 )

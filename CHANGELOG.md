@@ -2,7 +2,7 @@
 
 ### Unreleased
 
-* Add a browser-independent J2CL target backed by the deterministic test scheduler.
+* Ensure browser scheduling backends are eliminated from J2CL output when the deterministic test scheduler is enabled.
 * Use the global `console` object for J2CL logging.
 
 ### [v0.17](https://github.com/realityforge/zemeckis/tree/v0.17) (2026-07-24) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.16...v0.17)

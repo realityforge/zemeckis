@@ -11,6 +11,7 @@ import akasha.WindowGlobal;
 import akasha.Worker;
 import akasha.WorkerOptions;
 import grim.annotations.OmitSymbol;
+import grim.annotations.OmitType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -98,6 +99,7 @@ final class TemporalScheduler {
         return (TestSchedulerImpl) c_scheduler;
     }
 
+    @OmitType(unless = "zemeckis.use_test_scheduler")
     private static final class TestSchedulerImpl extends AbstractScheduler {
         private static final int MAX_PUMPED_TASKS = 10_000;
 
@@ -172,6 +174,7 @@ final class TemporalScheduler {
         }
     }
 
+    @OmitType(unless = "zemeckis.use_test_scheduler")
     private static final class ScheduledTask implements Cancelable, Comparable<ScheduledTask> {
         private final Runnable _task;
         private final int _period;
@@ -250,6 +253,7 @@ final class TemporalScheduler {
         abstract Cancelable doPeriodicTask(@Nullable String name, Runnable task, int period);
     }
 
+    @OmitType(when = "zemeckis.use_test_scheduler")
     private static final class ProductionSchedulerImpl extends AbstractScheduler {
         private static final boolean ENABLE_WORKERS = Zemeckis.useWorkerToScheduleDelayedTasks();
         private static final boolean LOG = Zemeckis.shouldLogWorkerInteractions();

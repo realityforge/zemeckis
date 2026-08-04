@@ -2,6 +2,7 @@ package zemeckis;
 
 import static org.realityforge.braincheck.Guards.*;
 
+import grim.annotations.OmitType;
 import java.util.Objects;
 import org.jetbrains.annotations.TestOnly;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -86,8 +87,9 @@ final class VirtualProcessorUnitsHolder {
     private static final class MacroTaskVPU {
         private MacroTaskVPU() {}
 
-        private static final VirtualProcessorUnit VPU =
-                new VirtualProcessorUnit(Zemeckis.areNamesEnabled() ? "Macro" : null, new MacroTaskExecutor());
+        private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
+                Zemeckis.areNamesEnabled() ? "Macro" : null,
+                ZemeckisConfig.useTestScheduler() ? new TestTaskExecutor() : new MacroTaskExecutor());
     }
 
     private static final class MicroTaskVPU {
@@ -95,7 +97,7 @@ final class VirtualProcessorUnitsHolder {
 
         private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
                 Zemeckis.areNamesEnabled() ? "Micro" : null,
-                ZemeckisConfig.useTestScheduler() ? new MacroTaskExecutor() : new MicroTaskExecutor());
+                ZemeckisConfig.useTestScheduler() ? new TestTaskExecutor() : new MicroTaskExecutor());
     }
 
     private static final class AnimationFrameVPU {
@@ -103,7 +105,7 @@ final class VirtualProcessorUnitsHolder {
 
         private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
                 Zemeckis.areNamesEnabled() ? "AnimationFrame" : null,
-                ZemeckisConfig.useTestScheduler() ? new MacroTaskExecutor() : new AnimationFrameExecutor());
+                ZemeckisConfig.useTestScheduler() ? new TestTaskExecutor() : new AnimationFrameExecutor());
     }
 
     private static final class AfterFrameVPU {
@@ -111,7 +113,7 @@ final class VirtualProcessorUnitsHolder {
 
         private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
                 Zemeckis.areNamesEnabled() ? "AfterFrame" : null,
-                ZemeckisConfig.useTestScheduler() ? new MacroTaskExecutor() : new AfterFrameExecutor());
+                ZemeckisConfig.useTestScheduler() ? new TestTaskExecutor() : new AfterFrameExecutor());
     }
 
     private static final class OnIdleVPU {
@@ -119,7 +121,15 @@ final class VirtualProcessorUnitsHolder {
 
         private static final VirtualProcessorUnit VPU = new VirtualProcessorUnit(
                 Zemeckis.areNamesEnabled() ? "OnIdle" : null,
-                ZemeckisConfig.useTestScheduler() ? new MacroTaskExecutor() : new OnIdleExecutor());
+                ZemeckisConfig.useTestScheduler() ? new TestTaskExecutor() : new OnIdleExecutor());
+    }
+
+    @OmitType(unless = "zemeckis.use_test_scheduler")
+    private static final class TestTaskExecutor extends RoundBasedExecutor {
+        @Override
+        void scheduleForActivation() {
+            TemporalScheduler.delayedTask(Zemeckis.areNamesEnabled() ? "TestTaskExecutor" : null, this::activate, 0);
+        }
     }
 
     /**
