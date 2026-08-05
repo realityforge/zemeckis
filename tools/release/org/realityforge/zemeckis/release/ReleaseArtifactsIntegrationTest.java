@@ -31,7 +31,7 @@ public final class ReleaseArtifactsIntegrationTest {
         assertJarEntries(mainJar, mainEntries());
         assertJava17Bytecode(mainJar, PACKAGE_PATH + "Zemeckis.class");
         assertJarEntries(resolve(Path.of(args[2])), sourceEntries());
-        assertJarContains(resolve(Path.of(args[3])), PACKAGE_PATH + "Zemeckis.html");
+        assertJavadocs(resolve(Path.of(args[3])));
         assertPom(
                 resolve(Path.of(args[4])),
                 version,
@@ -212,6 +212,30 @@ public final class ReleaseArtifactsIntegrationTest {
             if (jar.getJarEntry(entry) == null) {
                 throw new AssertionError("Missing " + entry + " from " + path);
             }
+        }
+    }
+
+    private static void assertJavadocs(final Path path) throws IOException {
+        assertJarContains(path, PACKAGE_PATH + "Zemeckis.html");
+        assertJarContains(path, "src-html/zemeckis/Zemeckis.html");
+        try (JarFile jar = new JarFile(path.toFile())) {
+            final String index = readJarEntry(jar, "index.html");
+            assertContains(index, "<title>Zemeckis API Documentation</title>", path);
+            if (index.contains("dc.created")) {
+                throw new AssertionError("Javadocs contain a generation timestamp: " + path);
+            }
+            final String zemeckis = readJarEntry(jar, PACKAGE_PATH + "Zemeckis.html");
+            assertContains(zemeckis, "../src-html/zemeckis/Zemeckis.html", path);
+            assertContains(
+                    zemeckis,
+                    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html",
+                    path);
+        }
+    }
+
+    private static String readJarEntry(final JarFile jar, final String entry) throws IOException {
+        try (InputStream input = jar.getInputStream(jar.getJarEntry(entry))) {
+            return new String(input.readAllBytes(), StandardCharsets.UTF_8);
         }
     }
 

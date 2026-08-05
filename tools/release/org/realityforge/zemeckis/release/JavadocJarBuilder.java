@@ -18,18 +18,24 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 
 public final class JavadocJarBuilder {
+    private static final String DOCUMENTATION_TITLE = "Zemeckis API Documentation";
+    private static final String JAVA_API_URL = "https://docs.oracle.com/en/java/javase/17/docs/api/";
     private static final long STABLE_TIME = 0L;
 
     private JavadocJarBuilder() {}
 
     public static void main(final String[] args) throws Exception {
         Path output = null;
+        Path javaApiElementList = null;
         final var sourceJars = new ArrayList<Path>();
         final var classpath = new ArrayList<Path>();
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "--output":
                     output = Path.of(args[++i]);
+                    break;
+                case "--java-api-element-list":
+                    javaApiElementList = Path.of(args[++i]);
                     break;
                 case "--source-jar":
                     sourceJars.add(Path.of(args[++i]));
@@ -44,10 +50,14 @@ public final class JavadocJarBuilder {
         if (output == null) {
             throw new IllegalArgumentException("Missing --output");
         }
-        build(output, sourceJars, classpath);
+        if (javaApiElementList == null) {
+            throw new IllegalArgumentException("Missing --java-api-element-list");
+        }
+        build(output, javaApiElementList, sourceJars, classpath);
     }
 
-    private static void build(final Path output, final List<Path> sourceJars, final List<Path> classpath)
+    private static void build(
+            final Path output, final Path javaApiElementList, final List<Path> sourceJars, final List<Path> classpath)
             throws IOException, InterruptedException {
         final var work = Files.createTempDirectory("zemeckis-javadoc");
         final var sources = work.resolve("sources");
@@ -59,7 +69,7 @@ public final class JavadocJarBuilder {
                 extractSources(sourceJar, sources);
             }
             final var sourceFiles = collectSourceFiles(sources);
-            runJavadoc(docs, sourceFiles, classpath);
+            runJavadoc(docs, javaApiElementList, sourceFiles, classpath);
             writeJar(output, docs);
         } finally {
             deleteTree(work);
@@ -100,7 +110,8 @@ public final class JavadocJarBuilder {
         }
     }
 
-    private static void runJavadoc(final Path docs, final List<Path> sourceFiles, final List<Path> classpath)
+    private static void runJavadoc(
+            final Path docs, final Path javaApiElementList, final List<Path> sourceFiles, final List<Path> classpath)
             throws IOException, InterruptedException {
         final var argsFile = Files.createTempFile("zemeckis-javadoc", ".args");
         final var argLines = new ArrayList<String>();
@@ -113,6 +124,20 @@ public final class JavadocJarBuilder {
         argLines.add("UTF-8");
         argLines.add("-docencoding");
         argLines.add("UTF-8");
+        argLines.add("-notimestamp");
+        argLines.add("-linksource");
+        argLines.add("-windowtitle");
+        argLines.add(quoteArg(DOCUMENTATION_TITLE));
+        argLines.add("-doctitle");
+        argLines.add(quoteArg(DOCUMENTATION_TITLE));
+        argLines.add("--no-platform-links");
+        argLines.add("-linkoffline");
+        argLines.add(JAVA_API_URL);
+        final Path javaApiDirectory = javaApiElementList.toAbsolutePath().getParent();
+        if (javaApiDirectory == null) {
+            throw new IOException("Java API element list has no parent directory: " + javaApiElementList);
+        }
+        argLines.add(javaApiDirectory.toString());
         if (!classpath.isEmpty()) {
             argLines.add("-classpath");
             argLines.add(classpath.stream().map(Path::toString).collect(Collectors.joining(File.pathSeparator)));
@@ -130,6 +155,10 @@ public final class JavadocJarBuilder {
         if (exit != 0) {
             throw new IOException("javadoc exited with status " + exit);
         }
+    }
+
+    private static String quoteArg(final String value) {
+        return '"' + value + '"';
     }
 
     private static void writeJar(final Path output, final Path docs) throws IOException {

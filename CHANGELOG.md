@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Publish release Javadocs to GitHub Pages and lint GitHub Actions workflows with Bazel.
 * Remove the dependency on Akasha by using internal browser runtime bindings.
 * Ensure browser scheduling backends are eliminated from J2CL output when the deterministic test scheduler is enabled.
 * Use the global `console` object for J2CL logging.

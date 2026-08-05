@@ -113,16 +113,18 @@ def _release_javadoc_jar_impl(ctx):
     out = ctx.actions.declare_file(ctx.attr.out)
     source_jars = _direct_java_source_jars(ctx.attr.java_targets)
     classpath = _direct_java_class_jars(ctx.attr.java_targets) + ctx.files.classpath
+    element_list = ctx.file.java_api_element_list
 
     args = ctx.actions.args()
     args.add("--output", out)
+    args.add("--java-api-element-list", element_list)
     args.add_all(source_jars, before_each = "--source-jar")
     args.add_all(classpath, before_each = "--classpath")
 
     ctx.actions.run(
         executable = ctx.executable._javadoc_jar_builder,
         arguments = [args],
-        inputs = source_jars + classpath,
+        inputs = source_jars + classpath + [element_list],
         outputs = [out],
         mnemonic = "ReleaseJavadocJar",
         progress_message = "Building release Javadocs jar %{output}",
@@ -133,6 +135,7 @@ release_javadoc_jar = rule(
     implementation = _release_javadoc_jar_impl,
     attrs = {
         "classpath": attr.label_list(allow_files = [".jar"]),
+        "java_api_element_list": attr.label(allow_single_file = True, mandatory = True),
         "java_targets": attr.label_list(providers = [JavaInfo]),
         "out": attr.string(mandatory = True),
         "_javadoc_jar_builder": attr.label(

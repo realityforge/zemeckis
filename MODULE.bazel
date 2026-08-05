@@ -3,6 +3,8 @@ module(
 )
 
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
+bazel_dep(name = "platforms", version = "1.1.0", dev_dependency = True)
+bazel_dep(name = "rules_shell", version = "0.6.1", dev_dependency = True)
 
 bazel_dep(name = "j2cl", version = "20260720")
 bazel_dep(name = "jsinterop_base", version = "20260720")
@@ -54,6 +56,91 @@ j2cl_maven.install(
     ],
 )
 use_repo(j2cl_maven, "maven")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+
+http_archive(
+    name = "actionlint_linux_x86_64",
+    build_file_content = """
+exports_files(
+    ["actionlint"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8",
+    urls = ["https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz"],
+)
+
+http_archive(
+    name = "actionlint_macos_aarch64",
+    build_file_content = """
+exports_files(
+    ["actionlint"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f",
+    urls = ["https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_darwin_arm64.tar.gz"],
+)
+
+http_archive(
+    name = "actionlint_windows_x86_64",
+    build_file_content = """
+exports_files(
+    ["actionlint.exe"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9",
+    urls = ["https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_windows_amd64.zip"],
+)
+
+http_archive(
+    name = "shellcheck_linux_x86_64",
+    build_file_content = """
+exports_files(
+    ["shellcheck"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198",
+    strip_prefix = "shellcheck-v0.11.0",
+    urls = ["https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz"],
+)
+
+http_archive(
+    name = "shellcheck_macos_aarch64",
+    build_file_content = """
+exports_files(
+    ["shellcheck"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "56affdd8de5527894dca6dc3d7e0a99a873b0f004d7aabc30ae407d3f48b0a79",
+    strip_prefix = "shellcheck-v0.11.0",
+    urls = ["https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.darwin.aarch64.tar.xz"],
+)
+
+http_archive(
+    name = "shellcheck_windows_x86_64",
+    build_file_content = """
+exports_files(
+    ["shellcheck.exe"],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "8a4e35ab0b331c85d73567b12f2a444df187f483e5079ceffa6bda1faa2e740e",
+    urls = ["https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.zip"],
+)
+
+http_file(
+    name = "java17_api_element_list",
+    downloaded_file_path = "element-list",
+    sha256 = "1ed630c32323b1d746d96e2e63f0013664ac8e2f97c73ec4c49adfeffb7f026c",
+    urls = ["https://docs.oracle.com/en/java/javase/17/docs/api/element-list"],
+)
 
 # --- depgen-generated repository rules start ---
 

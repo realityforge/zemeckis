@@ -1,0 +1,19 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+sh_test(
+    name = "actionlint_test",
+    size = "small",
+    srcs = ["actionlint_test.sh"],
+    args = [
+        "$(rootpath //tools/actionlint:actionlint)",
+        "$(rootpath //tools/actionlint:shellcheck)",
+        "$(rootpath :ci.yml)",
+        "$(rootpath :publish-javadocs.yml)",
+    ],
+    data = [
+        "ci.yml",
+        "publish-javadocs.yml",
+        "//tools/actionlint",
+        "//tools/actionlint:shellcheck",
+    ],
+)

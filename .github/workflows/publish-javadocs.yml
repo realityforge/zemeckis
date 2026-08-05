@@ -1,0 +1,94 @@
+name: Publish Javadocs
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Release tag to publish (v0.15 or later)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-javadocs
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Publish Javadocs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
+
+    steps:
+      - name: Validate release tag
+        shell: bash
+        run: |
+          if [[ ! "${RELEASE_TAG}" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "Expected a release tag in vMAJOR.MINOR format, got: ${RELEASE_TAG}" >&2
+            exit 1
+          fi
+          if [[ "${BASH_REMATCH[1]}" == "0" ]] && (( BASH_REMATCH[2] < 15 )); then
+            echo "Javadoc publishing is supported from v0.15 onward, got: ${RELEASE_TAG}" >&2
+            exit 1
+          fi
+
+      - name: Check out release
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Bazel
+        uses: bazel-contrib/setup-bazel@0.19.0
+        with:
+          bazelisk-cache: true
+          repository-cache: true
+          disk-cache: ${{ github.workflow }}
+
+      - name: Build Javadocs
+        run: bazel build //tools/release:zemeckis_core_javadoc_jar
+
+      - name: Prepare site
+        shell: bash
+        run: |
+          mkdir publish
+          unzip -q "$(bazel info bazel-bin)/tools/release/zemeckis-core-javadoc.jar" -d publish
+          touch publish/.nojekyll
+          test -f publish/index.html
+
+      - name: Check out GitHub Pages branch
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          path: gh-pages
+          ref: gh-pages
+
+      - name: Publish site
+        shell: bash
+        run: |
+          git -C gh-pages rm -r --ignore-unmatch .
+          git -C gh-pages clean -fdx
+          cp -R publish/. gh-pages/
+          git -C gh-pages add --all
+
+          if git -C gh-pages diff --cached --quiet; then
+            echo "Javadocs for ${RELEASE_TAG} are already published"
+            exit 0
+          fi
+
+          git -C gh-pages config user.name "github-actions[bot]"
+          git -C gh-pages config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C gh-pages commit -m "Publish Javadocs for ${RELEASE_TAG}"
+          git -C gh-pages push origin HEAD:gh-pages
