@@ -1,5 +1,7 @@
 # Change Log
 
+### Unreleased
+
 ### [v0.18](https://github.com/realityforge/zemeckis/tree/v0.18) (2026-08-05) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.17...v0.18)
 
 Changes in this release:
