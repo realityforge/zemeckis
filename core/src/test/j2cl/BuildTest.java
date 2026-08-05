@@ -12,6 +12,16 @@ public final class BuildTest {
         Zemeckis.delayedTask(() -> {}, 1);
     }
 
+    public static void scheduleProductionTasks() {
+        Zemeckis.delayedTask(() -> {}, 1);
+        Zemeckis.periodicTask(() -> {}, 1);
+        Zemeckis.macroTask(() -> {});
+        Zemeckis.microTask(() -> {});
+        Zemeckis.animationFrame(() -> {});
+        Zemeckis.afterFrame(() -> {});
+        Zemeckis.onIdle(() -> {});
+    }
+
     public static int pumpAll() {
         return ZemeckisTestUtil.pumpAll();
     }

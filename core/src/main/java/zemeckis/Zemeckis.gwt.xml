@@ -1,9 +1,7 @@
 <module>
   <inherits name='org.realityforge.braincheck.BrainCheck'/>
-  <inherits name='akasha.Akasha'/>
-
+  <inherits name='jsinterop.base.Base'/>
   <source path='' includes='*.java'/>
-  <source path='dom' includes='**/*.java'/>
 
   <!--
     These properties are all defined in zemeckis.ZemeckisConfig

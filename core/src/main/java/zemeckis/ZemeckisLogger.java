@@ -2,9 +2,6 @@ package zemeckis;
 
 import grim.annotations.OmitSymbol;
 import grim.annotations.OmitType;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsPackage;
-import jsinterop.annotations.JsType;
 import org.jetbrains.annotations.TestOnly;
 import org.jspecify.annotations.Nullable;
 
@@ -64,13 +61,6 @@ final class ZemeckisLogger {
         }
     }
 
-    @OmitType(unless = "zemeckis.logger=console")
-    @JsType(isNative = true, name = "globalThis.console", namespace = JsPackage.GLOBAL)
-    private static final class NativeJsLoggerUtil {
-        @JsMethod
-        public static native void log(Object message);
-    }
-
     /**
      * The console log provider implementation providing javascript based console logging.
      */
@@ -78,9 +68,9 @@ final class ZemeckisLogger {
     private abstract static class AbstractConsoleLogger implements Logger {
         @Override
         public void log(final String message, @Nullable final Throwable throwable) {
-            NativeJsLoggerUtil.log(message);
+            JsRuntime.log(message);
             if (null != throwable) {
-                NativeJsLoggerUtil.log(throwable);
+                JsRuntime.log(throwable);
             }
         }
     }

@@ -14,7 +14,7 @@ java_library(
     ],
     deps = [
         "//core/src/main/java/zemeckis:core",
-        "//third_party/java:akasha_gwt",
         "//third_party/java:gwt_user",
+        "//third_party/java:jsinterop_annotations",
     ],
 )

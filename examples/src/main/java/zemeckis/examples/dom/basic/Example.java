@@ -1,9 +1,11 @@
 package zemeckis.examples.dom.basic;
 
-import akasha.Console;
 import com.google.gwt.core.client.EntryPoint;
 import java.util.HashMap;
 import java.util.Map;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsPackage;
+import org.jspecify.annotations.Nullable;
 import zemeckis.Zemeckis;
 
 public final class Example implements EntryPoint {
@@ -35,8 +37,11 @@ public final class Example implements EntryPoint {
     }
 
     private static void log(final String type, final int id) {
-        Console.log("%c" + type + " task " + id, STYLES.get(type));
+        logToConsole("%c" + type + " task " + id, STYLES.get(type));
     }
+
+    @JsMethod(namespace = JsPackage.GLOBAL, name = "console.log")
+    private static native void logToConsole(String message, @Nullable String style);
 
     @SuppressWarnings("Varifier")
     private static Map<String, String> createStyles() {

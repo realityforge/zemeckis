@@ -1,6 +1,5 @@
 package zemeckis;
 
-import akasha.promise.Promise;
 import grim.annotations.OmitType;
 
 /**
@@ -11,6 +10,6 @@ final class MicroTaskExecutor extends RoundBasedExecutor {
     @Override
     void scheduleForActivation() {
         // In the future we should use akasha.WindowGlobal.queueMicrotask(  );
-        Promise.resolve((Object) null).thenAccept(v -> activate());
+        JsRuntime.Promise.resolve(null).thenAccept(v -> activate());
     }
 }

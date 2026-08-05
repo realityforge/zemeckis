@@ -1,6 +1,5 @@
 package zemeckis;
 
-import akasha.MessageChannel;
 import grim.annotations.OmitType;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
@@ -10,12 +9,12 @@ import org.jspecify.annotations.Nullable;
  */
 @OmitType(when = "zemeckis.use_test_scheduler")
 final class MacroTaskExecutor extends RoundBasedExecutor {
-    @Nullable
-    private final MessageChannel _channel = Zemeckis.useMessageChannelToScheduleTasks() ? new MessageChannel() : null;
+    private final JsRuntime.@Nullable MessageChannel _channel =
+            Zemeckis.useMessageChannelToScheduleTasks() ? new JsRuntime.MessageChannel() : null;
 
     MacroTaskExecutor() {
         if (Zemeckis.useMessageChannelToScheduleTasks()) {
-            channel().port1().onmessage = m -> activate();
+            channel().port1().setOnmessage(m -> activate());
         }
     }
 
@@ -28,7 +27,7 @@ final class MacroTaskExecutor extends RoundBasedExecutor {
         }
     }
 
-    private MessageChannel channel() {
+    private JsRuntime.MessageChannel channel() {
         return Objects.requireNonNull(_channel);
     }
 }

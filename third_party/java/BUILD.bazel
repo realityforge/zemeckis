@@ -13,7 +13,7 @@ _java_plugin(
 # DO NOT EDIT: Content is auto-generated from //third_party/java:dependencies.yml by https://github.com/realityforge/bazel-depgen version 0.29
 
 # SHA256 of the configuration content that generated this content
-_CONFIG_SHA256 = "9D876966A708F55C3A155D830F9BA086AA13A2A56BBFF20D3400FB37DEE1CDF4"
+_CONFIG_SHA256 = "42B389AAB020B8820D4EA487AF9C0BE97FC5EF2C38789D59658A86C510F9B7F9"
 
 exports_files(["dependencies.yml"])
 
@@ -67,18 +67,6 @@ exports_files(["dependencies.yml"])
 # +- org.ow2.asm:asm-commons:jar:9.7.1 [compile]
 # +- org.ow2.asm:asm-tree:jar:9.7.1 [compile]
 # +- org.ow2.asm:asm-util:jar:9.7.1 [compile]
-# +- org.realityforge.akasha:akasha-j2cl:jar:0.34 [compile]
-# |  +- org.realityforge.javax.annotation:javax.annotation:jar:1.1.1 [compile] TARGET OVERRIDES :javax_annotation-j2cl (J2cl)
-# |  +- org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:jar:1.7.0 [compile] TARGET OVERRIDES :org_jetbrains_annotations-j2cl (J2cl)
-# |  +- com.google.jsinterop:jsinterop-annotations:jar:2.0.0 [compile] TARGET OVERRIDES :jsinterop_annotations-j2cl (J2cl)
-# |  +- org.realityforge.javaemul.internal.annotations:javaemul.internal.annotations:jar:0.01 [compile] TARGET OVERRIDES :javaemul_internal_annotations-j2cl (J2cl)
-# |  \- com.google.jsinterop:base:jar:1.0.0 [compile] TARGET OVERRIDES @jsinterop_base//:jsinterop-base-j2cl (J2cl)
-# +- org.realityforge.akasha:akasha-gwt:jar:0.34 [compile]
-# |  +- org.realityforge.javax.annotation:javax.annotation:jar:1.1.1 [compile] TARGET OVERRIDES :javax_annotation-j2cl (J2cl)
-# |  +- org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:jar:1.7.0 [compile] TARGET OVERRIDES :org_jetbrains_annotations-j2cl (J2cl)
-# |  +- com.google.jsinterop:jsinterop-annotations:jar:2.0.0 [compile] TARGET OVERRIDES :jsinterop_annotations-j2cl (J2cl)
-# |  +- org.realityforge.javaemul.internal.annotations:javaemul.internal.annotations:jar:0.01 [compile] TARGET OVERRIDES :javaemul_internal_annotations-j2cl (J2cl)
-# |  \- com.google.jsinterop:base:jar:1.0.0 [compile] TARGET OVERRIDES @jsinterop_base//:jsinterop-base-j2cl (J2cl)
 # +- org.realityforge.braincheck:braincheck-core:jar:1.35.0 [compile]
 # |  +- org.jspecify:jspecify:jar:1.0.0 [compile] TARGET OVERRIDES :jspecify-j2cl (J2cl)
 # |  \- com.google.jsinterop:jsinterop-annotations:jar:2.0.0 [compile] TARGET OVERRIDES :jsinterop_annotations-j2cl (J2cl)
@@ -88,9 +76,9 @@ exports_files(["dependencies.yml"])
 # |  +- org.glassfish:javax.json:jar:1.1 [compile]
 # |  \- org.testng:testng:jar:6.11 [compile]
 # +- org.realityforge.grim:grim-annotations:jar:0.09 [compile]
-# |  \- org.realityforge.javax.annotation:javax.annotation:jar:1.0.1 [compile] (conflicts with 1.1.1) TARGET OVERRIDES :javax_annotation-j2cl (J2cl)
+# |  \- org.realityforge.javax.annotation:javax.annotation:jar:1.0.1 [compile] TARGET OVERRIDES :javax_annotation-j2cl (J2cl)
 # +- org.realityforge.grim:grim-processor:jar:0.09 [compile]
-# |  +- org.realityforge.javax.annotation:javax.annotation:jar:1.0.1 [compile] (conflicts with 1.1.1) TARGET OVERRIDES :javax_annotation-j2cl (J2cl)
+# |  +- org.realityforge.javax.annotation:javax.annotation:jar:1.0.1 [compile] TARGET OVERRIDES :javax_annotation-j2cl (J2cl)
 # |  \- org.glassfish:javax.json:jar:1.1 [compile]
 # +- org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:jar:1.7.0 [compile] TARGET OVERRIDES :org_jetbrains_annotations-j2cl (J2cl)
 # +- org.glassfish:javax.json:jar:1.1 [compile]
@@ -473,36 +461,6 @@ _java_import(
 )
 
 _java_import(
-    name = "akasha_gwt",
-    jars = ["@akasha_gwt//file"],
-    tags = ["maven_coordinates=org.realityforge.akasha:akasha-gwt:0.34"],
-    deps = [
-        ":base",
-        ":javaemul_internal_annotations",
-        ":javax_annotation",
-        ":jsinterop_annotations",
-        ":org_jetbrains_annotations",
-    ],
-)
-
-_j2cl_library(
-    name = "akasha_j2cl-j2cl",
-    srcs = ["@akasha_j2cl__sources//file"],
-    js_suppress = [
-        "accessControls",
-        "checkTypes",
-        "duplicate",
-    ],
-    deps = [
-        ":javaemul_internal_annotations-j2cl",
-        ":javax_annotation-j2cl",
-        ":jsinterop_annotations-j2cl",
-        ":org_jetbrains_annotations-j2cl",
-        "@jsinterop_base//:jsinterop-base-j2cl",
-    ],
-)
-
-_java_import(
     name = "bazel_depgen",
     jars = ["@bazel_depgen//file"],
     tags = ["maven_coordinates=org.realityforge.bazel.depgen:bazel-depgen:0.29"],
@@ -572,16 +530,9 @@ _java_library(
 )
 
 _java_import(
-    name = "javaemul_internal_annotations",
-    jars = ["@javaemul_internal_annotations//file"],
-    tags = ["maven_coordinates=org.realityforge.javaemul.internal.annotations:javaemul.internal.annotations:0.01"],
-    visibility = ["//visibility:private"],
-)
-
-_java_import(
     name = "javax_annotation",
     jars = ["@javax_annotation//file"],
-    tags = ["maven_coordinates=org.realityforge.javax.annotation:javax.annotation:1.1.1"],
+    tags = ["maven_coordinates=org.realityforge.javax.annotation:javax.annotation:1.0.1"],
     visibility = ["//visibility:private"],
 )
 
@@ -625,11 +576,6 @@ _java_import(
 _j2cl_import(
     name = "grim_annotations-j2cl",
     jar = ":grim_annotations",
-)
-
-_j2cl_import(
-    name = "javaemul_internal_annotations-j2cl",
-    jar = ":javaemul_internal_annotations",
 )
 
 _j2cl_import(

@@ -1,6 +1,5 @@
 package zemeckis;
 
-import akasha.WindowGlobal;
 import grim.annotations.OmitType;
 
 /**
@@ -10,6 +9,6 @@ import grim.annotations.OmitType;
 final class AnimationFrameExecutor extends RoundBasedExecutor {
     @Override
     void scheduleForActivation() {
-        WindowGlobal.requestAnimationFrame(v -> activate());
+        JsRuntime.requestAnimationFrame(v -> activate());
     }
 }

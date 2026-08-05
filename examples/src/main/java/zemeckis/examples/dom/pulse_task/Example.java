@@ -1,9 +1,10 @@
 package zemeckis.examples.dom.pulse_task;
 
-import akasha.Console;
 import com.google.gwt.core.client.EntryPoint;
 import java.util.Objects;
 import java.util.function.Consumer;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsPackage;
 import zemeckis.Cancelable;
 import zemeckis.Zemeckis;
 
@@ -45,8 +46,11 @@ public final class Example implements EntryPoint {
             final int now = Zemeckis.now();
             final int delta = -1 == _lastTime ? 0 : now - _lastTime;
             _lastTime = now;
-            Console.log("%c task " + _id + " Period=" + _period + " Delta=" + delta, COLORS[_id % COLORS.length]);
+            logToConsole("%c task " + _id + " Period=" + _period + " Delta=" + delta, COLORS[_id % COLORS.length]);
             _action.accept(_self);
         }
     }
+
+    @JsMethod(namespace = JsPackage.GLOBAL, name = "console.log")
+    private static native void logToConsole(String message, String style);
 }

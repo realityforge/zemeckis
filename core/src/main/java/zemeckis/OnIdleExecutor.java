@@ -1,6 +1,5 @@
 package zemeckis;
 
-import akasha.WindowGlobal;
 import grim.annotations.OmitType;
 
 /**
@@ -10,6 +9,6 @@ import grim.annotations.OmitType;
 final class OnIdleExecutor extends DeadlineBasedExecutor {
     @Override
     void scheduleForActivation() {
-        WindowGlobal.requestIdleCallback(deadline -> context().activate(() -> executeTasks(deadline::timeRemaining)));
+        JsRuntime.requestIdleCallback(deadline -> context().activate(() -> executeTasks(deadline::timeRemaining)));
     }
 }

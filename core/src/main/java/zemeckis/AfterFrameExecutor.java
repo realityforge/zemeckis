@@ -1,6 +1,5 @@
 package zemeckis;
 
-import akasha.MessageChannel;
 import grim.annotations.OmitType;
 
 /**
@@ -13,10 +12,10 @@ import grim.annotations.OmitType;
  */
 @OmitType(when = "zemeckis.use_test_scheduler")
 final class AfterFrameExecutor extends RoundBasedExecutor {
-    private final MessageChannel _channel = new MessageChannel();
+    private final JsRuntime.MessageChannel _channel = new JsRuntime.MessageChannel();
 
     AfterFrameExecutor() {
-        _channel.port1().onmessage = m -> activate();
+        _channel.port1().setOnmessage(m -> activate());
     }
 
     @Override

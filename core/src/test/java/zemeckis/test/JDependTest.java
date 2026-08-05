@@ -25,16 +25,10 @@ public class JDependTest {
         final var jsinterop = constraint.addPackage("jsinterop.annotations");
         final var jsinteropBase = constraint.addPackage("jsinterop.base");
         final var jspecify = constraint.addPackage("org.jspecify.annotations");
-        final var akasha = constraint.addPackage("akasha");
-        final var akashaPromise = constraint.addPackage("akasha.promise");
-
         zemeckis.dependsUpon(jsinterop);
         zemeckis.dependsUpon(jsinteropBase);
         zemeckis.dependsUpon(jspecify);
         zemeckis.dependsUpon(braincheck);
-        zemeckis.dependsUpon(akasha);
-        zemeckis.dependsUpon(akashaPromise);
-
         final var result = jdepend.analyzeDependencies(constraint);
 
         final var undefinedPackages = result.getUndefinedPackages();

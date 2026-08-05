@@ -118,13 +118,6 @@ artifacts:
   - coord: org.ow2.asm:asm-util:9.7.1
     excludes:
       - '*:*'
-  - coord: org.realityforge.akasha:akasha-j2cl:0.34
-    includeSource: true
-    natures: [J2cl]
-    j2cl:
-      mode: Library
-      suppress: [accessControls, checkTypes, duplicate]
-  - coord: org.realityforge.akasha:akasha-gwt:0.34
   - coord: org.realityforge.braincheck:braincheck-core:1.35.0
     includeSource: true
     natures: [Java, J2cl]
@@ -156,10 +149,6 @@ replacements:
   - coord: org.jspecify:jspecify
     targets:
       - target: ":jspecify-j2cl"
-        nature: J2cl
-  - coord: org.realityforge.javaemul.internal.annotations:javaemul.internal.annotations
-    targets:
-      - target: ":javaemul_internal_annotations-j2cl"
         nature: J2cl
   - coord: org.realityforge.javax.annotation:javax.annotation
     targets:
