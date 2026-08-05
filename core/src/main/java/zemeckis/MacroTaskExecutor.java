@@ -1,12 +1,14 @@
 package zemeckis;
 
 import akasha.MessageChannel;
+import grim.annotations.OmitType;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
 /**
  * Run tasks in next MacroTask.
  */
+@OmitType(when = "zemeckis.use_test_scheduler")
 final class MacroTaskExecutor extends RoundBasedExecutor {
     @Nullable
     private final MessageChannel _channel = Zemeckis.useMessageChannelToScheduleTasks() ? new MessageChannel() : null;

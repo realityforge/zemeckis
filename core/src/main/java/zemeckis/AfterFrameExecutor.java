@@ -1,6 +1,7 @@
 package zemeckis;
 
 import akasha.MessageChannel;
+import grim.annotations.OmitType;
 
 /**
  * Run tasks after the next browser render frame.
@@ -10,6 +11,7 @@ import akasha.MessageChannel;
  * and <a href="https://mobile.twitter.com/_developit/status/1081681351122829325">tweeted</a> about by
  * developit.
  */
+@OmitType(when = "zemeckis.use_test_scheduler")
 final class AfterFrameExecutor extends RoundBasedExecutor {
     private final MessageChannel _channel = new MessageChannel();
 

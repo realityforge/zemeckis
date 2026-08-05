@@ -49,10 +49,18 @@ public final class ReleaseArtifactsIntegrationTest {
         final var entries = new LinkedHashSet<>(sourceEntries());
         entries.add("META-INF/LICENSE");
         for (final String grim : List.of(
+                "AfterFrameExecutor",
+                "AnimationFrameExecutor",
+                "MacroTaskExecutor",
+                "MicroTaskExecutor",
+                "OnIdleExecutor",
                 "TaskEntry",
                 "TemporalScheduler$ProductionSchedulerImpl",
+                "TemporalScheduler$ScheduledTask",
+                "TemporalScheduler$TestSchedulerImpl",
                 "TemporalScheduler",
                 "VirtualProcessorUnit",
+                "VirtualProcessorUnitsHolder$TestTaskExecutor",
                 "Zemeckis$IdContainer",
                 "Zemeckis",
                 "ZemeckisConfig",
@@ -97,6 +105,7 @@ public final class ReleaseArtifactsIntegrationTest {
                 "VirtualProcessorUnitsHolder$MacroTaskVPU",
                 "VirtualProcessorUnitsHolder$MicroTaskVPU",
                 "VirtualProcessorUnitsHolder$OnIdleVPU",
+                "VirtualProcessorUnitsHolder$TestTaskExecutor",
                 "VirtualProcessorUnitsHolder",
                 "Zemeckis$IdContainer",
                 "Zemeckis",
