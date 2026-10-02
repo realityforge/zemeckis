@@ -2,10 +2,10 @@
 
 - Spec: [SPEC.md](../SPEC.md)
 - Status: `implementation-review`
-- Current frontier: implementation review
+- Current frontier: closeout and publication
 - Planning reviewer: `/root/planning_reviewer` (`1/3` rounds, Findings: none)
 - Plan checkpoint: automatic (completed evidence-based grill tree, explicit confirmation/entry exception, passing planning review)
-- Implementation reviewer: pending (`0/5` rounds)
+- Implementation reviewer: `/root/implementation_reviewer` (`1/5` rounds, Findings: none)
 
 ## Full-scope validation
 
@@ -30,6 +30,6 @@ Not required: no docs/adr, docs/glossary, docs/specs, docs/deferred or .domain-m
 ## Publication and closeout
 
 - Plan commit: `56017c0`.
-- Implementation/evidence commit: pending.
-- Review/closeout/publication: pending.
+- Implementation/evidence commit: `547a52d`.
+- Implementation review: round 1 passed, Findings: none. Closeout/publication: pending.
 - User resumed work and requested archival after confirmed merge. Master is unprotected; wait for every actual check on the exact PR head before requesting `gh pr merge --auto --merge --match-head-commit`, without admin bypass. Preserve plan history with a merge commit. Archive this chat only after GitHub confirms merge.
