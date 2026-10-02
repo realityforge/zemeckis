@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Use persistent Bazel workers for graph-based Java formatting checks and add `tools/java_format_watch.sh`.
+
 ### [v0.18](https://github.com/realityforge/zemeckis/tree/v0.18) (2026-08-05) · [Full Changelog](https://github.com/realityforge/zemeckis/compare/v0.17...v0.18)
 
 Changes in this release:
