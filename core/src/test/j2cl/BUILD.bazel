@@ -1,7 +1,20 @@
 load("@j2cl//build_defs:rules.bzl", "j2cl_application", "j2cl_library")
 load("@rules_closure//closure:defs.bzl", "closure_js_library")
+load("@rules_java//java:defs.bzl", "java_library")
 
 package(default_visibility = ["//visibility:public"])
+
+# The format aspect needs JavaInfo, which j2cl_library does not expose.
+java_library(
+    name = "build_test_java",
+    testonly = True,
+    srcs = ["BuildTest.java"],
+    visibility = ["//:__pkg__"],
+    deps = [
+        "//core/src/main/java/zemeckis:core",
+        "//third_party/java:jsinterop_annotations",
+    ],
+)
 
 j2cl_library(
     name = "build_test",
