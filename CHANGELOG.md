@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Use Bazel's default symlink and repository cache locations.
 * Clean Bazel outputs and shut down the Bazel server when Codex environments are removed.
 * Use persistent Bazel workers for graph-based Java formatting checks and add `tools/java_format_watch.sh`.
 

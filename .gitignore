@@ -1,4 +1,5 @@
 /.bazelbsp
 /.idea
+/bazel-*
 /dist
 /tmp
