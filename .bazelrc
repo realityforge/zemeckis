@@ -14,7 +14,4 @@ build --explicit_java_test_deps
 build --strategy=PalantirJavaFormat=worker,local
 build --worker_max_instances=PalantirJavaFormat=1
 
-# Generate the symlink tree as a peer directory so IDEA does not scan it.
-common --symlink_prefix=../.bazel/zemeckis/
-
 common --flag_alias=release_version=//tools/release:version

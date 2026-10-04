@@ -54,7 +54,6 @@ jobs:
         uses: bazel-contrib/setup-bazel@0.19.0
         with:
           bazelisk-cache: true
-          repository-cache: true
           disk-cache: ${{ github.workflow }}
 
       - name: Build Javadocs
