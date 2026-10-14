@@ -25,7 +25,7 @@ artifacts:
   - coord: com.google.code.findbugs:jsr305:3.0.2
     excludes:
       - '*:*'
-  - coord: com.uber.nullaway:nullaway:0.13.7
+  - coord: com.uber.nullaway:nullaway:0.14.2
   - coord: com.google.jsinterop:base:1.0.0
   - coord: com.google.jsinterop:jsinterop-annotations:2.0.0
   - coord: commons-collections:commons-collections:3.2.2

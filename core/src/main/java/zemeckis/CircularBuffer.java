@@ -11,7 +11,7 @@ final class CircularBuffer<T> {
     /**
      * The underlying object array.
      */
-    private T[] _elements;
+    private @Nullable T[] _elements;
     /**
      * The pointer to first element.
      */
@@ -154,7 +154,7 @@ final class CircularBuffer<T> {
     @SuppressWarnings("Varifier")
     private void resizeElements(final int newSize, final int size) {
         @SuppressWarnings("unchecked")
-        final T[] elements = (T[]) new Object[newSize];
+        final @Nullable T[] elements = (T[]) new Object[newSize];
         int j = 0;
         for (int i = 0; i < size; i++) {
             final int index = (_head + i) % _elements.length;
@@ -191,7 +191,7 @@ final class CircularBuffer<T> {
         @SuppressWarnings("unchecked")
         final T[] elements = (T[]) new Object[size];
         for (int i = 0; i < size; i++) {
-            elements[i] = get(i);
+            elements[i] = Objects.requireNonNull(get(i));
         }
         return Stream.of(elements);
     }

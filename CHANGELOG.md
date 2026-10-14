@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Enable NullAway's JSpecify mode and reject unrecognized JSpecify annotation locations in Bazel Java builds.
 * Update Bazel to version `9.3.0`.
 * Use Bazel's default symlink and repository cache locations.
 * Clean Bazel outputs and shut down the Bazel server when Codex environments are removed.
