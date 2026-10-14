@@ -103,8 +103,10 @@ _JAVA_JAVACOPTS = [
     "--release",
     "17",
     "-Werror",
+    "-Xep:JSpecifyUnrecognizedAnnotationLocation:ERROR",
     "-Xep:NullAway:ERROR",
     "-Xep:RequireExplicitNullMarking:ERROR",
+    "-XepOpt:NullAway:JSpecifyMode=true",
     "-XepOpt:NullAway:OnlyNullMarked=true",
     "-Xlint:all,-processing,-serial,-path,-options,-classfile,-this-escape",
 ] + _ERROR_PRONE_JAVACOPTS

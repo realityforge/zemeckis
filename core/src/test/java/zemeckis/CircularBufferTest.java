@@ -6,6 +6,26 @@ import org.testng.annotations.Test;
 
 public final class CircularBufferTest extends AbstractTest {
     @Test
+    public void streamContents() {
+        final CircularBuffer<String> buffer = new CircularBuffer<>(3);
+        assertEquals(buffer.stream().toArray(), new Object[0]);
+
+        buffer.add("A");
+        buffer.add("B");
+        buffer.add("C");
+        assertEquals(buffer.pop(), "A");
+        buffer.add("D");
+        assertEquals(buffer.stream().toArray(), new Object[] {"B", "C", "D"});
+
+        buffer.add("E");
+        assertEquals(buffer.stream().toArray(), new Object[] {"B", "C", "D", "E"});
+        buffer.truncate(2);
+        assertEquals(buffer.stream().toArray(), new Object[] {"B", "C"});
+        buffer.clear();
+        assertEquals(buffer.stream().toArray(), new Object[0]);
+    }
+
+    @Test
     public void basicOperation() {
         final CircularBuffer<String> buffer = new CircularBuffer<>(3);
         assertEquals(buffer.size(), 0);
