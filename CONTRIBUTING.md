@@ -19,6 +19,9 @@ Participation in this project comes under the [Contributor Covenant Code of Cond
 
 ## Formatting
 
+Run `bazel run //tools/buildifier:buildifier` to format Bazel files and `tools/java_format.sh` to format Java files.
+The check targets are `//tools/buildifier:buildifier_check` and `//tools/java-format:java_format_check`.
+
 When submitting pull requests, make sure to do the following:
 
 - Maintain the same code style as the rest of the project.

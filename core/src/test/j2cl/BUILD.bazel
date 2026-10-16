@@ -9,7 +9,7 @@ java_library(
     name = "build_test_java",
     testonly = True,
     srcs = ["BuildTest.java"],
-    visibility = ["//:__pkg__"],
+    visibility = ["//tools/java-format:__pkg__"],
     deps = [
         "//core/src/main/java/zemeckis:core",
         "//third_party/java:jsinterop_annotations",
