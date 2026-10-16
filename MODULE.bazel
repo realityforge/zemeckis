@@ -2,6 +2,13 @@ module(
     name = "zemeckis",
 )
 
+bazel_dep(name = "braincheck")
+git_override(
+    module_name = "braincheck",
+    commit = "cf4f382f75a8660425d7637a88451c3a5596d887",
+    remote = "https://github.com/realityforge/braincheck.git",
+)
+
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
 bazel_dep(name = "platforms", version = "1.1.0", dev_dependency = True)
 bazel_dep(name = "rules_shell", version = "0.6.1", dev_dependency = True)
@@ -524,27 +531,6 @@ _http_file(
     downloaded_file_path = "org/realityforge/bazel/depgen/bazel-depgen/0.29/bazel-depgen-0.29-all.jar",
     sha256 = "d0daed0637d526dab0c1699524f63296fe0e50d9aef928ac6733c1b4ce95763e",
     urls = ["https://repo.maven.apache.org/maven2/org/realityforge/bazel/depgen/bazel-depgen/0.29/bazel-depgen-0.29-all.jar"],
-)
-
-_http_file(
-    name = "braincheck_core",
-    downloaded_file_path = "org/realityforge/braincheck/braincheck-core/1.35.0/braincheck-core-1.35.0.jar",
-    sha256 = "6d37351d8be23c2dd5b0c06a75cf6d1eaf70a8cad9300ce4bcf2d2d92de74b94",
-    urls = ["https://repo.maven.apache.org/maven2/org/realityforge/braincheck/braincheck-core/1.35.0/braincheck-core-1.35.0.jar"],
-)
-
-_http_file(
-    name = "braincheck_core__sources",
-    downloaded_file_path = "org/realityforge/braincheck/braincheck-core/1.35.0/braincheck-core-1.35.0-sources.jar",
-    sha256 = "2111c57c8b83e4e0e75dfe6f00b13dedd7c8484a91f8331fbd00c657cc9ed9d2",
-    urls = ["https://repo.maven.apache.org/maven2/org/realityforge/braincheck/braincheck-core/1.35.0/braincheck-core-1.35.0-sources.jar"],
-)
-
-_http_file(
-    name = "braincheck_testng",
-    downloaded_file_path = "org/realityforge/braincheck/braincheck-testng/1.35.0/braincheck-testng-1.35.0.jar",
-    sha256 = "927179a7588ab3c5f9411e4dd6f6cd98efba5177cd0c0e1489cb633f9145bbb2",
-    urls = ["https://repo.maven.apache.org/maven2/org/realityforge/braincheck/braincheck-testng/1.35.0/braincheck-testng-1.35.0.jar"],
 )
 
 _http_file(

@@ -118,13 +118,6 @@ artifacts:
   - coord: org.ow2.asm:asm-util:9.7.1
     excludes:
       - '*:*'
-  - coord: org.realityforge.braincheck:braincheck-core:1.35.0
-    includeSource: true
-    natures: [Java, J2cl]
-    j2cl:
-      mode: Library
-      jspecifyMode: Enable
-  - coord: org.realityforge.braincheck:braincheck-testng:1.35.0
   - coord: org.realityforge.grim:grim-annotations:0.09
   - coord: org.realityforge.grim:grim-processor:0.09
   - coord: org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:1.7.0
@@ -158,3 +151,13 @@ replacements:
     targets:
       - target: ":org_jetbrains_annotations-j2cl"
         nature: J2cl
+  - coord: org.realityforge.braincheck:braincheck-core
+    targets:
+      - target: ":braincheck_core"
+        nature: Java
+      - target: ":braincheck_core-j2cl"
+        nature: J2cl
+  - coord: org.realityforge.braincheck:braincheck-testng
+    targets:
+      - target: ":braincheck_testng"
+        nature: Java

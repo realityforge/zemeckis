@@ -8,12 +8,45 @@ _java_plugin(
     deps = [":nullaway"],
 )
 
+_java_import(
+    name = "braincheck_core",
+    jars = ["@braincheck//tools/release:braincheck_core_jar"],
+    srcjar = "@braincheck//tools/release:braincheck_core_sources_jar",
+    deps = [
+        ":jsinterop_annotations",
+        ":jspecify",
+    ],
+)
+
+_java_import(
+    name = "braincheck_testng",
+    jars = ["@braincheck//tools/release:braincheck_testng_jar"],
+    srcjar = "@braincheck//tools/release:braincheck_testng_sources_jar",
+    deps = [
+        ":javax_json",
+        ":jsinterop_annotations",
+        ":jspecify",
+        ":testng",
+    ],
+)
+
+_j2cl_library(
+    name = "braincheck_core-j2cl",
+    # The combined binary archive includes Java sources and native configuration.
+    srcs = ["@braincheck//tools/release:braincheck_core_jar"],
+    experimental_enable_jspecify_support_do_not_enable_without_jspecify_static_checking_or_you_might_cause_an_outage = True,
+    deps = [
+        ":jsinterop_annotations-j2cl",
+        ":jspecify-j2cl",
+    ],
+)
+
 # --- depgen-generated targets start ---
 
 # DO NOT EDIT: Content is auto-generated from //third_party/java:dependencies.yml by https://github.com/realityforge/bazel-depgen version 0.29
 
 # SHA256 of the configuration content that generated this content
-_CONFIG_SHA256 = "55203677B8D9E8DBDECD50B571A5E940403E6937C4621D26C586C94FBD12CC84"
+_CONFIG_SHA256 = "56CE4323E8FF49DB6D9CFF51DEAB82CCE429BF8F8A37AE7C1C793CB41D1A4EA1"
 
 exports_files(["dependencies.yml"])
 
@@ -67,14 +100,6 @@ exports_files(["dependencies.yml"])
 # +- org.ow2.asm:asm-commons:jar:9.7.1 [compile]
 # +- org.ow2.asm:asm-tree:jar:9.7.1 [compile]
 # +- org.ow2.asm:asm-util:jar:9.7.1 [compile]
-# +- org.realityforge.braincheck:braincheck-core:jar:1.35.0 [compile]
-# |  +- org.jspecify:jspecify:jar:1.0.0 [compile] TARGET OVERRIDES :jspecify-j2cl (J2cl)
-# |  \- com.google.jsinterop:jsinterop-annotations:jar:2.0.0 [compile] TARGET OVERRIDES :jsinterop_annotations-j2cl (J2cl)
-# +- org.realityforge.braincheck:braincheck-testng:jar:1.35.0 [compile]
-# |  +- org.jspecify:jspecify:jar:1.0.0 [compile] TARGET OVERRIDES :jspecify-j2cl (J2cl)
-# |  +- com.google.jsinterop:jsinterop-annotations:jar:2.0.0 [compile] TARGET OVERRIDES :jsinterop_annotations-j2cl (J2cl)
-# |  +- org.glassfish:javax.json:jar:1.1 [compile]
-# |  \- org.testng:testng:jar:6.11 [compile]
 # +- org.realityforge.grim:grim-annotations:jar:0.09 [compile]
 # |  \- org.realityforge.javax.annotation:javax.annotation:jar:1.0.1 [compile] TARGET OVERRIDES :javax_annotation-j2cl (J2cl)
 # +- org.realityforge.grim:grim-processor:jar:0.09 [compile]
@@ -464,39 +489,6 @@ _java_import(
     name = "bazel_depgen",
     jars = ["@bazel_depgen//file"],
     tags = ["maven_coordinates=org.realityforge.bazel.depgen:bazel-depgen:0.29"],
-)
-
-_java_import(
-    name = "braincheck_core",
-    jars = ["@braincheck_core//file"],
-    srcjar = "@braincheck_core__sources//file",
-    tags = ["maven_coordinates=org.realityforge.braincheck:braincheck-core:1.35.0"],
-    deps = [
-        ":jsinterop_annotations",
-        ":jspecify",
-    ],
-)
-
-_j2cl_library(
-    name = "braincheck_core-j2cl",
-    srcs = ["@braincheck_core__sources//file"],
-    experimental_enable_jspecify_support_do_not_enable_without_jspecify_static_checking_or_you_might_cause_an_outage = True,
-    deps = [
-        ":jsinterop_annotations-j2cl",
-        ":jspecify-j2cl",
-    ],
-)
-
-_java_import(
-    name = "braincheck_testng",
-    jars = ["@braincheck_testng//file"],
-    tags = ["maven_coordinates=org.realityforge.braincheck:braincheck-testng:1.35.0"],
-    deps = [
-        ":javax_json",
-        ":jsinterop_annotations",
-        ":jspecify",
-        ":testng",
-    ],
 )
 
 _java_import(

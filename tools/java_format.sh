@@ -11,7 +11,7 @@ case "${MODE}" in
     exec bazel run @rules_palantir_java_format//:java_format -- --root=core --root=examples --root=tools
     ;;
   check)
-    exec bazel build //:java_format_check
+    exec bazel build //tools/java-format:java_format_check
     ;;
   watch)
     exec bazel run @rules_palantir_java_format//:java_format_watch -- --root=core --root=examples --root=tools
