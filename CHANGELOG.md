@@ -3,9 +3,7 @@
 ### Unreleased
 
 * Isolate development formatter targets so dependency modules can load publication artifacts.
-
 * Consume Braincheck publication archives from an immutable upstream source pin in Bazel.
-
 * Enable NullAway's JSpecify mode and reject unrecognized JSpecify annotation locations in Bazel Java builds.
 * Update Bazel to version `9.3.0`.
 * Use Bazel's default symlink and repository cache locations.
