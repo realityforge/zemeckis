@@ -70,6 +70,7 @@ release_javadoc_jar(
     classpath = [
         "@base//file",
         "@braincheck//tools/release:braincheck_core_jar",
+        "@error_prone_annotations//file",
         "@grim_annotations//file",
         "@gwt_user//file",
         "@javax_annotation//file",
@@ -86,9 +87,10 @@ release_pom(
     out = "zemeckis-core.pom",
     artifact_id = "zemeckis-core",
     dependencies = [
-        "org.jspecify:jspecify:1.0.0",
+        "org.jspecify:jspecify:1.0.1",
         "com.google.jsinterop:jsinterop-annotations:2.0.0",
-        "com.google.jsinterop:base:1.0.0",
+        "com.google.jsinterop:base:1.2.0",
+        "com.google.errorprone:error_prone_annotations:2.11.0",
         "org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:1.7.0",
         "org.realityforge.braincheck:braincheck-core:1.35.0",
         "org.realityforge.grim:grim-annotations:0.09",

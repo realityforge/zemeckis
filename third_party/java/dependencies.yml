@@ -26,7 +26,9 @@ artifacts:
     excludes:
       - '*:*'
   - coord: com.uber.nullaway:nullaway:0.14.2
-  - coord: com.google.jsinterop:base:1.0.0
+  - coord: com.google.errorprone:error_prone_annotations:2.11.0
+    includeSource: false
+  - coord: com.google.jsinterop:base:1.2.0
   - coord: com.google.jsinterop:jsinterop-annotations:2.0.0
   - coord: commons-collections:commons-collections:3.2.2
     excludes:
@@ -100,7 +102,7 @@ artifacts:
     includeSource: true
     excludes:
       - '*:*'
-  - coord: org.jspecify:jspecify:1.0.0
+  - coord: org.jspecify:jspecify:1.0.1
     excludes:
       - '*:*'
   - coord: org.ow2.asm:asm:9.7.1

@@ -36,9 +36,10 @@ public final class ReleaseArtifactsIntegrationTest {
                 resolve(Path.of(args[4])),
                 version,
                 Set.of(
-                        "org.jspecify:jspecify:1.0.0",
+                        "org.jspecify:jspecify:1.0.1",
                         "com.google.jsinterop:jsinterop-annotations:2.0.0",
-                        "com.google.jsinterop:base:1.0.0",
+                        "com.google.jsinterop:base:1.2.0",
+                        "com.google.errorprone:error_prone_annotations:2.11.0",
                         "org.realityforge.org.jetbrains.annotations:org.jetbrains.annotations:1.7.0",
                         "org.realityforge.braincheck:braincheck-core:1.35.0",
                         "org.realityforge.grim:grim-annotations:0.09"));

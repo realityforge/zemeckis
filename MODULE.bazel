@@ -5,7 +5,7 @@ module(
 bazel_dep(name = "braincheck")
 git_override(
     module_name = "braincheck",
-    commit = "cf4f382f75a8660425d7637a88451c3a5596d887",
+    commit = "da61a26bb5b0577cb6b76fbccf9eff3158fd1e1f",
     remote = "https://github.com/realityforge/braincheck.git",
 )
 
@@ -21,7 +21,7 @@ archive_override(
 )
 
 bazel_dep(name = "j2cl", version = "20260720")
-bazel_dep(name = "jsinterop_base", version = "20260720")
+bazel_dep(name = "jsinterop_base", version = "1.2.0")
 bazel_dep(name = "protobuf", version = "33.4")
 bazel_dep(name = "rules_closure", version = "0.16.0")
 bazel_dep(name = "rules_java", version = "9.9.0")
@@ -34,13 +34,6 @@ archive_override(
     patches = ["//third_party/bazel/patches:j2cl_fix_escapevelocity_coordinate.patch"],
     strip_prefix = "j2cl-78d44e6e7c2c2517e654f63405a2bc61e2462c4c",
     urls = ["https://github.com/google/j2cl/archive/78d44e6e7c2c2517e654f63405a2bc61e2462c4c.tar.gz"],
-)
-
-archive_override(
-    module_name = "jsinterop_base",
-    integrity = "sha256-xpicorGGpQUo8lafBOqDxLbmCMqEMJFKD/PT6NfDZi4=",
-    strip_prefix = "jsinterop-base-bbf8103ecdcbc7bb3c07c6c68227bf2bed131bcf",
-    urls = ["https://github.com/google/jsinterop-base/archive/bbf8103ecdcbc7bb3c07c6c68227bf2bed131bcf.tar.gz"],
 )
 
 single_version_override(
@@ -66,7 +59,16 @@ j2cl_maven.install(
         "args4j:args4j:2.33",
         "com.google.code.gson:gson:2.10.1",
         "com.google.escapevelocity:escapevelocity:1.1",
-        "com.google.j2objc:j2objc-annotations:1.3",
+        "com.google.j2objc:j2objc-annotations:2.8",
+        "org.jspecify:jspecify:1.0.1",
+    ],
+    known_contributing_modules = [
+        "braincheck",
+        "j2cl",
+        "jsinterop_base",
+        "protobuf",
+        "rules_closure",
+        "rules_web_testing_java",
     ],
 )
 use_repo(j2cl_maven, "maven")
@@ -227,9 +229,9 @@ _http_file(
 
 _http_file(
     name = "base",
-    downloaded_file_path = "com/google/jsinterop/base/1.0.0/base-1.0.0.jar",
-    sha256 = "603635c26a384f601b19fa79c04208bd2f52da7af54650a3abced5b813ca4412",
-    urls = ["https://repo.maven.apache.org/maven2/com/google/jsinterop/base/1.0.0/base-1.0.0.jar"],
+    downloaded_file_path = "com/google/jsinterop/base/1.2.0/base-1.2.0.jar",
+    sha256 = "74b273c76c94b27826ff816186310a2b384fb7b3e96471b26dd28afae263572a",
+    urls = ["https://repo.maven.apache.org/maven2/com/google/jsinterop/base/1.2.0/base-1.2.0.jar"],
 )
 
 _http_file(
@@ -486,9 +488,9 @@ _http_file(
 
 _http_file(
     name = "jspecify",
-    downloaded_file_path = "org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar",
-    sha256 = "1fad6e6be7557781e4d33729d49ae1cdc8fdda6fe477bb0cc68ce351eafdfbab",
-    urls = ["https://repo.maven.apache.org/maven2/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar"],
+    downloaded_file_path = "org/jspecify/jspecify/1.0.1/jspecify-1.0.1.jar",
+    sha256 = "070d75f261fe4c5b8202508366715f7f2d4660f88c8ef7e6d3575e48c9683b66",
+    urls = ["https://repo.maven.apache.org/maven2/org/jspecify/jspecify/1.0.1/jspecify-1.0.1.jar"],
 )
 
 _http_file(

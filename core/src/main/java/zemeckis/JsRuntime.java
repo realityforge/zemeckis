@@ -76,7 +76,7 @@ final class JsRuntime {
     @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "MessageEvent")
     static final class MessageEvent {
         @JsProperty(name = "data")
-        native Any data();
+        native @Nullable Any data();
     }
 
     @FunctionalInterface

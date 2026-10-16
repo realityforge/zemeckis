@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Upgrade JSpecify to version `1.0.1` and JsInterop Base to version `1.2.0`. Validate required worker-message fields using the updated nullability contracts.
 * Isolate development formatter targets so dependency modules can load publication artifacts.
 * Consume Braincheck publication archives from an immutable upstream source pin in Bazel.
 * Enable NullAway's JSpecify mode and reject unrecognized JSpecify annotation locations in Bazel Java builds.

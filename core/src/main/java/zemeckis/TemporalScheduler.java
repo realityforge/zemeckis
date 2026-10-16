@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.PriorityQueue;
 import jsinterop.base.Any;
-import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
 import org.jetbrains.annotations.TestOnly;
 import org.jspecify.annotations.Nullable;
@@ -405,9 +404,10 @@ final class TemporalScheduler {
         private void onWorkerMessage(final JsRuntime.MessageEvent event) {
             final Any eventData = event.data();
             if (null != eventData) {
-                final JsPropertyMap<Object> data = Js.asPropertyMap(eventData);
-                final double id = data.getAsAny("id").asDouble();
-                final String type = data.getAsAny("type").asString();
+                final JsPropertyMap<@Nullable Object> data = eventData.asPropertyMap();
+                final double id = Objects.requireNonNull(data.getAsAny("id")).asDouble();
+                final String type =
+                        Objects.requireNonNull(data.getAsAny("type")).asString();
                 if ("dt".equals(type)) {
                     if (LOG) {
                         JsRuntime.log("[Zemeckis-Main] Delayed Task Tick: " + id);
