@@ -51,15 +51,11 @@ release_source_jar(
     out = "zemeckis-core-sources.jar",
     java_targets = [CORE],
     resource_entries = [
-        "zemeckis/Zemeckis.gwt.xml",
         "zemeckis/ZemeckisConfig.native.js",
-        "zemeckis/ZemeckisDev.gwt.xml",
         "zemeckis/zemeckis.js",
     ],
     resource_files = [
-        "//core/src/main/java/zemeckis:Zemeckis.gwt.xml",
         "//core/src/main/java/zemeckis:ZemeckisConfig.native.js",
-        "//core/src/main/java/zemeckis:ZemeckisDev.gwt.xml",
         "//core/src/main/java/zemeckis:zemeckis.js",
     ],
 )
@@ -69,10 +65,9 @@ release_javadoc_jar(
     out = "zemeckis-core-javadoc.jar",
     classpath = [
         "@base//file",
-        "@braincheck//tools/release:braincheck_core_jar",
+        "@braincheck//:core",
         "@error_prone_annotations//file",
         "@grim_annotations//file",
-        "@gwt_user//file",
         "@javax_annotation//file",
         "@jsinterop_annotations//file",
         "@jspecify//file",

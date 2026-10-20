@@ -1,7 +1,7 @@
 # Zemeckis
 
 [<img src="https://img.shields.io/maven-central/v/org.realityforge.zemeckis/zemeckis-core.svg?label=latest%20release"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.realityforge.zemeckis%22%20a%3A%22zemeckis-core%22)
-![GWT3/J2CL compatible](https://img.shields.io/badge/GWT3/J2CL-compatible-brightgreen.svg)
+Zemeckis supports Java 17 and J2CL. GWT is no longer supported.
 
 Zemeckis is a library to unify the mechanisms for scheduling tasks inside a browser. Browsers support
 scheduling of tasks as macroTasks, microTasks, idle tasks, animation tasks etc. This library attempts
@@ -19,6 +19,19 @@ Add Zemeckis to a Maven build with:
   <version>0.18</version>
 </dependency>
 ```
+
+## Examples
+
+Build the browser examples with:
+
+```sh
+bazel build //examples/src/main/java/zemeckis/examples/dom/basic:distribution \
+  //examples/src/main/java/zemeckis/examples/dom/pulse_task:distribution \
+  //examples/src/main/java/zemeckis/examples/dom/repeating_task:distribution
+```
+
+Serve an example's generated `distribution` directory with a local HTTP server, then open `index.html`
+with the browser console visible. The examples retain development invariant checks and console logging.
 
 # Contributing
 

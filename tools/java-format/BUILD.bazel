@@ -7,7 +7,6 @@ java_format_check(
     targets = [
         "//:all_tests",
         "//core/src/test/j2cl:build_test_java",
-        "//core/src/test/java/zemeckis/gwt:smoke",
         "//examples/src/main/java/zemeckis/examples/dom/basic",
         "//examples/src/main/java/zemeckis/examples/dom/pulse_task",
         "//examples/src/main/java/zemeckis/examples/dom/repeating_task",

@@ -1,3 +1,5 @@
+load("@j2cl//build_defs:rules.bzl", "j2cl_application", "j2cl_library")
+load("@rules_closure//closure:defs.bzl", "closure_js_library")
 load("//third_party/java:rules.bzl", "java_library")
 
 package(default_visibility = ["//visibility:public"])
@@ -8,13 +10,57 @@ java_library(
         "Example.java",
         "package-info.java",
     ],
-    resources = [
-        "Example.gwt.xml",
-        "public/index.html",
-    ],
     deps = [
         "//core/src/main/java/zemeckis:core",
-        "//third_party/java:gwt_user",
         "//third_party/java:jsinterop_annotations",
     ],
+)
+
+j2cl_library(
+    name = "example-j2cl",
+    srcs = [
+        "Example.java",
+        "package-info.java",
+    ],
+    experimental_enable_jspecify_support_do_not_enable_without_jspecify_static_checking_or_you_might_cause_an_outage = True,
+    deps = [
+        "//core/src/main/java/zemeckis:core-j2cl",
+        "//third_party/java:jsinterop_annotations-j2cl",
+        "//third_party/java:jspecify-j2cl",
+    ],
+)
+
+closure_js_library(
+    name = "entry_point",
+    srcs = ["entry_point.js"],
+    deps = [":example-j2cl"],
+)
+
+j2cl_application(
+    name = "example",
+    closure_defines = {
+        "braincheck.check_api_invariants": "'true'",
+        "braincheck.check_invariants": "'true'",
+        "braincheck.environment": "'development'",
+        "braincheck.verbose_error_messages": "'true'",
+        "zemeckis.enable_names": "'true'",
+        "zemeckis.enable_uncaught_error_handlers": "'true'",
+        "zemeckis.environment": "'development'",
+        "zemeckis.logger": "'console'",
+    },
+    entry_points = ["zemeckis.examples.dom.pulse_task.EntryPoint"],
+    deps = [":entry_point"],
+)
+
+genrule(
+    name = "distribution",
+    srcs = [
+        ":example.js",
+        "index.html",
+    ],
+    outs = [
+        "distribution/example.js",
+        "distribution/index.html",
+    ],
+    cmd = "cp $(location :example.js) $(location distribution/example.js) && cp $(location index.html) $(location distribution/index.html)",
 )

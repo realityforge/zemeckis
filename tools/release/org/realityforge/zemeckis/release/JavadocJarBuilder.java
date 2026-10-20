@@ -116,6 +116,9 @@ public final class JavadocJarBuilder {
         final var argsFile = Files.createTempFile("zemeckis-javadoc", ".args");
         final var argLines = new ArrayList<String>();
         argLines.add("-quiet");
+        // Dependencies bundle sources; resolve their compiled APIs without recompiling them.
+        argLines.add("-sourcepath");
+        argLines.add(quoteArg(""));
         argLines.add("-d");
         argLines.add(docs.toString());
         argLines.add("-encoding");
