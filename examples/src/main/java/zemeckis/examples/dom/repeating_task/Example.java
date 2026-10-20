@@ -1,15 +1,16 @@
 package zemeckis.examples.dom.repeating_task;
 
-import com.google.gwt.core.client.EntryPoint;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 import zemeckis.Zemeckis;
 
-public final class Example implements EntryPoint {
+public final class Example {
+    private Example() {}
+
     private static final String[] COLORS = {"color: #006AEB;", "color: #c143eb;"};
 
-    @Override
-    public void onModuleLoad() {
+    @JsMethod
+    public static void main() {
         new Timer(1, 2000);
         new Timer(2, 10000);
     }
