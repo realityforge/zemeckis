@@ -4,7 +4,7 @@
 
 * Upgrade JSpecify to version `1.0.1` and JsInterop Base to version `1.2.0`. Validate required worker-message fields using the updated nullability contracts.
 * Isolate development formatter targets so dependency modules can load publication artifacts.
-* Consume Braincheck publication archives from an immutable upstream source pin in Bazel.
+* Reuse Braincheck's native J2CL target to avoid duplicate Closure modules when combining libraries; JVM dependencies continue to use pinned publication archives.
 * Enable NullAway's JSpecify mode and reject unrecognized JSpecify annotation locations in Bazel Java builds.
 * Update Bazel to version `9.3.0`.
 * Use Bazel's default symlink and repository cache locations.
