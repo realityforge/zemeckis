@@ -69,7 +69,7 @@ release_javadoc_jar(
     out = "zemeckis-core-javadoc.jar",
     classpath = [
         "@base//file",
-        "@braincheck//tools/release:braincheck_core_jar",
+        "@braincheck//:core",
         "@error_prone_annotations//file",
         "@grim_annotations//file",
         "@gwt_user//file",

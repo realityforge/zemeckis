@@ -8,31 +8,19 @@ _java_plugin(
     deps = [":nullaway"],
 )
 
-_java_import(
+alias(
     name = "braincheck_core",
-    jars = ["@braincheck//tools/release:braincheck_core_jar"],
-    srcjar = "@braincheck//tools/release:braincheck_core_sources_jar",
-    deps = [
-        ":jsinterop_annotations",
-        ":jspecify",
-    ],
+    actual = "@braincheck//:core",
 )
 
-_java_import(
+alias(
     name = "braincheck_testng",
-    jars = ["@braincheck//tools/release:braincheck_testng_jar"],
-    srcjar = "@braincheck//tools/release:braincheck_testng_sources_jar",
-    deps = [
-        ":javax_json",
-        ":jsinterop_annotations",
-        ":jspecify",
-        ":testng",
-    ],
+    actual = "@braincheck//:testng",
 )
 
 alias(
     name = "braincheck_core-j2cl",
-    actual = "@braincheck//core/src/main/java/org/realityforge/braincheck:core-j2cl",
+    actual = "@braincheck//:core-j2cl",
 )
 
 # --- depgen-generated targets start ---
