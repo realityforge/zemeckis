@@ -23,7 +23,7 @@ archive_override(
 bazel_dep(name = "j2cl", version = "20260720")
 bazel_dep(name = "jsinterop_base", version = "1.2.0")
 bazel_dep(name = "protobuf", version = "33.4")
-bazel_dep(name = "rules_closure", version = "0.16.0")
+bazel_dep(name = "rules_closure", version = "0.17.0")
 bazel_dep(name = "rules_java", version = "9.9.0")
 bazel_dep(name = "rules_jvm_external", version = "7.1")
 
@@ -46,11 +46,11 @@ single_version_override(
     version = "0.61.1",
 )
 
-single_version_override(
+archive_override(
     module_name = "rules_closure",
-    patch_strip = 1,
-    patches = ["//third_party/bazel/patches:rules_closure_use_protobuf_java_proto_library.patch"],
-    version = "0.16.0",
+    integrity = "sha256-a+8E2hTyPhwYAPs2SM7Gc2T/iVtDXFiowXrU9JpS+Ew=",
+    strip_prefix = "rules_closure-5324b6eb9b37dc08bbe5996d67e042a9e4fd57eb",
+    urls = ["https://github.com/bazelbuild/rules_closure/archive/5324b6eb9b37dc08bbe5996d67e042a9e4fd57eb.tar.gz"],
 )
 
 j2cl_maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
