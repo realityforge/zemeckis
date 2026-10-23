@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Pin the consolidated J2CL compiler and matching Braincheck revision; remove the local EscapeVelocity patch.
 * Use the upstream rules_closure protobuf-rule migration and remove the redundant local patch.
 * Retire GWT modules, compiler tooling, and dependencies; run the three browser examples through J2CL.
 * Update the Bazel Braincheck source pin to the Java/J2CL-only revision and consume its public targets.

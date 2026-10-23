@@ -5,7 +5,7 @@ module(
 bazel_dep(name = "braincheck")
 git_override(
     module_name = "braincheck",
-    commit = "18adeceecb966be6fa6bc8165f8047330c34749d",
+    commit = "7a37804412039affbe2d6adf28416b9d5f0a3a62",
     remote = "https://github.com/realityforge/braincheck.git",
 )
 
@@ -29,11 +29,9 @@ bazel_dep(name = "rules_jvm_external", version = "7.1")
 
 archive_override(
     module_name = "j2cl",
-    integrity = "sha256-Ny6r8kYwbMjLWY+39VKzGGHerH1xOIWBRvhxO1gT8iQ=",
-    patch_strip = 1,
-    patches = ["//third_party/bazel/patches:j2cl_fix_escapevelocity_coordinate.patch"],
-    strip_prefix = "j2cl-78d44e6e7c2c2517e654f63405a2bc61e2462c4c",
-    urls = ["https://github.com/google/j2cl/archive/78d44e6e7c2c2517e654f63405a2bc61e2462c4c.tar.gz"],
+    integrity = "sha256-jtx4qV2UC+xvgoDeV+6/TBNCs/GRPzeW07TTrIqm+pg=",
+    strip_prefix = "j2cl-260ec1abd929947c032714672d4124e47ff2aec2",
+    urls = ["https://github.com/realityforge/j2cl/archive/260ec1abd929947c032714672d4124e47ff2aec2.tar.gz"],
 )
 
 single_version_override(
