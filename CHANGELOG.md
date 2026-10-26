@@ -10,7 +10,7 @@
 * Isolate development formatter targets so dependency modules can load publication artifacts.
 * Reuse Braincheck's native J2CL target to avoid duplicate Closure modules when combining libraries; JVM dependencies continue to use pinned publication archives.
 * Enable NullAway's JSpecify mode and reject unrecognized JSpecify annotation locations in Bazel Java builds.
-* Update Bazel to version `9.3.0`.
+* Update Bazel to version `9.3.1`.
 * Use Bazel's default symlink and repository cache locations.
 * Clean Bazel outputs and shut down the Bazel server when Codex environments are removed.
 * Use persistent Bazel workers for graph-based Java formatting checks and add `tools/java_format_watch.sh`.
