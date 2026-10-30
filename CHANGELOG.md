@@ -2,8 +2,8 @@
 
 ### Unreleased
 
-* Pin the consolidated J2CL compiler and matching Braincheck revision; remove the local EscapeVelocity patch.
-* Use the upstream rules_closure protobuf-rule migration and remove the redundant local patch.
+* Pin refreshed J2CL and Closure integration snapshots, with local EscapeVelocity/protobuf patches and legacy
+  worker-protocol and Go overrides removed.
 * Retire GWT modules, compiler tooling, and dependencies; run the three browser examples through J2CL.
 * Update the Bazel Braincheck source pin to the Java/J2CL-only revision and consume its public targets.
 * Upgrade JSpecify to version `1.0.1` and JsInterop Base to version `1.2.0`. Validate required worker-message fields using the updated nullability contracts.
