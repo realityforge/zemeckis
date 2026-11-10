@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Give release jar manifests a stable timestamp so repeated builds produce identical jars.
 * Pin refreshed J2CL and Closure integration snapshots, with local EscapeVelocity/protobuf patches and legacy
   worker-protocol and Go overrides removed.
 * Retire GWT modules, compiler tooling, and dependencies; run the three browser examples through J2CL.

@@ -18,9 +18,30 @@ public final class JarBuilderTest {
         final Path root = Files.createTempDirectory("jar-builder-test");
         try {
             testSkipsModuleDescriptors(root);
+            testManifestUsesStableTimestamp(root);
             testDuplicateRealEntryFails(root);
         } finally {
             deleteTree(root);
+        }
+    }
+
+    private static void testManifestUsesStableTimestamp(final Path root) throws Exception {
+        final Path directory = Files.createDirectories(root.resolve("stable-manifest"));
+        final Path first = directory.resolve("first.jar");
+        final Path second = directory.resolve("second.jar");
+        final Path output = directory.resolve("output.jar");
+
+        writeJar(first, entries("com/example/First.class", "first"));
+        writeJar(second, entries("com/example/Second.class", "second"));
+
+        merge(output, first, second);
+
+        try (JarFile jar = new JarFile(output.toFile())) {
+            final long manifestTime = jar.getJarEntry(JarFile.MANIFEST_NAME).getTime();
+            final long entryTime = jar.getJarEntry("com/example/First.class").getTime();
+            if (manifestTime != entryTime) {
+                throw new AssertionError("Expected manifest timestamp " + manifestTime + " to equal " + entryTime);
+            }
         }
     }
 

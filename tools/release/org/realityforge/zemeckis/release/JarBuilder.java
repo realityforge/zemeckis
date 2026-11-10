@@ -87,7 +87,8 @@ public final class JarBuilder {
         }
 
         Files.createDirectories(output.toAbsolutePath().getParent());
-        try (JarOutputStream out = new JarOutputStream(Files.newOutputStream(output), manifest(mainClass))) {
+        try (JarOutputStream out = new JarOutputStream(Files.newOutputStream(output))) {
+            writeManifest(out, manifest(mainClass));
             writeEntries(out, entries, services, plexusComponents);
         }
     }
@@ -225,6 +226,12 @@ public final class JarBuilder {
             content.write("  </components>\n</component-set>\n".getBytes(StandardCharsets.UTF_8));
             writeEntry(out, "META-INF/plexus/components.xml", content.toByteArray());
         }
+    }
+
+    private static void writeManifest(final JarOutputStream out, final Manifest manifest) throws IOException {
+        final var content = new ByteArrayOutputStream();
+        manifest.write(content);
+        writeEntry(out, JarFile.MANIFEST_NAME, content.toByteArray());
     }
 
     private static void writeEntry(final JarOutputStream out, final String name, final byte[] content)
