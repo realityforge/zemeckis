@@ -1,6 +1,5 @@
 package zemeckis.examples.dom.basic;
 
-import com.google.gwt.core.client.EntryPoint;
 import java.util.HashMap;
 import java.util.Map;
 import jsinterop.annotations.JsMethod;
@@ -8,11 +7,13 @@ import jsinterop.annotations.JsPackage;
 import org.jspecify.annotations.Nullable;
 import zemeckis.Zemeckis;
 
-public final class Example implements EntryPoint {
+public final class Example {
+    private Example() {}
+
     private static final Map<String, String> STYLES = createStyles();
 
-    @Override
-    public void onModuleLoad() {
+    @JsMethod
+    public static void main() {
         // AfterFrame schedules a macro task after the next render
         Zemeckis.afterFrame(() -> log("afterFrame", 1));
         // Schedule a task immediately preceding next render

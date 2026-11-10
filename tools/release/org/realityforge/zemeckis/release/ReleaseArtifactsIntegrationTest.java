@@ -169,9 +169,7 @@ public final class ReleaseArtifactsIntegrationTest {
                 "ZemeckisTestUtil.java",
                 "ZemeckisUtil.java",
                 "package-info.java",
-                "Zemeckis.gwt.xml",
                 "ZemeckisConfig.native.js",
-                "ZemeckisDev.gwt.xml",
                 "zemeckis.js")) {
             entries.add(PACKAGE_PATH + source);
         }

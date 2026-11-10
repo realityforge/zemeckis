@@ -1,6 +1,5 @@
 package zemeckis.examples.dom.pulse_task;
 
-import com.google.gwt.core.client.EntryPoint;
 import java.util.Objects;
 import java.util.function.Consumer;
 import jsinterop.annotations.JsMethod;
@@ -8,11 +7,13 @@ import jsinterop.annotations.JsPackage;
 import zemeckis.Cancelable;
 import zemeckis.Zemeckis;
 
-public final class Example implements EntryPoint {
+public final class Example {
+    private Example() {}
+
     private static final String[] COLORS = {"color: #006AEB;", "color: #c143eb;"};
 
-    @Override
-    public void onModuleLoad() {
+    @JsMethod
+    public static void main() {
         createTimerThatCancelsSelfAndRestartsAfterDelay();
     }
 

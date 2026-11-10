@@ -1,6 +1,7 @@
 package org.realityforge.zemeckis.release;
 
 import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -116,6 +117,9 @@ public final class JavadocJarBuilder {
         final var argsFile = Files.createTempFile("zemeckis-javadoc", ".args");
         final var argLines = new ArrayList<String>();
         argLines.add("-quiet");
+        // Dependencies bundle sources; resolve their compiled APIs without recompiling them.
+        argLines.add("-sourcepath");
+        argLines.add(quoteArg(""));
         argLines.add("-d");
         argLines.add(docs.toString());
         argLines.add("-encoding");
@@ -163,7 +167,14 @@ public final class JavadocJarBuilder {
 
     private static void writeJar(final Path output, final Path docs) throws IOException {
         Files.createDirectories(output.toAbsolutePath().getParent());
-        try (JarOutputStream out = new JarOutputStream(Files.newOutputStream(output), new Manifest())) {
+        try (JarOutputStream out = new JarOutputStream(Files.newOutputStream(output))) {
+            final var manifest = new ByteArrayOutputStream();
+            new Manifest().write(manifest);
+            final var manifestEntry = new JarEntry(JarFile.MANIFEST_NAME);
+            manifestEntry.setTime(STABLE_TIME);
+            out.putNextEntry(manifestEntry);
+            out.write(manifest.toByteArray());
+            out.closeEntry();
             final List<Path> files;
             try (Stream<Path> stream = Files.walk(docs)) {
                 files = stream.filter(Files::isRegularFile).sorted().toList();
