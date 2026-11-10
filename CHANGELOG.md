@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Consume Braincheck through its public Bazel library labels and update its source pin.
 * Give release jar manifests a stable timestamp so repeated builds produce identical jars.
 * Pin refreshed J2CL and Closure integration snapshots, with local EscapeVelocity/protobuf patches and legacy
   worker-protocol and Go overrides removed.

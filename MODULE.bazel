@@ -5,7 +5,7 @@ module(
 bazel_dep(name = "braincheck")
 git_override(
     module_name = "braincheck",
-    commit = "7a37804412039affbe2d6adf28416b9d5f0a3a62",
+    commit = "d1c717ab04e54281d811c15c1f84daa264675761",
     remote = "https://github.com/realityforge/braincheck.git",
 )
 
